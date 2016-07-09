@@ -1,0 +1,8 @@
+group 'net.darthgeek.yggdrasil'
+version '0.0.0-SNAPSHOT'
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.14'
+  distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
