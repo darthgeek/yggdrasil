@@ -1,0 +1,62 @@
+.masthead {
+  background-image: url("../images/masthead-pattern.png");
+  background-color: #cccccc;
+  height: 300px;
+  max-height: 300px;
+}
+
+.masthead div {
+  vertical-align: middle;
+}
+
+.hidden-xs .logo-pane {
+  display: table-cell;
+  padding: 5px 5px;
+}
+
+
+.hidden-xs .title-pane {
+  display: table-cell;
+  width: 100%;
+  padding: 5px 5px;
+}
+
+
+.hidden-xs .title-pane .subtitle {
+  display: block;
+  margin-top: -10px;
+  padding: 10px 5px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.visible-xs .title-pane {
+  display: table-cell;
+  padding: 30px 30px 60px 30px;
+  vertical-align: middle;
+}
+
+.visible-xs .title-pane img {
+  display: block;
+}
+
+.visible-xs .links-pane {
+  display: table-cell;
+  width: 100%;
+  text-align: center;
+}
+
+.visible-xs .links-pane ul {
+  display: block;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.visible-xs .links-pane ul li {
+  padding: 5px 5px;
+}
+
+.visible-xs .mobile-pane {
+  display: table;
+}

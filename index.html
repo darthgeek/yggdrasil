@@ -2,64 +2,85 @@
 <html>
   <head>
     <meta charset='UTF-8' />
+    <meta http-equiv='X-UA-Compatible' content='IE=edge' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
     <title>Yggdrasil - Home</title>
-    <link rel='stylesheet' href='css/style.css' type='text/css' />
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css' crossorigin='anonymous' integrity='sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7' />
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css' crossorigin='anonymous' integrity='sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r' />
+    <link rel='stylesheet' href='css/site.css' />
   </head>
   <body>
-    <div id='background'>
-      <div id='header'>
-        <div>
-          <div>
-            <a href='index.html' class='logo'>
-              <img src='images/logo.png' alt='' />
-            </a>
-            <ul>
-              <li class='selected'>
-                <a href='index-old.html' id='menu1'>home</a>
+    <div class='masthead'>
+      <div class='container'>
+        <div class='hidden-xs row'>
+          <div class='logo-pane'>
+            <img src='images/yggdrasil.png' />
+          </div>
+          <div class='title-pane'>
+            <div class='title text-center'>
+              <img class='hidden-sm' src='images/yggdrasil-logo.png' />
+              <img class='visible-sm' src='images/yggdrasil-logo-sm.png' />
+            </div>
+            <div>
+              <ul class='dev-links list-inline text-center'>
+                <li>
+                  <a class='btn btn-default' href='https://github.com/darthgeek/yggdrasil'>
+                    <img src='images/octocat-icon.png' />
+                    <span>GitHub Project</span>
+                  </a>
+                </li>
+                <li>
+                  <a href='https://travis-ci.org/darthgeek/yggdrasil'>
+                    <img src='https://travis-ci.org/darthgeek/yggdrasil.svg?branch=dev' />
+                  </a>
+                </li>
+                <li>
+                  <a class='btn btn-default' href='http://blog.darthgeek.net'>
+                    <img src='images/blogger-logo-small.png' width='auto' height='20' />
+                    <span>Darthgeek Blog</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class='visible-xs row'>
+          <div class='title-pane'>
+            <img src='images/yggdrasil-xs.png' />
+            <img src='images/yggdrasil-logo-xs.png' />
+          </div>
+          <div class='links-pane'>
+            <ul class='dev-links  text-center'>
+              <li>
+                <a class='btn btn-default' href='https://github.com/darthgeek/yggdrasil'>
+                  <img src='images/octocat-icon.png' />
+                  <span>GitHub Project</span>
+                </a>
               </li>
               <li>
-                <a href='media.html' id='menu2'>media</a>
+                <a href='https://travis-ci.org/darthgeek/yggdrasil'>
+                  <img src='https://travis-ci.org/darthgeek/yggdrasil.svg?branch=dev' />
+                </a>
               </li>
               <li>
-                <a href='games.html' id='menu3'>games</a>
-              </li>
-              <li>
-                <a href='about.html' id='menu4'>about</a>
-              </li>
-              <li>
-                <a href='blog.html' id='menu5'>blog</a>
+                <a class='btn btn-default' href='http://blog.darthgeek.net'>
+                  <img src='images/blogger-logo-small.png' width='auto' height='20' />
+                  <span>Darthgeek Blog</span>
+                </a>
               </li>
             </ul>
           </div>
         </div>
       </div>
-      <div id='body'>
-        <div>
-          <div>
-            <div class='featured'>
-              <p>featured stuff</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id='footer'>
-        <div>
-          <ul>
-            <li id='facebook'>
-              <a href='http://facebook.com'>facebook</a>
-            </li>
-            <li id='twitter'>
-              <a href='http://twitter.com'>twitter</a>
-            </li>
-            <li id='googleplus'>
-              <a href='http://plus.google.com'>googleplus</a>
-            </li>
-          </ul>
-          <div>
-            <p>Copyright (c) 2016 Jason Steele</p>
-          </div>
-        </div>
-      </div>
     </div>
+    <div class='container'>
+      <h1>Overview</h1>
+      <h3 class='visible-xs-block'>Size: XS</h3>
+      <h3 class='visible-sm-block'>Size: SM</h3>
+      <h3 class='visible-md-block'>Size: MD</h3>
+      <h3 class='visible-lg-block'>Size: LG</h3>
+    </div>
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js' crossorigin='anonymous' integrity='sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44='></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js' crossorigin='anonymous' integrity='sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS'></script>
   </body>
 </html>
