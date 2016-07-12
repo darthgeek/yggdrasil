@@ -1,0 +1,87 @@
+import groovy.xml.MarkupBuilder
+import groovy.xml.MarkupBuilderHelper
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.codehaus.groovy:groovy-all:2.4.7'
+    }
+}
+
+task createIndex << {
+    logger.info "Creating index.html"
+
+    StringWriter writer = new StringWriter()
+    MarkupBuilder builder = new MarkupBuilder(writer)
+    builder.html() {
+        head() {
+            meta(charset: 'UTF-8')
+            title("Yggdrasil - Home")
+            link(rel: 'stylesheet', href: 'css/style.css', type: 'text/css')
+        }
+        body() {
+            div id: 'background', {
+                div id: 'header', {
+                    div {
+                        div {
+                            a href: 'index.html', class: 'logo', {
+                                img src: 'images/logo.png', alt: ''
+                            }
+                            ul {
+                                li class: 'selected', {
+                                    a href: 'index-old.html', id: 'menu1', 'home'
+                                }
+                                li {
+                                    a href: 'media.html', id: 'menu2', 'media'
+                                }
+                                li {
+                                    a href: 'games.html', id: 'menu3', 'games'
+                                }
+                                li {
+                                    a href: 'about.html', id: 'menu4', 'about'
+                                }
+                                li {
+                                    a href: 'blog.html', id: 'menu5', 'blog'
+                                }
+                            }
+                        }
+                    }
+                }
+                div id: 'body', {
+                    div {
+                        div {
+                            div class: 'featured', {
+                                p 'featured stuff'
+                            }
+                        }
+                    }
+                }
+                div id: 'footer', {
+                    div {
+                        ul {
+                            li id: 'facebook', {
+                                a href: 'http://facebook.com', 'facebook'
+                            }
+                            li id: 'twitter', {
+                                a href: 'http://twitter.com', 'twitter'
+                            }
+                            li id: 'googleplus', {
+                                a href: 'http://plus.google.com', 'googleplus'
+                            }
+                        }
+                        div {
+                            p 'Copyright (c) 2016 Jason Steele'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    def file = new File("index.html")
+    file.write "<!DOCTYPE HTML>\n"
+    file << writer.toString()
+}
