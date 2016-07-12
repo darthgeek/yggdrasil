@@ -27,6 +27,7 @@ tasks.withType(FindBugs) {
 }
 
 dependencies {
+    compile project(':yggdrasil-javascript')
     compile "org.springframework:spring-context:$rootProject.ext.springVersion"
     compile "org.springframework:spring-context-support:$rootProject.ext.springVersion"
     compile "org.springframework:spring-webmvc:$rootProject.ext.springVersion"

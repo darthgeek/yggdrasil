@@ -1,0 +1,37 @@
+plugins {
+    id "com.moowork.node" version "0.12"
+    id "com.moowork.gulp" version "0.12"
+}
+apply plugin: 'java'
+
+group 'net.darthgeek.yggdrasil'
+version '0.0.0-SNAPSHOT'
+
+task execGulp(type: NodeTask, group: 'gulp') {
+    args = [
+            '--root-dir',
+            project.projectDir.absolutePath,
+            '--task',
+            'default'
+    ]
+    script = project.file('gulpfile.js')
+}
+
+tasks['execGulp'].dependsOn 'installGulp'
+tasks['installGulp'].dependsOn 'npmInstall'
+tasks['classes'].dependsOn 'execGulp'
+tasks['execGulp'].mustRunAfter 'processResources'
+
+node {
+    download = true
+    workDir = project.file("build/nodejs")
+    nodeModulesDir = rootProject.projectDir
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'build/webpack'
+        }
+    }
+}
