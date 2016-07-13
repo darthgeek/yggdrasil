@@ -42,6 +42,7 @@ dependencies {
     compile "org.thymeleaf.extras:thymeleaf-extras-springsecurity4:$rootProject.ext.thymeleafVersion"
     compile "com.google.code.findbugs:jsr305:3.0.0"
     compile "com.google.code.findbugs:annotations:3.0.0"
+    compile "com.fasterxml.jackson.core:jackson-databind:$rootProject.ext.jacksonVersion"
 
     compile "org.slf4j:slf4j-api:1.7.10"
     compile "org.slf4j:jul-to-slf4j:1.7.10"

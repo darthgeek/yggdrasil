@@ -1,11 +1,15 @@
 package net.darthgeek.ygdrassil.mvc;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.BeanInitializationException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.dialect.IDialect;
@@ -15,9 +19,10 @@ import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
 
+import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -28,7 +33,19 @@ import java.util.Set;
 @ComponentScan
 @PropertySource("classpath:thymeleaf.properties")
 public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
+  private static final TypeReference<Map<String, Object>> ASSETS_TYPE_REF = new TypeReference<Map<String, Object>>() {
+  };
+  private static final ObjectMapper JSON_MAPPER = new ObjectMapper();
+
   private ApplicationContext applicationContext;
+
+  @javax.annotation.Resource
+  private Environment env;
+
+  @Value("classpath:assets.json")
+  private Resource assetsJsonFile;
+  private Map<String, Object> assets;
+
 
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) {
@@ -37,13 +54,13 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 
   @Override
   public void addResourceHandlers(final ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/")
+    registry.addResourceHandler("/css/**").addResourceLocations("/WEB-INF/css/", "classpath:/META-INF/resources/css/")
           .setCachePeriod(2592000);
-    registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/images/")
+    registry.addResourceHandler("/images/**").addResourceLocations("/WEB-INF/images/", "classpath:/META-INF/resources/images/")
           .setCachePeriod(2592000);
-    registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/")
+    registry.addResourceHandler("/js/**").addResourceLocations("/WEB-INF/js/", "classpath:/META-INF/resources/js/")
           .setCachePeriod(2592000);
-    registry.addResourceHandler("/fonts/**").addResourceLocations("/WEB-INF/fonts/")
+    registry.addResourceHandler("/fonts/**").addResourceLocations("/WEB-INF/fonts/", "classpath:/META-INF/resources/fonts/")
           .setCachePeriod(2592000);
   }
 
@@ -84,5 +101,14 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     viewResolver.setTemplateEngine(templateEngine());
     viewResolver.setCharacterEncoding("UTF-8");
     return viewResolver;
+  }
+
+  @Bean
+  public Map<String, Object> assets() {
+    try {
+      return JSON_MAPPER.readValue(assetsJsonFile.getInputStream(), ASSETS_TYPE_REF);
+    } catch (final IOException ioe) {
+      throw new BeanInitializationException("Error loading " + assetsJsonFile, ioe);
+    }
   }
 }
