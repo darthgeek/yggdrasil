@@ -72,6 +72,10 @@ module.exports = function (env) {
         {
           test: /\.hbs/,
           loader: "handlebars-loader"
+        },
+        {
+          test: /(pixi|phaser).js/,
+          loader: 'script'
         }
       ]
     }
