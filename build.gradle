@@ -66,6 +66,12 @@ task createIndex << {
                                                 span 'Darthgeek Blog'
                                             }
                                         }
+                                        li {
+                                            a class: 'btn btn-default', href: 'http://blog.darthgeek.net', {
+                                                img src: 'images/Slack.png', width: 'auto', height: '20'
+                                                span 'Slack'
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -92,6 +98,12 @@ task createIndex << {
                                         a class: 'btn btn-default', href: 'http://blog.darthgeek.net', {
                                             img src: 'images/blogger-logo-small.png', width: 'auto', height: '20'
                                             span 'Darthgeek Blog'
+                                        }
+                                    }
+                                    li {
+                                        a class: 'btn btn-default', href: 'http://blog.darthgeek.net', {
+                                            img src: 'images/Slack.png', width: 'auto', height: '20'
+                                            span 'Slack'
                                         }
                                     }
                                 }
