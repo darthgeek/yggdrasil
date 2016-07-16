@@ -52,7 +52,7 @@ task createIndex << {
                                         li {
                                             a class: 'btn btn-default', href: 'https://github.com/darthgeek/yggdrasil', {
                                                 img src: 'images/octocat-icon.png'
-                                                span 'GitHub Project'
+                                                span 'GitHub'
                                             }
                                         }
                                         li {
@@ -63,11 +63,11 @@ task createIndex << {
                                         li {
                                             a class: 'btn btn-default', href: 'http://blog.darthgeek.net', {
                                                 img src: 'images/blogger-logo-small.png', width: 'auto', height: '20'
-                                                span 'Darthgeek Blog'
+                                                span 'Blog'
                                             }
                                         }
                                         li {
-                                            a class: 'btn btn-default', href: 'http://blog.darthgeek.net', {
+                                            a class: 'btn btn-default', href: 'https://darthgeek.slack.com', {
                                                 img src: 'images/Slack.png', width: 'auto', height: '20'
                                                 span 'Slack'
                                             }
@@ -86,7 +86,7 @@ task createIndex << {
                                     li {
                                         a class: 'btn btn-default', href: 'https://github.com/darthgeek/yggdrasil', {
                                             img src: 'images/octocat-icon.png'
-                                            span 'GitHub Project'
+                                            span 'GitHub'
                                         }
                                     }
                                     li {
@@ -97,11 +97,11 @@ task createIndex << {
                                     li {
                                         a class: 'btn btn-default', href: 'http://blog.darthgeek.net', {
                                             img src: 'images/blogger-logo-small.png', width: 'auto', height: '20'
-                                            span 'Darthgeek Blog'
+                                            span 'Blog'
                                         }
                                     }
                                     li {
-                                        a class: 'btn btn-default', href: 'http://blog.darthgeek.net', {
+                                        a class: 'btn btn-default', href: 'https://darthgeek.slack.com', {
                                             img src: 'images/Slack.png', width: 'auto', height: '20'
                                             span 'Slack'
                                         }
