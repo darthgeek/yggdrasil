@@ -7,7 +7,8 @@ module.exports = function (env) {
     context: config.jsSource,
 
     entry: {
-      "page/home": ["./page/home.js"],
+      "page/phaser-tutorial": ["./page/phaser-tutorial.js"],
+      "page/websocket-tutorial": ["./page/websocket-tutorial.js"],
     },
 
     output: {
@@ -30,6 +31,10 @@ module.exports = function (env) {
     resolve: {
       extensions: ['', '.js'],
       alias: {}
+    },
+
+    node: {
+      fs: "empty"
     },
 
     module: {

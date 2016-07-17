@@ -8,10 +8,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Created by jason on 7/10/2016.
  */
 @Controller("homeController")
-@RequestMapping("/index.html")
 public class HomeController {
-  @RequestMapping(method = RequestMethod.GET)
+  @RequestMapping(value = "/index.html", method = RequestMethod.GET)
   public String home() {
     return "index";
+  }
+
+  @RequestMapping(value = "/phaser-tutorial", method = RequestMethod.GET)
+  public String phaserDemo() {
+    return "phaser-tutorial";
+  }
+
+  @RequestMapping(value = "/websocket-tutorial", method = RequestMethod.GET)
+  public String websocketDemo() {
+    return "websocket-tutorial";
   }
 }
