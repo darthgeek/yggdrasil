@@ -34,7 +34,9 @@ module.exports = function (env) {
     },
 
     node: {
-      fs: "empty"
+      fs: "empty",
+      net: "empty",
+      tls: "empty"
     },
 
     module: {
