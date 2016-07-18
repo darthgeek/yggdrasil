@@ -7,6 +7,7 @@ module.exports = function (env) {
     context: config.jsSource,
 
     entry: {
+      "page/game-sandbox": ["./page/game-sandbox.js"],
       "page/phaser-tutorial": ["./page/phaser-tutorial.js"],
       "page/websocket-tutorial": ["./page/websocket-tutorial.js"],
     },

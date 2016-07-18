@@ -14,6 +14,11 @@ public class HomeController {
     return "index";
   }
 
+  @RequestMapping(value = "/game-sandbox", method = RequestMethod.GET)
+  public String game() {
+    return "game-sandbox";
+  }
+
   @RequestMapping(value = "/phaser-tutorial", method = RequestMethod.GET)
   public String phaserDemo() {
     return "phaser-tutorial";
