@@ -97,7 +97,7 @@ module.exports = function (env) {
 
   if (env === "development") {
     webpackConfig.devtool = "source-map";
-    webpack.debug = true
+    webpack.debug = true;
   }
 
   return webpackConfig;

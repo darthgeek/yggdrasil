@@ -1,7 +1,7 @@
 /* global __webpack_public_path__ */
 
 // Standard stuff for every page
-__webpack_public_path__ = window._contextPath + "js/";
+__webpack_public_path__ = window._contextPath + "js/"; // eslint-disable-line camelcase
 
 var $ = window["jQuery"] = window.jquery = require("jquery");
 

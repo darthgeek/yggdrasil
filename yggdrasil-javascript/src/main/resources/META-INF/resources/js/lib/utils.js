@@ -63,7 +63,7 @@ Utils.formatDate = function(date, format, utc) {
  * @return {string}                     formatted date string
  */
 Utils.formatUtcDate = function(date, format) {
-  return Utils.formatDate(date, format, true)
+  return Utils.formatDate(date, format, true);
 };
 
 /**

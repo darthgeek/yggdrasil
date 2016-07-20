@@ -6,8 +6,6 @@ require("phaser-shim");
 
 // https://github.com/photonstorm/phaser/issues/1974
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, "", {preload: _preload, create: _create, update: _update});
-
 function _preload() {
   log.info("Phaser preload");
   game.load.image("sky", "images/sky.png");
@@ -133,3 +131,5 @@ function _update() {
     player.body.velocity.y = -350;
   }
 }
+
+var game = new Phaser.Game(800, 600, Phaser.AUTO, "", {preload: _preload, create: _create, update: _update});
