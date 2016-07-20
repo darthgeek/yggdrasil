@@ -11,7 +11,7 @@ var url = require("url");
  * @constructor
  */
 function Logger(name, level) {
-  level = level || url.parse(window.location.search, true).query['logLevel'];
+  level = level || url.parse(window.location.search, true).query["logLevel"];
   level = Logger.LEVELS.get(level);
 
   /**
