@@ -3,7 +3,6 @@ plugins {
     id "com.moowork.gulp" version "0.12"
 }
 apply plugin: 'java'
-
 group 'net.darthgeek.yggdrasil'
 version '0.0.0-SNAPSHOT'
 
