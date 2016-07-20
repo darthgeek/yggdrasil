@@ -11,6 +11,9 @@ branches:
     - master
     - dev
 
+script:
+  - ./gradlew check jacocoTestReport uploadCoverageToCodacy --projectToken=c4c6358fe3694a15a1ecb82752c32eec
+
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
