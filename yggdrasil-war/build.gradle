@@ -193,7 +193,7 @@ task uploadCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
             "-r",
             "${buildDir}/test-results/jacoco/${archivesBaseName}.xml",
             "--projectToken",
-            "c4c6358fe3694a15a1ecb82752c32eec"
+            project.projectToken
     ]
 }
 
