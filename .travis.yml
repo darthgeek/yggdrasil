@@ -12,8 +12,7 @@ branches:
     - dev
 
 script:
-  - ./gradlew check jacocoTestReport uploadCoverageToCodacy -PprojectToken=c4c6358fe3694a15a1ecb82752c32eec
-  - ./gradlew javascriptTest javascriptCodacy -PprojectToken=c4c6358fe3694a15a1ecb82752c32eec
+  - ./gradlew check jacocoTestReport uploadCoverageToCodacy javascriptTest javascriptCodacy -PprojectToken=c4c6358fe3694a15a1ecb82752c32eec
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
