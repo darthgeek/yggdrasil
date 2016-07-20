@@ -12,6 +12,7 @@ apply plugin: 'war'
 apply plugin: 'announce'
 apply plugin: 'findbugs'
 apply plugin: 'jacoco'
+apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
 
 // TODO clean this up and refactor a bit
 
@@ -94,8 +95,6 @@ jacoco {
     toolVersion = "0.7.7.201606060606"
     reportsDir = file("${buildDir}/test-results/jacoco")
 }
-
-
 
 jacocoTestReport {
     executionData = fileTree(dir: "${buildDir}", include: '**/jacoco/*.exec')
@@ -222,4 +221,10 @@ gradle.taskGraph.afterTask { Task task, TaskState state ->
     } else {
         announce.announce("':${task.name}' succeeded", "local")
     }
+}
+
+gretty {
+    servletContainer 'tomcat8'
+    managedClassReload true
+    contextPath '/'
 }
