@@ -46,6 +46,9 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
   @Value("classpath:assets.json")
   private Resource assetsJsonFile;
 
+  @Value("${spring.template.cache:false}")
+  private boolean templateCache;
+
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) {
     this.applicationContext = applicationContext;
@@ -91,6 +94,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     resolver.setPrefix("/WEB-INF/templates/");
     resolver.setSuffix(".html");
     resolver.setTemplateMode(TemplateMode.HTML);
+    resolver.setCacheable(templateCache);
     return resolver;
   }
 
