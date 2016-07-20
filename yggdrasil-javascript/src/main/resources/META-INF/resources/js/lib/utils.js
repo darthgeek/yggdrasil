@@ -66,28 +66,4 @@ Utils.formatUtcDate = function(date, format) {
   return Utils.formatDate(date, format, true);
 };
 
-/**
- * Returns the query string value for the given param name. Returns null if none found.
- *
- * @param name
- *
- * @return {string}                 query string param value
- */
-Utils.getParam = function(name) {
-  var qry = window.location.search;
-  if (!qry) {
-    return null;
-  }
-  qry = qry.substring(1);
-  var comps = qry.split("&");
-  for (var i = 0; i < comps.length; i++) {
-    var nvp = comps[i].split("=");
-    var n = nvp[0], v = decodeURIComponent(nvp[1]);
-    if (n === name) {
-      return v;
-    }
-  }
-  return null;
-};
-
 module.exports = Utils;

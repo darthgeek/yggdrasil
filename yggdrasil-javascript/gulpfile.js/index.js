@@ -1,11 +1,16 @@
 // Process command line arguments
-var task = "default", rootDir;
+var task = "default";
+var codacyToken;
+var rootDir;
 var args = process.argv.slice(2);
 for (var i = 0; i < args.length; i++) {
   var item = args[i];
   switch (item) {
     case "--root-dir":
       rootDir = args[i + 1];
+      break;
+    case "--codacy-token":
+      codacyToken = args[i + 1];
       break;
     case "--task":
       task = args[i + 1];
@@ -19,6 +24,7 @@ var gutil = require("gulp-util");
 var requireDir = require("require-dir");
 
 process.env.rootDir = rootDir;
+process.env.codacyToken = codacyToken;
 
 requireDir("./tasks", {
   recurse: true

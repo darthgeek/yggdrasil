@@ -33,6 +33,12 @@
     "datatables.net-bs": "~1.10.11",
     "phaser-shim": "~2.4.8",
     "sockjs-client": "~1.1.1",
-    "webstomp-client": "~1.0.2"
+    "webstomp-client": "~1.0.2",
+    "gulp-mocha": "~2.2.0",
+    "chai": "~3.5.0",
+    "url": "~0.11.0",
+    "dateformat": "~1.0.12",
+    "gulp-istanbul": "~1.0.0",
+    "gulp-codacy": "~1.0.0"
   }
 }

@@ -1,6 +1,7 @@
 var BRAGI = require("bragi-browser");
 var $ = require("jquery");
 var Utils = require("./utils");
+var url = require("url");
 
 /**
  * Logger object that wraps Bragi logging in an API that is similar to log4j.
@@ -10,7 +11,7 @@ var Utils = require("./utils");
  * @constructor
  */
 function Logger(name, level) {
-  level = level || Utils.getParam("logLevel");
+  level = level || url.parse(window.location.search, true).query['logLevel'];
   level = Logger.LEVELS.get(level);
 
   /**
