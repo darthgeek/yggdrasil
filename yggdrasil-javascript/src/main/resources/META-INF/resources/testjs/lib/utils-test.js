@@ -57,11 +57,6 @@ describe("lib/utils.js", function () {
         expect(formatDate).to.equal("2016/07/20");
       });
 
-      it("formats as yyyy/mm/dd hh:mm:ss TT", function () {
-        var formatDate = utils.formatDate(date, "yyyy/mm/dd hh:MM:ss TT");
-        expect(formatDate).to.equal("2016/07/20 02:57:53 PM");
-      });
-
       it("formats as yyyy/mm/dd hh:mm:ss'Z'", function () {
         var formatDate = utils.formatDate(date, "yyyy/mm/dd hh:MM:ss'Z'", true);
         expect(formatDate).to.equal("2016/07/20 06:57:53Z");
@@ -72,11 +67,6 @@ describe("lib/utils.js", function () {
       it("formats as yyyy/mm/dd", function () {
         var formatDate = utils.formatDate(timestamp, "yyyy/mm/dd");
         expect(formatDate).to.equal("2016/07/20");
-      });
-
-      it("formats as yyyy/mm/dd hh:mm:ss TT", function () {
-        var formatDate = utils.formatDate(timestamp, "yyyy/mm/dd hh:MM:ss TT");
-        expect(formatDate).to.equal("2016/07/20 02:57:53 PM");
       });
 
       it("formats as yyyy/mm/dd hh:mm:ss'Z'", function () {
