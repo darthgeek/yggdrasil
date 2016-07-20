@@ -28,7 +28,7 @@ Utils.die = function (message) {
  *
  * @return {string}                     formatted date string
  */
-Utils.formatDate = function(date, format, utc) {
+Utils.formatDate = function(date, format, utc) { // eslint-disable-line complexity
   if (!date) {
     return "";
   }

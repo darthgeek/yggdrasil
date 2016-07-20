@@ -6,7 +6,7 @@ require("phaser-shim");
 
 // https://github.com/photonstorm/phaser/issues/1974
 
-var game = new Phaser.Game(800, 600, Phaser.AUTO, "", {preload: _preload, create: _create, update: _update}); //
+var game = new Phaser.Game(800, 600, Phaser.AUTO, "", {preload: _preload, create: _create, update: _update}); // eslint-disable-line no-use-before-define
 
 function _preload() {
   log.info("Phaser preload");
