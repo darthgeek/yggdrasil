@@ -1,6 +1,6 @@
-require('date-util');
-var $ = require('jquery');
-var _ = require('underscore');
+require("date-util");
+var $ = require("jquery");
+var _ = require("underscore");
 
 /**
  * Contains static utility methods used throughout application.
@@ -23,7 +23,7 @@ Utils.die = function (message) {
  * Is called to format raw date value as formatted date string.
  *
  * @param {string|number|Date} date     either a Date, a timestamp string or millis-since-epoch value
- * @param [format]                      optional format string (if none provided, uses 'mm/dd/yyyy hh:MM TT')
+ * @param [format]                      optional format string (if none provided, uses "mm/dd/yyyy hh:MM TT")
  * @param {boolean} utc                 format as UTC date.
  *
  * @return {string}                     formatted date string
@@ -57,7 +57,7 @@ Utils.formatDate = function(date, format, utc) {
  * Is called to format raw date value as formatted date string.
  *
  * @param {string|number|Date} date     either a Date, a timestamp string or millis-since-epoch value
- * @param [format]                      optional format string (if none provided, uses 'mm/dd/yyyy hh:MM TT')
+ * @param [format]                      optional format string (if none provided, uses "mm/dd/yyyy hh:MM TT")
  * @param {boolean} useBrowserTz        Use the browser timezone when converting dates. Else, it defaults to UTC.
  *
  * @return {string}                     formatted date string
@@ -83,7 +83,7 @@ Utils.getParam = function(name) {
   for (var i = 0; i < comps.length; i++) {
     var nvp = comps[i].split("=");
     var n = nvp[0], v = decodeURIComponent(nvp[1]);
-    if (n == name) {
+    if (n === name) {
       return v;
     }
   }

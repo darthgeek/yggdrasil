@@ -1,6 +1,6 @@
-var BRAGI = require('bragi-browser');
-var $ = require('jquery');
-var Utils = require('./utils');
+var BRAGI = require("bragi-browser");
+var $ = require("jquery");
+var Utils = require("./utils");
 
 /**
  * Logger object that wraps Bragi logging in an API that is similar to log4j.
@@ -39,7 +39,7 @@ function Logger(name, level) {
   BRAGI.options.groupsEnabled = true;
   BRAGI.options.groupsDisabled = disabled;
   //noinspection JSUnresolvedVariable,JSUnresolvedFunction
-  BRAGI.transports.get('console').property('showMeta', false);
+  BRAGI.transports.get("console").property("showMeta", false);
 }
 
 // LEVELS objects have a name (corresponding with Logger method name) and a group name (corresponding with Bragi logger group)...
@@ -90,7 +90,7 @@ Logger.LEVELS.get = function(name) {
 
   var level = null;
   $.each(Logger.LEVELS, function(nm, levelObj) {
-    if (levelObj.name == name) {
+    if (levelObj.name === name) {
       level = levelObj;
     }
   });

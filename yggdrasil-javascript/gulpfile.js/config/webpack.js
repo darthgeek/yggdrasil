@@ -1,6 +1,6 @@
 var config = require("../config");
-var webpack = require('webpack');
-var AssetsPlugin = require('assets-webpack-plugin');
+var webpack = require("webpack");
+var AssetsPlugin = require("assets-webpack-plugin");
 
 module.exports = function (env) {
   var webpackConfig = {
@@ -14,7 +14,7 @@ module.exports = function (env) {
 
     output: {
       path: config.jsTarget,
-      filename: '[name].[hash].js',
+      filename: "[name].[hash].js",
       chunkFilename: "[name].[id].[chunkhash].js"
     },
 
@@ -22,7 +22,7 @@ module.exports = function (env) {
       new webpack.optimize.OccurenceOrderPlugin(true),
       new AssetsPlugin({
         path: config.classpathTarget,
-        filename: 'assets.json'
+        filename: "assets.json"
       }), new webpack.ProvidePlugin({
         $: "jquery",
         jQuery: "jquery",
@@ -30,7 +30,7 @@ module.exports = function (env) {
       })],
 
     resolve: {
-      extensions: ['', '.js'],
+      extensions: ["", ".js"],
       alias: {}
     },
 
@@ -83,22 +83,22 @@ module.exports = function (env) {
         },
         {
           test: /(pixi|phaser).js/,
-          loader: 'script'
+          loader: "script"
         }
       ]
     }
-  }
+  };
 
   // Factor out common dependencies into a shared.js
   webpackConfig.plugins.push(new webpack.optimize.CommonsChunkPlugin({
-    name: 'shared',
-    filename: '[name].[hash].js'
-  }))
+    name: "shared",
+    filename: "[name].[hash].js"
+  }));
 
-  if (env === 'development') {
-    webpackConfig.devtool = 'source-map';
+  if (env === "development") {
+    webpackConfig.devtool = "source-map";
     webpack.debug = true
   }
 
   return webpackConfig;
-}
+};

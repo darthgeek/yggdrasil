@@ -1,10 +1,10 @@
-var gulp = require('gulp');
-var gutil = require('gulp-util');
-var webpack = require('webpack');
-var logger = require('../lib/compileLogger');
-var config = require('../config/webpack')('development');
+var gulp = require("gulp");
+var gutil = require("gulp-util");
+var webpack = require("webpack");
+var logger = require("../lib/compileLogger");
+var config = require("../config/webpack")("development");
 
-gulp.task('webpack:dev', function(cb) {
+gulp.task("webpack:dev", function(cb) {
   var built = false;
 
   gutil.log("Running webpack:dev");
@@ -25,4 +25,4 @@ gulp.task('webpack:dev', function(cb) {
   });
 });
 
-gulp.task('webpack_dev', ['webpack:dev']);
+gulp.task("webpack_dev", ["webpack:dev"]);

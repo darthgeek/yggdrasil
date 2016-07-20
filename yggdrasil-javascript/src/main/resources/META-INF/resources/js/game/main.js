@@ -1,6 +1,8 @@
-var $ = require('jquery');
-require('phaser-shim');
-var log = require('../lib/logger').getLogger('game/main.js');
+var $ = require("jquery");
+require("phaser-shim");
+var log = require("../lib/logger").getLogger("game/main.js");
+
+/*global Phaser */
 
 /**
  * Options for the application.
@@ -19,7 +21,7 @@ var _defaultOpts = {
   /**
    * ID of the DOM element to embed the game viewport in.
    */
-  gameDiv: 'gameDiv'
+  gameDiv: "gameDiv"
 };
 
 /**
@@ -36,44 +38,44 @@ function Main(opts) {
   var _this = this;
 
   // TODO - split game state initialization out to separate method/class
-  this.game.state.add('Boot', {
+  this.game.state.add("Boot", {
     preload: function () {
       log.info("[BOOT] preload");
       // TODO - load booting assets
     },
     create: function () {
       log.info("[BOOT] create");
-      _this.game.state.start('Preload');
+      _this.game.state.start("Preload");
     }
   });
 
-  this.game.state.add('Preload', {
+  this.game.state.add("Preload", {
     preload: function () {
       log.info("[PRELOAD] preload");
       // TODO: load preload assets
     },
     create: function () {
       log.info("[PRELOAD] create");
-      _this.game.state.start('Play');
+      _this.game.state.start("Play");
     }
   });
 
-  this.game.state.add('Play', {
+  this.game.state.add("Play", {
     create: function () {
       log.info("[PLAY] create");
     }
   });
 
   return this;
-};
+}
 
 /**
  * Initializes the game and starts the boot sequence.
  */
 Main.prototype.init = function () {
   log.info("starting boot state");
-  this.game.state.start('Boot');
-}
+  this.game.state.start("Boot");
+};
 
 /**
  * CommonJS exports for this module.
@@ -82,5 +84,5 @@ Main.prototype.init = function () {
  */
 module.exports = function (opts) {
   return new Main(opts || {});
-}
+};
 
