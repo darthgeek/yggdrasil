@@ -1,7 +1,8 @@
-package net.darthgeek.ygdrassil.web;
+package net.darthgeek.yggdrasil.web;
 
-import net.darthgeek.ygdrassil.mvc.MvcConfig;
-import net.darthgeek.ygdrassil.websocket.WebSocketConfig;
+import net.darthgeek.yggdrasil.mvc.MvcConfig;
+import net.darthgeek.yggdrasil.websocket.WebSocketConfig;
+import net.darthgeek.yggdrasil.dao.DaoConfig;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -12,7 +13,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
   @Override
   protected Class<?>[] getRootConfigClasses() {
-    return new Class<?>[]{RootConfig.class};
+    return new Class<?>[]{RootConfig.class, DaoConfig.class};
   }
 
   @Override

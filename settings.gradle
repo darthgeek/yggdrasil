@@ -1,4 +1,5 @@
 rootProject.name = 'yggdraasil'
 include 'yggdrasil-war'
 include 'yggdrasil-javascript'
+include 'yggdrasil-data'
 

@@ -1,20 +1,17 @@
-repositories {
-    jcenter()
-    mavenCentral()
-    maven { url "http://dl.bintray.com/typesafe/maven-releases" }
-}
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'announce'
+apply plugin: 'findbugs'
+apply plugin: 'jacoco'
 
 group 'net.darthgeek.yggdrasil'
 version '0.0.0-SNAPSHOT'
 
-apply plugin: 'groovy'
-apply plugin: 'war'
-apply plugin: 'announce'
-apply plugin: 'findbugs'
-apply plugin: 'jacoco'
-apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+sourceCompatibility = 1.5
 
-// TODO clean this up and refactor a bit
+repositories {
+    mavenCentral()
+}
 
 repositories {
     mavenLocal()
@@ -49,31 +46,16 @@ configurations {
 }
 
 dependencies {
-    compile project(':yggdrasil-data')
-    compile project(':yggdrasil-javascript')
     compile "org.springframework:spring-context:$rootProject.ext.springVersion"
     compile "org.springframework:spring-context-support:$rootProject.ext.springVersion"
-    compile "org.springframework:spring-webmvc:$rootProject.ext.springVersion"
-    compile "org.springframework:spring-aop:$rootProject.ext.springVersion"
-    compile "org.springframework:spring-messaging:$rootProject.ext.springVersion"
-    compile "org.springframework:spring-websocket:$rootProject.ext.springVersion"
+    compile "org.springframework:spring-orm:$rootProject.ext.springVersion"
     compile "org.springframework.security:spring-security-web:$rootProject.ext.springSecurityVersion"
     compile "org.springframework.security:spring-security-config:$rootProject.ext.springSecurityVersion"
-    compile "cglib:cglib:3.2.4"
     compile "javax.inject:javax.inject:1"
-    compile "org.thymeleaf:thymeleaf:$rootProject.ext.thymeleafVersion"
-    compile "org.thymeleaf:thymeleaf-spring4:$rootProject.ext.thymeleafVersion"
-    compile "org.thymeleaf.extras:thymeleaf-extras-springsecurity4:$rootProject.ext.thymeleafVersion"
-    compile "com.google.code.findbugs:jsr305:3.0.0"
-    compile "com.google.code.findbugs:annotations:3.0.0"
-    compile "com.fasterxml.jackson.core:jackson-databind:$rootProject.ext.jacksonVersion"
-
     compile "org.slf4j:slf4j-api:1.7.10"
-    compile "org.slf4j:jul-to-slf4j:1.7.10"
-    compile "org.slf4j:jcl-over-slf4j:1.7.10"
-    compile "ch.qos.logback:logback-classic:1.1.2"
-
-    providedCompile "javax:javaee-web-api:7.0"
+    compile "org.hibernate:hibernate-core:4.3.8.Final"
+    compile "org.hibernate:hibernate-c3p0:4.3.8.Final"
+    compile "org.hibernate:hibernate-validator:5.1.3.Final"
 
     testCompile("junit:junit:4.+") {
         exclude group: "org.hamcrest"
@@ -85,6 +67,7 @@ dependencies {
     codacy 'com.codacy:codacy-coverage-reporter:1.0.7'
     codacy 'com.typesafe.netty:netty-http-pipelining:1.1.2'
 }
+
 
 configurations {
     runtime.exclude group: "commons-logging", module: "commons-logging"
@@ -225,10 +208,4 @@ gradle.taskGraph.afterTask { Task task, TaskState state ->
     } else {
         announce.announce("':${task.name}' succeeded", "local")
     }
-}
-
-gretty {
-    servletContainer 'tomcat8'
-    managedClassReload true
-    contextPath '/'
 }

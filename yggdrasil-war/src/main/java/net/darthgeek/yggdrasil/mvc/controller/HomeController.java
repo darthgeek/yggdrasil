@@ -1,4 +1,4 @@
-package net.darthgeek.ygdrassil.mvc.controller;
+package net.darthgeek.yggdrasil.mvc.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

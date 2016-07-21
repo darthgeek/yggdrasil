@@ -1,4 +1,4 @@
-package net.darthgeek.ygdrassil.websocket.message;
+package net.darthgeek.yggdrasil.websocket.message;
 
 /**
  * Created by jason on 7/16/2016.

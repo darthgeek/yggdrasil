@@ -1,6 +1,6 @@
-package net.darthgeek.ygdrassil.websocket.controller;
+package net.darthgeek.yggdrasil.websocket.controller;
 
-import net.darthgeek.ygdrassil.websocket.message.Message;
+import net.darthgeek.yggdrasil.websocket.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.messaging.handler.annotation.MessageMapping;
