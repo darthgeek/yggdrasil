@@ -9,17 +9,6 @@ var _ = require("underscore");
 var Utils = { };
 
 /**
- * Simple convenience method used to throw an Error with the given message. Allows the use of the paradigm:
- *
- * var e = init.prop || Utils.die("prop must be provided");
- *
- * @param message   error message
- */
-Utils.die = function (message) {
-  throw new Error(message);
-};
-
-/**
  * Is called to format raw date value as formatted date string.
  *
  * @param {string|number|Date} date     either a Date, a timestamp string or millis-since-epoch value
