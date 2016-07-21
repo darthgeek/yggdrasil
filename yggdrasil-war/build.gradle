@@ -23,6 +23,7 @@ repositories {
     maven {
         url = "http://repository.jboss.org/nexus/content/groups/public-jboss/"
         url = "http://download.java.net/maven/2/"
+        url = "http://repo.typesafe.com/typesafe/releases/"
     }
 }
 

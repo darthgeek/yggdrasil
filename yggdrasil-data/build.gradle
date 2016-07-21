@@ -7,12 +7,6 @@ apply plugin: 'jacoco'
 group 'net.darthgeek.yggdrasil'
 version '0.0.0-SNAPSHOT'
 
-sourceCompatibility = 1.5
-
-repositories {
-    mavenCentral()
-}
-
 repositories {
     mavenLocal()
     mavenCentral()
@@ -20,6 +14,7 @@ repositories {
     maven {
         url = "http://repository.jboss.org/nexus/content/groups/public-jboss/"
         url = "http://download.java.net/maven/2/"
+        url = "http://repo.typesafe.com/typesafe/releases/"
     }
 }
 
