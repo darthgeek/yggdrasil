@@ -16,15 +16,15 @@ import java.util.List;
  * @author jason
  */
 @Transactional
-public abstract class AbstractDaoImpl<T, PK extends Serializable> implements AbstractDao<T, PK> {
+public abstract class AbstractDaoImpl<T, K extends Serializable> implements AbstractDao<T, K> {
   /** Hibernate session factory. */
   @Resource
   private SessionFactory sessionFactory;
 
   @SuppressWarnings("unchecked")
   @Override
-  public PK create(final T entity) {
-    return (PK) getSession().save(entity);
+  public K create(final T entity) {
+    return (K) getSession().save(entity);
   }
 
   @Override
@@ -33,7 +33,7 @@ public abstract class AbstractDaoImpl<T, PK extends Serializable> implements Abs
   }
 
   @Override
-  public void delete(final PK key) {
+  public void delete(final K key) {
     final T entity = get(key);
     if (null == entity) {
       throw new EntityNotFoundException("no such " + getEntityClass().getSimpleName()
@@ -44,7 +44,7 @@ public abstract class AbstractDaoImpl<T, PK extends Serializable> implements Abs
 
   @SuppressWarnings("unchecked")
   @Override
-  public T get(final PK key) {
+  public T get(final K key) {
     return (T) getSession().get(getEntityClass(), key);
   }
 

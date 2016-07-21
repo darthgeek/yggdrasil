@@ -13,7 +13,7 @@ function LogFactory() {
 
 LogFactory.prototype = {};
 
-var Logger = function(name, level) { }
+var Logger = function(name, level) { };
 
 if (typeof window != "undefined") {
   var BRAGI = require("bragi-browser");
