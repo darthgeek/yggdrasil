@@ -1,12 +1,11 @@
-package net.darthgeek.yggdrasil.dao;
+package net.darthgeek.yggdrasil.data.dao;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import org.flywaydb.core.Flyway;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.BeanInstantiationException;
 import org.springframework.beans.factory.BeanCreationException;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
@@ -58,6 +57,7 @@ public class DaoConfig {
   }
 
   @Bean
+  @DependsOn("flyway")
   public SessionFactory sessionFactory() {
     final LocalSessionFactoryBean factory = new LocalSessionFactoryBean();
 
@@ -75,7 +75,7 @@ public class DaoConfig {
     factory.setHibernateProperties(props);
     factory.setDataSource(dataSource());
 
-    factory.setPackagesToScan("yggdrasil.model");
+    factory.setPackagesToScan("net.darthgeek.yggdrasil.data.model");
 
     try {
       factory.afterPropertiesSet();
@@ -89,5 +89,13 @@ public class DaoConfig {
   @Bean
   public PlatformTransactionManager txManager() {
     return new DataSourceTransactionManager(dataSource());
+  }
+
+  @Bean(initMethod = "migrate")
+  public Flyway flyway() {
+    Flyway flyway = new Flyway();
+    flyway.setBaselineOnMigrate(true);
+    flyway.setDataSource(dataSource());
+    return flyway;
   }
 }

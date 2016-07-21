@@ -1,8 +1,8 @@
 package net.darthgeek.yggdrasil.web;
 
+import net.darthgeek.yggdrasil.data.dao.DaoConfig;
 import net.darthgeek.yggdrasil.mvc.MvcConfig;
 import net.darthgeek.yggdrasil.websocket.WebSocketConfig;
-import net.darthgeek.yggdrasil.dao.DaoConfig;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 

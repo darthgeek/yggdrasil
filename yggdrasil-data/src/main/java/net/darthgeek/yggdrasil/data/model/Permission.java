@@ -1,28 +1,21 @@
-package net.darthgeek.yggdrasil.model;
-
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.validation.constraints.Pattern;
+package net.darthgeek.yggdrasil.data.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
+
+import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import java.util.Set;
 
 /**
  * A permission within the system.
  *
  * @author jason
  */
-@SuppressWarnings("serial")
 @Entity
 public class Permission implements GrantedAuthority {
   private static final String AUTH_PREFIX = "PERM_";
+  private static final long serialVersionUID = 6446410903587627750L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -67,33 +60,33 @@ public class Permission implements GrantedAuthority {
     return id;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public Set<Role> getRoles() {
-    return roles;
-  }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((AUTH_PREFIX == null) ? 0 : AUTH_PREFIX.hashCode());
-    result = prime * result + ((name == null) ? 0 : name.hashCode());
-    return result;
-  }
-
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  public String getName() {
+    return name;
   }
 
   public void setName(final String name) {
     this.name = name;
   }
 
+  public Set<Role> getRoles() {
+    return roles;
+  }
+
   public void setRoles(final Set<Role> roles) {
     this.roles = roles;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + AUTH_PREFIX.hashCode();
+    result = prime * result + ((name == null) ? 0 : name.hashCode());
+    return result;
   }
 
   @Override

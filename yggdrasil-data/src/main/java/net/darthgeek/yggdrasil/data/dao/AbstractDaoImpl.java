@@ -1,4 +1,4 @@
-package net.darthgeek.yggdrasil.dao;
+package net.darthgeek.yggdrasil.data.dao;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;

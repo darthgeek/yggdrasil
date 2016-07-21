@@ -1,27 +1,20 @@
-package net.darthgeek.yggdrasil.model;
-
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+package net.darthgeek.yggdrasil.data.model;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
+
+import javax.persistence.*;
+import java.util.Set;
 
 /**
  * A user access group.
  *
  * @author jason
  */
-@SuppressWarnings("serial")
 @Entity
 public class Role implements GrantedAuthority {
   private static final String AUTH_PREFIX = "ROLE_";
+  private static final long serialVersionUID = -2484659709742149219L;
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
@@ -68,41 +61,41 @@ public class Role implements GrantedAuthority {
     return id;
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public Set<Permission> getPermissions() {
-    return permissions;
-  }
-
-  public Set<User> getUsers() {
-    return users;
-  }
-
-  @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((AUTH_PREFIX == null) ? 0 : AUTH_PREFIX.hashCode());
-    result = prime * result + ((name == null) ? 0 : name.hashCode());
-    return result;
-  }
-
   public void setId(final Long id) {
     this.id = id;
+  }
+
+  public String getName() {
+    return name;
   }
 
   public void setName(final String name) {
     this.name = name;
   }
 
+  public Set<Permission> getPermissions() {
+    return permissions;
+  }
+
   public void setPermissions(final Set<Permission> permissions) {
     this.permissions = permissions;
   }
 
+  public Set<User> getUsers() {
+    return users;
+  }
+
   public void setUsers(final Set<User> users) {
     this.users = users;
+  }
+
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + AUTH_PREFIX.hashCode();
+    result = prime * result + ((name == null) ? 0 : name.hashCode());
+    return result;
   }
 
   @Override

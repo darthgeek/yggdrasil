@@ -1,6 +1,7 @@
-package net.darthgeek.yggdrasil.dao;
+package net.darthgeek.yggdrasil.data.dao;
 
-import net.darthgeek.yggdrasil.model.User;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import net.darthgeek.yggdrasil.data.model.User;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -27,12 +28,10 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
   @SuppressWarnings("unchecked")
   @Override
   public int deleteUnverifiedCreatedBefore(final Date expirationTime) {
-    // @formatter:off
     final List<User> users = getSession().createCriteria(getEntityClass())
           .add(Restrictions.eq("emailVerified", false))
           .add(Restrictions.lt("createdTime", expirationTime))
           .list();
-    // @formatter:on
 
     if (users.size() == 0) {
       log.debug("no unverified users");
@@ -49,13 +48,11 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
   public User findByEmail(final String email) {
     final Session session = getSession();
 
-    // @formatter:off
     @SuppressWarnings("unchecked")
     final List<User> results =
           session.createCriteria(getEntityClass())
                 .add(Restrictions.eq("email", email))
                 .list();
-    // @formatter:on
 
     if (results.size() == 0) {
       throw new EntityNotFoundException("e-mail address " + email + " not found");
@@ -68,13 +65,11 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
   public User findByName(final String username) {
     final Session session = getSession();
 
-    // @formatter:off
     @SuppressWarnings("unchecked")
     final List<User> results =
           session.createCriteria(getEntityClass())
                 .add(Restrictions.eq("username", username))
                 .list();
-    // @formatter:on
 
     if (results.size() == 0) {
       throw new EntityNotFoundException("username " + username + " not found");
@@ -89,22 +84,21 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
   }
 
   @Override
+  @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT",
+        justification = "Walk user authority relationships to force load of permissions for spring-security")
   public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
     final Session session = getSession();
 
-    // @formatter:off
     @SuppressWarnings("unchecked")
     final List<User> results =
           session.createCriteria(getEntityClass())
                 .add(Restrictions.eq("username", username))
                 .list();
-    // @formatter:on
 
     if (results.size() == 0) {
       throw new UsernameNotFoundException("username " + username + " not found");
     } else {
       final User user = results.get(0);
-      // Walk relationships to force load of permissions for spring-security
       user.getAuthorities();
       return user;
     }

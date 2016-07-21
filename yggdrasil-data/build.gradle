@@ -51,6 +51,8 @@ dependencies {
     compile "org.hibernate:hibernate-core:4.3.8.Final"
     compile "org.hibernate:hibernate-c3p0:4.3.8.Final"
     compile "org.hibernate:hibernate-validator:5.1.3.Final"
+    compile "org.flywaydb:flyway-core:4.0.3"
+    compile "com.google.code.findbugs:findbugs-annotations:3.0.1"
 
     testCompile("junit:junit:4.+") {
         exclude group: "org.hamcrest"
@@ -151,7 +153,6 @@ artifacts {
 }
 
 findbugs {
-    ignoreFailures = true
     toolVersion = "3.0.1"
     sourceSets = [sourceSets.main]
     effort = "max"

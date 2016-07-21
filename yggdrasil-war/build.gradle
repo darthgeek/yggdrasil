@@ -74,6 +74,8 @@ dependencies {
     compile "org.slf4j:jcl-over-slf4j:1.7.10"
     compile "ch.qos.logback:logback-classic:1.1.2"
 
+    compile "com.h2database:h2:1.4.184"
+
     providedCompile "javax:javaee-web-api:7.0"
 
     testCompile("junit:junit:4.+") {
@@ -174,7 +176,6 @@ artifacts {
 }
 
 findbugs {
-    ignoreFailures = true
     toolVersion = "3.0.1"
     sourceSets = [sourceSets.main]
     effort = "max"

@@ -1,29 +1,25 @@
-package net.darthgeek.yggdrasil.dao;
-
-import java.io.Serializable;
-import java.util.List;
-
-import javax.transaction.Transactional;
+package net.darthgeek.yggdrasil.data.dao;
 
 import org.hibernate.Criteria;
+
+import javax.transaction.Transactional;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Implementations of this interface provide base data access operations for an
  * entity type.
  *
+ * @param <T> entity type
+ * @param <K> primary key type
  * @author jason
- * @param <T>
- *          entity type
- * @param <K>
- *          primary key type
  */
 @Transactional
 public interface AbstractDao<T, K extends Serializable> {
   /**
    * Creates a new persistent object.
    *
-   * @param entity
-   *          values to use in creating entity
+   * @param entity values to use in creating entity
    * @return entity object with any modifications made by the persistence layer
    */
   K create(T entity);
@@ -38,16 +34,14 @@ public interface AbstractDao<T, K extends Serializable> {
   /**
    * Deletes an entity.
    *
-   * @param key
-   *          primary key for entity
+   * @param key primary key for entity
    */
   void delete(K key);
 
   /**
    * Retrieves an entity.
    *
-   * @param key
-   *          primary key for entity
+   * @param key primary key for entity
    * @return entity object
    */
   T get(K key);
@@ -62,8 +56,7 @@ public interface AbstractDao<T, K extends Serializable> {
   /**
    * Updates an entity object.
    *
-   * @param entity
-   *          entity to save
+   * @param entity entity to save
    */
   void update(T entity);
 }
