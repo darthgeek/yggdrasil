@@ -14,11 +14,11 @@ import org.hibernate.Criteria;
  * @author jason
  * @param <T>
  *          entity type
- * @param <PK>
+ * @param <K>
  *          primary key type
  */
 @Transactional
-public interface AbstractDao<T, PK extends Serializable> {
+public interface AbstractDao<T, K extends Serializable> {
   /**
    * Creates a new persistent object.
    *
@@ -26,7 +26,7 @@ public interface AbstractDao<T, PK extends Serializable> {
    *          values to use in creating entity
    * @return entity object with any modifications made by the persistence layer
    */
-  PK create(T entity);
+  K create(T entity);
 
   /**
    * Creates search criteria for the entity type of this DAO.
@@ -41,7 +41,7 @@ public interface AbstractDao<T, PK extends Serializable> {
    * @param key
    *          primary key for entity
    */
-  void delete(PK key);
+  void delete(K key);
 
   /**
    * Retrieves an entity.
@@ -50,7 +50,7 @@ public interface AbstractDao<T, PK extends Serializable> {
    *          primary key for entity
    * @return entity object
    */
-  T get(PK key);
+  T get(K key);
 
   /**
    * Gets all entity objects of this type.

@@ -13,7 +13,7 @@ function LogFactory() {
 
 LogFactory.prototype = {};
 
-var Logger = function(name, level) { }
+var Logger = function(name, level) { };
 
 if (typeof window != "undefined") {
   var BRAGI = require("bragi-browser");
@@ -56,7 +56,7 @@ if (typeof window != "undefined") {
     BRAGI.options.groupsDisabled = disabled;
     //noinspection JSUnresolvedVariable,JSUnresolvedFunction
     BRAGI.transports.get("console").property("showMeta", false);
-  }
+  };
 
 // LEVELS objects have a name (corresponding with Logger method name) and a group name (corresponding with Bragi logger group)...
 // this allows method names to vary independently of Bragi logging

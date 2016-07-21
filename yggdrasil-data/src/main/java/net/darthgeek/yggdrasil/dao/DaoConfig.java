@@ -3,6 +3,7 @@ package net.darthgeek.yggdrasil.dao;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.BeanInstantiationException;
+import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -79,7 +80,7 @@ public class DaoConfig {
     try {
       factory.afterPropertiesSet();
     } catch (IOException ioe) {
-      throw new RuntimeException(ioe);
+      throw new BeanCreationException("unable to instantiate session factory", ioe);
     }
 
     return factory.getObject();

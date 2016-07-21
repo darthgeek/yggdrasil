@@ -45,12 +45,6 @@ public class User implements UserDetails {
   @ManyToMany(fetch = FetchType.LAZY)
   private Set<Role> roles = new TreeSet<Role>();
 
-  /**
-   * Default constructor.
-   */
-  public User() {
-  }
-
   @Override
   public boolean equals(final Object obj) {
     if (this == obj) {
