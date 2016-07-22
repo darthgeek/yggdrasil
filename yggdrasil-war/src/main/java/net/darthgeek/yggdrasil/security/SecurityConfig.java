@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -16,46 +15,67 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 /**
  * Created by jason on 7/21/2016.
  */
 @Configuration
 @ComponentScan
-public class SecurityConfig  {
-  @EnableWebSecurity
-  @Configuration
-  @Order(10)
-  public static class AppSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Override
-    @Bean(name = "authenticationManager")
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-      return super.authenticationManagerBean();
-    }
-
-    @Override
-    protected void configure(final HttpSecurity http) throws Exception {
-      http.authorizeRequests()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin().defaultSuccessUrl("/")
-            .and()
-            .logout().permitAll();
-    }
-
-    @Override
-    public void configure(final WebSecurity web) throws Exception {
-      web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/fonts/**");
-    }
-  }
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+  @Resource
+  private DataSource dataSource;
 
   @Resource
   private Environment env;
 
   @Resource
   private UserDetailsService userDetailsService;
+
+  @Override
+  @Bean(name = "authenticationManager")
+  public AuthenticationManager authenticationManagerBean() throws Exception {
+    return super.authenticationManagerBean();
+  }
+
+  @Override
+  protected void configure(final HttpSecurity http) throws Exception {
+    http.authorizeRequests()
+          .antMatchers("/error/**").permitAll()
+          .anyRequest().authenticated()
+          .and().formLogin().permitAll().loginPage("/login").defaultSuccessUrl("/")
+          .and().logout().permitAll()
+          .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository())
+          .userDetailsService(userDetailsService).tokenValiditySeconds(86400)
+          .and().csrf()
+          .and().exceptionHandling().accessDeniedPage("/error/403");
+  }
+
+  @Override
+  public void configure(final WebSecurity web) throws Exception {
+    web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/fonts/**");
+  }
+
+  @Bean
+  public PersistentTokenRepository persistentTokenRepository() {
+    JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+    db.setDataSource(dataSource);
+    return db;
+  }
+
+  @Bean
+  public SavedRequestAwareAuthenticationSuccessHandler savedRequestAwareAuthenticationSuccessHandler() {
+    SavedRequestAwareAuthenticationSuccessHandler auth
+          = new SavedRequestAwareAuthenticationSuccessHandler();
+    auth.setTargetUrlParameter("targetUrl");
+    return auth;
+  }
 
   @Bean
   public DaoAuthenticationProvider daoAuthenticationProvider() {

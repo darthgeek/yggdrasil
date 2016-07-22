@@ -1,5 +1,5 @@
 require("../lib/common.js");
-var log = require("../lib/logger").getLogger("page/home/js", "INFO");
+var log = require("../lib/logger").getLogger("page/home.js");
 require("phaser-shim");
 
 /*global Phaser */
@@ -77,8 +77,7 @@ function _create() {
   stars.enableBody = true;
 
   //  Here we"ll create 12 of them evenly spaced apart
-  for (var i = 0; i < 12; i++)
-  {
+  for (var i = 0; i < 12; i++) {
     //  Create a star inside of the "stars" group
     var star = stars.create(i * 70, 0, "star");
 
@@ -89,10 +88,10 @@ function _create() {
     star.body.bounce.y = 0.7 + Math.random() * 0.2;
   }
 
-  scoreText = game.add.text(16, 16, "score: 0", { fontSize: "32px", fill: "#000" });
+  scoreText = game.add.text(16, 16, "score: 0", {fontSize: "32px", fill: "#000"});
 }
 
-function collectStar (player, star) {
+function collectStar(player, star) {
   // Removes the star from the screen
   star.kill();
 

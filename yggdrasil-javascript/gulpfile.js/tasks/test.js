@@ -15,6 +15,6 @@ gulp.task("test", ["pre-test"], function () {
       .pipe(mocha())
       // Creating the reports after tests ran
       .pipe(istanbul.writeReports({dir: "build/coverage"}));
-      // Enforce a coverage of at least 90%
-      // .pipe(istanbul.enforceThresholds({thresholds: {global: 90}}));
+  // Enforce a coverage of at least 90%
+  // .pipe(istanbul.enforceThresholds({thresholds: {global: 90}}));
 });

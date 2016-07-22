@@ -13,7 +13,8 @@ function LogFactory() {
 
 LogFactory.prototype = {};
 
-var Logger = function(name, level) { };
+var Logger = function (name, level) {
+};
 
 if (typeof window != "undefined") {
   var BRAGI = require("bragi-browser");
@@ -25,7 +26,7 @@ if (typeof window != "undefined") {
    * @param [level]
    * @constructor
    */
-  Logger = function(name, level) {
+  Logger = function (name, level) {
     level = level || url.parse(window.location.search, true).query["logLevel"];
     level = Logger.LEVELS.get(level);
 
@@ -150,7 +151,9 @@ if (typeof window != "undefined") {
    * @return {Logger}
    */
   LogFactory.prototype.getLogger = function (name, level) {
-    if (!name) { throw new Error("name is required for call to LogFactory.getLogger()."); }
+    if (!name) {
+      throw new Error("name is required for call to LogFactory.getLogger().");
+    }
     var logger = this._cache[name];
     if (!logger) {
       logger = this._cache[name] = new Logger(name, level);

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 >
 <head>
-  <title>Yggdrasil | Home</title>
+  <title>Yggdrasil | Access Forbidden</title>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,19 +19,20 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 
+  <script th:inline='javascript'>
+    window._contextPath = /*[[@{/}]]*/ '/';
+  </script>
+  <script type="text/javascript" th:src='@{/js/}+${@assets.get("shared").get("js")}'></script>
+  <script type="text/javascript" th:src='@{/js/}+${@assets.get("page/basic").get("js")}'></script>
 </head>
 <body>
-<h1>Links</h1>
-<ul>
-  <li><a th:href="@{game-sandbox.html}">Game Sandbox</a></li>
-  <li><a th:href="@{phaser-tutorial.html}">Phaser POC</a></li>
-  <li><a th:href="@{websocket-tutorial.html}">Websocket POC</a></li>
-  <li>
-    <a href="javascript:void(0)" onclick="document.getElementById('logoutForm').submit();">Log Out</a>
-    <form id="logoutForm" th:action="@{/logout}" method="post">
-      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    </form>
-  </li>
-</ul>
+<div class="container">
+  <div class="panel panel-danger">
+    <div class="panel-heading">HTTP 403 : Access Forbidden</div>
+    <div class="panel-body">
+      You have tried to access a page that you don't have permission to view.
+    </div>
+  </div>
+</div>
 </body>
 </html>

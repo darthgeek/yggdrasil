@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+>
+<head>
+  <title>Yggdrasil | Login</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+  <meta name="_csrf" th:content="${_csrf.token}" th:if="${_csrf != null}"/>
+  <meta name="_csrf_header" th:content="${_csrf.headerName}" th:if="${_csrf != null}"/>
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script th:inline='javascript'>
+    window._contextPath = /*[[@{/}]]*/ '/';
+  </script>
+  <script type="text/javascript" th:src='@{/js/}+${@assets.get("shared").get("js")}'></script>
+  <script type="text/javascript" th:src='@{/js/}+${@assets.get("page/login").get("js")}'></script>
+</head>
+<body>
+<div id="mainWrapper">
+  <div class="container">
+    <div class="login-card">
+      <div class="login-form">
+        <form method="post" class="form-horizontal">
+          <div class="alert alert-danger"
+               th:if="${param.error != null && session['SPRING_SECURITY_LAST_EXCEPTION'] != null}">
+            <p th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">Invalid username and password.</p>
+          </div>
+          <div class="alert alert-success" th:if="${param.logout != null}">
+            <p>You have been logged out successfully.</p>
+          </div>
+          <div>
+            <h1 class="text-center">Yggdrasil Login</h1>
+          </div>
+          <div class="input-group input-sm">
+            <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
+            <input type="username" class="form-control" id="username" name="username" placeholder="Enter Username" required>
+          </div>
+          <div class="input-group input-sm">
+            <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password"
+                   required>
+          </div>
+          <div class="row input-sm">
+            <div class="col-xs-8">
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="rememberme" name="remember-me">
+                  <span>Remember me</span>
+                </label>
+              </div>
+            </div>
+            <div class="col-xs-4">
+              <input type="submit"
+                     class="btn btn-block btn-primary btn-default" value="Log in" disabled="disabled">
+            </div>
+          </div>
+          <input type="hidden" th:name="${_csrf.parameterName}"
+                 th:value="${_csrf.token}"/>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

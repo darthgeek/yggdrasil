@@ -6,7 +6,7 @@ var _ = require("underscore");
  * Contains static utility methods used throughout application.
  * @type {{}}
  */
-var Utils = { };
+var Utils = {};
 
 /**
  * Is called to format raw date value as formatted date string.
@@ -17,7 +17,7 @@ var Utils = { };
  *
  * @return {string}                     formatted date string
  */
-Utils.formatDate = function(date, format, utc) { // eslint-disable-line complexity
+Utils.formatDate = function (date, format, utc) { // eslint-disable-line complexity
   if (!date) {
     return "";
   }
@@ -51,7 +51,7 @@ Utils.formatDate = function(date, format, utc) { // eslint-disable-line complexi
  *
  * @return {string}                     formatted date string
  */
-Utils.formatUtcDate = function(date, format) {
+Utils.formatUtcDate = function (date, format) {
   return Utils.formatDate(date, format, true);
 };
 

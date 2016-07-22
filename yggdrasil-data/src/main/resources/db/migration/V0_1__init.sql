@@ -44,3 +44,12 @@ INSERT INTO Role (id, name) VALUES (2, 'ADMIN');
 
 INSERT INTO User_Role (users_id, roles_id) VALUES (1, 1);
 INSERT INTO User_Role (users_id, roles_id) VALUES (1, 2);
+
+-- Spring "remember me" authentication
+CREATE TABLE persistent_logins (
+  username  VARCHAR(64) NOT NULL,
+  series    VARCHAR(64) PRIMARY KEY,
+  token     VARCHAR(64) NOT NULL,
+  last_used TIMESTAMP   NOT NULL
+);
+

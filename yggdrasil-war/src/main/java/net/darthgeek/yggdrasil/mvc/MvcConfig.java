@@ -10,12 +10,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -113,5 +111,18 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     } catch (final IOException ioe) {
       throw new BeanInitializationException("Error loading " + assetsJsonFile, ioe);
     }
+  }
+
+  @Override
+  public void addViewControllers(ViewControllerRegistry registry) {
+    registry.addViewController("/").setViewName("index");
+    registry.addViewController("/login").setViewName("login");
+    registry.addViewController("/error/403").setViewName("error/403");
+    registry.addViewController("/error/404").setViewName("error/404");
+
+    registry.addViewController("/game-sandbox").setViewName("game-sandbox");
+    registry.addViewController("/phaser-tutorial").setViewName("phaser-tutorial");
+    registry.addViewController("/websocket-tutorial").setViewName("websocket-tutorial");
+    registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
   }
 }
