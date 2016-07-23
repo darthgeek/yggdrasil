@@ -5,6 +5,7 @@ require("../lib/common.js");
 require("../../css/app.css");
 var $ = require("jquery");
 var log = require("../lib/logger").getLogger("page/login.js", "INFO");
+var stringify = require('json-stringify');
 
 function onSuccess(googleUser) {
   log.info("Logged in as " + googleUser.getBasicProfile().getName());
@@ -15,7 +16,12 @@ function onSuccess(googleUser) {
 }
 
 function onFailure(error) {
-  log.error(error);  // TODO: display this error to user
+  log.error("error authenticating with Google: " + stringify(error));
+  var panel = $("#external-login-error");
+  panel.html("<p>Google responded with: " + error.reason + "</p>");
+  panel.slideDown("fast", function() {
+    panel.delay(5000).slideUp();
+  });
 }
 
 window.gapi_onload = function() {
@@ -42,7 +48,7 @@ $(function () {
     }
   });
 
-  $(".alert").delay(5000).slideToggle();
+  $(".alert:visible").delay(5000).slideUp();
 
   $("#google-signout").click(function() {
     var auth2 = gapi.auth2.getAuthInstance();

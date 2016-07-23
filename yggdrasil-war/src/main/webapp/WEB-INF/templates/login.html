@@ -33,6 +33,9 @@
     <div class="login-card">
       <div class="login-form">
         <form method="post" class="form-horizontal">
+          <div id="external-login-error" class="alert alert-danger">
+            <p>Error processing external login</p>
+          </div>
           <div class="alert alert-danger"
                th:if="${param.error != null && session['SPRING_SECURITY_LAST_EXCEPTION'] != null}">
             <p th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">Invalid username and password.</p>
