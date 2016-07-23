@@ -7,36 +7,23 @@ var $ = require("jquery");
 var log = require("../lib/logger").getLogger("page/login.js", "INFO");
 var stringify = require("json-stringify");
 
-function onSuccess(googleUser) {
-  log.info("Logged in as " + googleUser.getBasicProfile().getName());
-  var idToken = googleUser.getAuthResponse().id_token;
-  var form = $("#google-signin-form");
-  form.find("input[name=token]").val(idToken);
-  $(".google-action-button").removeAttr("disabled");
-}
+/*global gapi */
 
-function onFailure(error) {
-  log.error("error authenticating with Google: " + stringify(error));
-  var panel = $("#external-login-error");
-  panel.html("<p>Google responded with: " + error.reason + "</p>");
-  panel.slideDown("fast", function() {
-    panel.delay(5000).slideUp();
+/**
+ * Page specific functionality.
+ * @constructor
+ */
+function Page() {
+  var _this = this;
+  $(function () {
+    _this.init();
   });
 }
 
-window.gapi_onload = function() {
-  window.gapi.signin2.render("google-signin", {
-    "scope": "profile email",
-    "width": 240,
-    "height": 50,
-    "longtitle": false,
-    "theme": "light",
-    "onsuccess": onSuccess,
-    "onfailure": onFailure
-  });
-};
-
-$(function () {
+/**
+ * Initializes the page after DOM ready.
+ */
+Page.prototype.init = function () {
   $("input[type='username']").focus();
 
   $("input[type='username'],input[type='password']").keyup(function () {
@@ -49,12 +36,59 @@ $(function () {
   });
 
   $(".alert:visible").delay(5000).slideUp();
+  $("#google-signout").click(this.signOutGoogle);
+}
 
-  $("#google-signout").click(function() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      log.info("user signed out of google");
-      $(".google-action-button").attr("disabled", "disabled");
-    });
+/**
+ * Callback for Google signin widget to initialize the button once platform.js has finished loading.
+ */
+Page.prototype.initGoogleSignin = function () {
+  window.gapi.signin2.render("google-signin", {
+    "scope": "profile email",
+    "width": 240,
+    "height": 50,
+    "longtitle": false,
+    "theme": "light",
+    "onsuccess": this.onGoogleSigninSuccess,
+    "onfailure": this.onGoogleSigninFailure
   });
-});
+};
+
+/**
+ * Signs the user out of Google.
+ */
+Page.prototype.signOutGoogle = function () {
+  var auth2 = gapi.auth2.getAuthInstance();
+  auth2.signOut().then(function () {
+    log.info("user signed out of Google");
+    $(".google-action-button").attr("disabled", "disabled");
+  });
+}
+
+/**
+ * Callback for Google sign-in widget to indicate the user has been successfully authorized.
+ * @param googleUser Google account information
+ */
+Page.prototype.onGoogleSigninSuccess = function (googleUser) {
+  log.info("Logged in as " + googleUser.getBasicProfile().getName());
+  var idToken = googleUser.getAuthResponse().id_token;
+  var form = $("#google-signin-form");
+  form.find("input[name=token]").val(idToken);
+  $(".google-action-button").removeAttr("disabled");
+}
+
+/**
+ * Callback for Google sign-in widget to indicate the user was not successfully authenticated.
+ * @param error error object from Google's Javascript API
+ */
+Page.prototype.onGoogleSigninFailure = function (error) {
+  log.error("error authenticating with Google: " + stringify(error));
+  var panel = $("#external-login-error");
+  panel.html("<p>Google responded with: " + error.reason + "</p>");
+  panel.slideDown("fast", function () {
+    panel.delay(5000).slideUp();
+  });
+}
+
+window.page = new Page();
+window.gapi_onload = function() { window.page.initGoogleSignin(); }
