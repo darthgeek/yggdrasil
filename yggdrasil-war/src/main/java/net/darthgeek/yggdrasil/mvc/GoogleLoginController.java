@@ -4,7 +4,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import net.darthgeek.yggdrasil.data.dao.RoleDao;
 import net.darthgeek.yggdrasil.data.dao.UserDao;
 import net.darthgeek.yggdrasil.data.model.User;
 import org.slf4j.Logger;

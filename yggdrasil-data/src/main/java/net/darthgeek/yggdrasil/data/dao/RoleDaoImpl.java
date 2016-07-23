@@ -3,8 +3,6 @@ package net.darthgeek.yggdrasil.data.dao;
 import net.darthgeek.yggdrasil.data.model.Role;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityNotFoundException;
