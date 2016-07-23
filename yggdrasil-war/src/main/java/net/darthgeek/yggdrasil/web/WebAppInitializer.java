@@ -7,8 +7,6 @@ import net.darthgeek.yggdrasil.websocket.WebSocketConfig;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import javax.servlet.ServletRegistration;
-
 /**
  * Created by jason on 7/10/2016.
  */

@@ -14,15 +14,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -32,17 +29,13 @@ import java.util.Date;
 @Controller("googleLoginController")
 @RequestMapping("/login/google")
 public class GoogleLoginController {
+  public static final String GOOGLE_AUTH_PROVIDER = "google";
   private static final Logger LOG = LoggerFactory.getLogger(GoogleLoginController.class);
   private static final String CLIENT_ID = "1020627545730-gifi00t2fl2gvgfh89dpnt3cfjsdfh4v.apps.googleusercontent.com";
-  public static final String GOOGLE_AUTH_PROVIDER = "google";
-
   private GoogleIdTokenVerifier verifier;
 
   @Resource
   private UserDao userDao;
-
-  @Resource
-  private RoleDao roleDao;
 
   @PostConstruct
   public void init() {

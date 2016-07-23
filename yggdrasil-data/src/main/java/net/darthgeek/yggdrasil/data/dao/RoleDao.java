@@ -1,10 +1,8 @@
 package net.darthgeek.yggdrasil.data.dao;
 
 import net.darthgeek.yggdrasil.data.model.Role;
-import net.darthgeek.yggdrasil.data.model.User;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Date;
 
 /**
  * Data access object for roles.

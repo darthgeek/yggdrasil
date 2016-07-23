@@ -8,9 +8,9 @@ var log = require("../lib/logger").getLogger("page/login.js", "INFO");
 
 function onSuccess(googleUser) {
   log.info("Logged in as " + googleUser.getBasicProfile().getName());
-  var id_token = googleUser.getAuthResponse().id_token;
+  var idToken = googleUser.getAuthResponse().id_token;
   var form = $("#google-signin-form");
-  form.find("input[name=token]").val(id_token);
+  form.find("input[name=token]").val(idToken);
   $(".google-action-button").removeAttr("disabled");
 }
 
@@ -28,7 +28,7 @@ window.gapi_onload = function() {
     "onsuccess": onSuccess,
     "onfailure": onFailure
   });
-}
+};
 
 $(function () {
   $("input[type='username']").focus();
@@ -47,7 +47,7 @@ $(function () {
   $("#google-signout").click(function() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
-      log.info("user signed out of google")
+      log.info("user signed out of google");
       $(".google-action-button").attr("disabled", "disabled");
     });
   });

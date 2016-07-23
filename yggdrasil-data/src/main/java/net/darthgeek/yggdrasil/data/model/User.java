@@ -173,12 +173,12 @@ public class User implements UserDetails {
     return externalAuthProvider;
   }
 
-  public String getExternalAuthKey() {
-    return externalAuthKey;
-  }
-
   public void setExternalAuthProvider(final String externalAuthProvider) {
     this.externalAuthProvider = externalAuthProvider;
+  }
+
+  public String getExternalAuthKey() {
+    return externalAuthKey;
   }
 
   public void setExternalAuthKey(final String externalAuthKey) {

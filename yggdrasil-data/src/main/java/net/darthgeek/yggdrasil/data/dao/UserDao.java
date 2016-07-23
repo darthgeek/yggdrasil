@@ -39,6 +39,7 @@ public interface UserDao extends AbstractDao<User, Long> {
 
   /**
    * Finds a user by external authorization ID.
+   *
    * @param provider string identifying external authentication provider
    * @param key user's unique ID with external authentication provider
    * @return null if user not found

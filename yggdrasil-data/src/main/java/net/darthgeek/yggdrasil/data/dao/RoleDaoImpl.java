@@ -17,9 +17,6 @@ import java.util.List;
  */
 @Repository("roleDao")
 public class RoleDaoImpl extends AbstractDaoImpl<Role, Long> implements RoleDao {
-  /** Class logger. */
-  private static final Logger log = LoggerFactory.getLogger(RoleDaoImpl.class);
-
   @Override
   public Role findByName(final String name) {
     final Session session = getSession();
