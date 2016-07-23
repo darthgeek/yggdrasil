@@ -36,4 +36,12 @@ public interface UserDao extends AbstractDao<User, Long> {
    * @throws EntityNotFoundException if no such user is found
    */
   User findByName(String username);
+
+  /**
+   * Finds a user by external authorization ID.
+   * @param provider string identifying external authentication provider
+   * @param key user's unique ID with external authentication provider
+   * @return null if user not found
+   */
+  User findByExternalId(String provider, String key);
 }

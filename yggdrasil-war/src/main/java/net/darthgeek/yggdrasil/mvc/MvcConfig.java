@@ -12,8 +12,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
@@ -23,9 +26,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by jason on 7/10/2016.
@@ -34,6 +35,7 @@ import java.util.Set;
 @Configuration
 @ComponentScan
 @PropertySource("classpath:thymeleaf.properties")
+@EnableTransactionManagement
 public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
   private static final TypeReference<Map<String, Object>> ASSETS_TYPE_REF = new TypeReference<Map<String, Object>>() {
   };

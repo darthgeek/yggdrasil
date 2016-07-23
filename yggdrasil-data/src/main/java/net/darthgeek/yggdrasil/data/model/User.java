@@ -38,6 +38,12 @@ public class User implements UserDetails {
   @Column(nullable = false)
   private Date createdTime;
 
+  @Column
+  private String externalAuthProvider;
+
+  @Column
+  private String externalAuthKey;
+
   @ManyToMany(fetch = FetchType.LAZY)
   private Set<Role> roles = new TreeSet<Role>();
 
@@ -161,6 +167,27 @@ public class User implements UserDetails {
 
   public void setEnabled(final boolean enabled) {
     this.enabled = enabled;
+  }
+
+  public String getExternalAuthProvider() {
+    return externalAuthProvider;
+  }
+
+  public String getExternalAuthKey() {
+    return externalAuthKey;
+  }
+
+  public void setExternalAuthProvider(final String externalAuthProvider) {
+    this.externalAuthProvider = externalAuthProvider;
+  }
+
+  public void setExternalAuthKey(final String externalAuthKey) {
+    this.externalAuthKey = externalAuthKey;
+  }
+
+  public void setExternalAuth(final String externalAuthProvider, final String externalAuthKey) {
+    this.externalAuthProvider = externalAuthProvider;
+    this.externalAuthKey = externalAuthKey;
   }
 
   @Override

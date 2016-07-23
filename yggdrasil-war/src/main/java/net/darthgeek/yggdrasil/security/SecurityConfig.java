@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -33,9 +32,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   private DataSource dataSource;
 
   @Resource
-  private Environment env;
-
-  @Resource
   private UserDetailsService userDetailsService;
 
   @Override
@@ -46,15 +42,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(final HttpSecurity http) throws Exception {
+    // @formatter:off
     http.authorizeRequests()
-          .antMatchers("/error/**").permitAll()
-          .anyRequest().authenticated()
-          .and().formLogin().permitAll().loginPage("/login").defaultSuccessUrl("/")
-          .and().logout().permitAll()
-          .and().rememberMe().rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository())
-          .userDetailsService(userDetailsService).tokenValiditySeconds(86400)
-          .and().csrf()
-          .and().exceptionHandling().accessDeniedPage("/error/403");
+            .antMatchers("/error/**").permitAll()
+            .antMatchers("/login/google").permitAll()
+            .anyRequest().authenticated().and()
+          .formLogin()
+            .loginPage("/login")
+            .permitAll()
+            .and()
+          .logout().permitAll().and()
+            .rememberMe()
+            .rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository())
+            .userDetailsService(userDetailsService).tokenValiditySeconds(86400).and()
+          .csrf().and()
+          .exceptionHandling().accessDeniedPage("/error/403");
+    // @formatter:on
   }
 
   @Override

@@ -79,6 +79,24 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
   }
 
   @Override
+  public User findByExternalId(final String provider, final String key) {
+    final Session session = getSession();
+
+    @SuppressWarnings("unchecked")
+    final List<User> results =
+          session.createCriteria(getEntityClass())
+                .add(Restrictions.eq("externalAuthProvider", provider))
+                .add(Restrictions.eq("externalAuthKey", key))
+                .list();
+
+    if (results.size() == 0) {
+      return null;
+    } else {
+      return results.get(0);
+    }
+  }
+
+  @Override
   protected Class<User> getEntityClass() {
     return User.class;
   }

@@ -4,15 +4,15 @@ repositories {
     maven { url "http://dl.bintray.com/typesafe/maven-releases" }
 }
 
-group 'net.darthgeek.yggdrasil'
-version '0.0.0-SNAPSHOT'
+group "net.darthgeek.yggdrasil"
+version "0.0.0-SNAPSHOT"
 
-apply plugin: 'groovy'
-apply plugin: 'war'
-apply plugin: 'announce'
-apply plugin: 'findbugs'
-apply plugin: 'jacoco'
-apply from: 'https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin'
+apply plugin: "groovy"
+apply plugin: "war"
+apply plugin: "announce"
+apply plugin: "findbugs"
+apply plugin: "jacoco"
+apply from: "https://raw.github.com/akhikhl/gretty/master/pluginScripts/gretty.plugin"
 
 // TODO clean this up and refactor a bit
 
@@ -28,30 +28,30 @@ repositories {
 }
 
 ext {
-    codacyProjectToken = project.hasProperty('projectToken') ? project.projectToken : 'null'
+    codacyProjectToken = project.hasProperty("projectToken") ? project.projectToken : "null"
     limits = [
-            'instruction': 0,
-            'branch'     : 0,
-            'line'       : 0,
-            'complexity' : 0,
-            'method'     : 0,
-            'class'      : 0
+            "instruction": 0,
+            "branch"     : 0,
+            "line"       : 0,
+            "complexity" : 0,
+            "method"     : 0,
+            "class"      : 0
     ]
 }
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-compileJava.options.compilerArgs.add '-parameters'
-compileTestJava.options.compilerArgs.add '-parameters'
+compileJava.options.compilerArgs.add "-parameters"
+compileTestJava.options.compilerArgs.add "-parameters"
 
 configurations {
     codacy
 }
 
 dependencies {
-    compile project(':yggdrasil-data')
-    compile project(':yggdrasil-javascript')
+    compile project(":yggdrasil-data")
+    compile project(":yggdrasil-javascript")
     compile "org.springframework:spring-context:$rootProject.ext.springVersion"
     compile "org.springframework:spring-context-support:$rootProject.ext.springVersion"
     compile "org.springframework:spring-webmvc:$rootProject.ext.springVersion"
@@ -68,6 +68,7 @@ dependencies {
     compile "com.google.code.findbugs:jsr305:3.0.0"
     compile "com.google.code.findbugs:annotations:3.0.0"
     compile "com.fasterxml.jackson.core:jackson-databind:$rootProject.ext.jacksonVersion"
+    compile "com.google.api-client:google-api-client:1.19.1"
 
     compile "org.slf4j:slf4j-api:1.7.10"
     compile "org.slf4j:jul-to-slf4j:1.7.10"
@@ -85,8 +86,8 @@ dependencies {
     testCompile "org.springframework:spring-test:$rootProject.ext.springVersion"
     testCompile "org.mockito:mockito-core:1.+"
 
-    codacy 'com.codacy:codacy-coverage-reporter:1.0.7'
-    codacy 'com.typesafe.netty:netty-http-pipelining:1.1.2'
+    codacy "com.codacy:codacy-coverage-reporter:1.0.7"
+    codacy "com.typesafe.netty:netty-http-pipelining:1.1.2"
 }
 
 configurations {
@@ -94,7 +95,7 @@ configurations {
 }
 
 task sourcesJar(type: Jar) {
-    classifier = 'sources'
+    classifier = "sources"
     from sourceSets.main.allSource
 }
 
@@ -104,7 +105,7 @@ jacoco {
 }
 
 jacocoTestReport {
-    executionData = fileTree(dir: "${buildDir}", include: '**/jacoco/*.exec')
+    executionData = fileTree(dir: "${buildDir}", include: "**/jacoco/*.exec")
 
     reports {
         xml.enabled true
@@ -127,20 +128,20 @@ jacocoTestReport {
             if (it == null) {
                 return 100
             }
-            def covered = it.'@covered' as Double
-            def missed = it.'@missed' as Double
+            def covered = it."@covered" as Double
+            def missed = it."@missed" as Double
             ((covered / (covered + missed)) * 100).round(2)
         }
 
         def counters = results.counter
         def metrics = [:]
         metrics << [
-                'instruction': percentage(counters.find { it.'@type'.equals('INSTRUCTION') }),
-                'branch'     : percentage(counters.find { it.'@type'.equals('BRANCH') }),
-                'line'       : percentage(counters.find { it.'@type'.equals('LINE') }),
-                'complexity' : percentage(counters.find { it.'@type'.equals('COMPLEXITY') }),
-                'method'     : percentage(counters.find { it.'@type'.equals('METHOD') }),
-                'class'      : percentage(counters.find { it.'@type'.equals('CLASS') })
+                "instruction": percentage(counters.find { it."@type".equals("INSTRUCTION") }),
+                "branch"     : percentage(counters.find { it."@type".equals("BRANCH") }),
+                "line"       : percentage(counters.find { it."@type".equals("LINE") }),
+                "complexity" : percentage(counters.find { it."@type".equals("COMPLEXITY") }),
+                "method"     : percentage(counters.find { it."@type".equals("METHOD") }),
+                "class"      : percentage(counters.find { it."@type".equals("CLASS") })
         ]
 
 
@@ -186,7 +187,7 @@ tasks.withType(FindBugs) {
     reports {
         xml.enabled false
         html.enabled true
-        //html.stylesheet resources.text.fromFile('config/xsl/findbugs-custom.xsl')
+        //html.stylesheet resources.text.fromFile("config/xsl/findbugs-custom.xsl")
     }
 }
 
@@ -223,14 +224,14 @@ task(codacyLocs) << {
 
 gradle.taskGraph.afterTask { Task task, TaskState state ->
     if (state.failure) {
-        announce.announce("':${task.name}' FAILED", "local")
+        announce.announce("':${task.name} FAILED", "local")
     } else {
         announce.announce("':${task.name}' succeeded", "local")
     }
 }
 
 gretty {
-    servletContainer 'tomcat8'
+    servletContainer "tomcat8"
     managedClassReload true
-    contextPath '/'
+    contextPath "/"
 }

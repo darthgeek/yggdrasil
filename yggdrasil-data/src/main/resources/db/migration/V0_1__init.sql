@@ -1,22 +1,24 @@
 CREATE TABLE User (
-  id          BIGINT       NOT NULL,
-  email       VARCHAR(255) NOT NULL UNIQUE,
-  username    VARCHAR(255) NOT NULL UNIQUE,
-  password    VARCHAR(255) NOT NULL,
-  enabled     BIT          NOT NULL,
-  createdTime TIMESTAMP    NOT NULL,
+  id                   BIGINT AUTO_INCREMENT NOT NULL,
+  email                VARCHAR(255)          NOT NULL UNIQUE,
+  username             VARCHAR(255)          NOT NULL UNIQUE,
+  password             VARCHAR(255)          NOT NULL,
+  enabled              BIT                   NOT NULL,
+  createdTime          TIMESTAMP             NOT NULL,
+  externalAuthProvider VARCHAR(255),
+  externalAuthKey      VARCHAR(1024),
   PRIMARY KEY (id)
 );
 
 CREATE TABLE Role (
-  id   BIGINT       NOT NULL,
-  name VARCHAR(255) NOT NULL UNIQUE,
+  id   BIGINT AUTO_INCREMENT NOT NULL,
+  name VARCHAR(255)          NOT NULL UNIQUE,
   PRIMARY KEY (id)
 );
 
 CREATE TABLE Permission (
-  id   BIGINT       NOT NULL,
-  name VARCHAR(255) NOT NULL UNIQUE,
+  id   BIGINT AUTO_INCREMENT NOT NULL,
+  name VARCHAR(255)          NOT NULL UNIQUE,
   PRIMARY KEY (id)
 );
 

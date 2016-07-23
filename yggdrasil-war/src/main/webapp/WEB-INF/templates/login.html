@@ -11,6 +11,8 @@
 
   <meta name="_csrf" th:content="${_csrf.token}" th:if="${_csrf != null}"/>
   <meta name="_csrf_header" th:content="${_csrf.headerName}" th:if="${_csrf != null}"/>
+  <meta name="google-signin-client_id"
+        content="1020627545730-gifi00t2fl2gvgfh89dpnt3cfjsdfh4v.apps.googleusercontent.com">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,11 +41,12 @@
             <p>You have been logged out successfully.</p>
           </div>
           <div>
-            <h1 class="text-center">Yggdrasil Login</h1>
+            <h1 class="text-center">App Login</h1>
           </div>
           <div class="input-group input-sm">
             <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
-            <input type="username" class="form-control" id="username" name="username" placeholder="Enter Username" required>
+            <input type="username" class="form-control" id="username" name="username" placeholder="Enter Username"
+                   required>
           </div>
           <div class="input-group input-sm">
             <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>
@@ -60,7 +63,7 @@
               </div>
             </div>
             <div class="col-xs-4">
-              <input type="submit"
+              <input id="app-login" type="submit"
                      class="btn btn-block btn-primary btn-default" value="Log in" disabled="disabled">
             </div>
           </div>
@@ -68,6 +71,39 @@
                  th:value="${_csrf.token}"/>
         </form>
       </div>
+    </div>
+    <hr/>
+    <div class="login-card">
+      <div>
+        <h1 class="text-center">Google Login</h1>
+      </div>
+      <div class="login-form">
+        <form id="google-signin-form" th:action="@{/login/google}" method="post">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="checkbox">
+                <div class="social-login-container">
+                  <div id="google-signin"></div>
+                  <script src="https://apis.google.com/js/platform.js" async defer></script>
+                  <input type="hidden" name="token" value=""/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              <button id="google-signout" type="button" class="google-action-button btn btn-block btn-default"
+                      disabled="disabled">Sign Out
+              </button>
+            </div>
+            <div class="col-xs-6">
+              <input id="google-login" type="submit" class="google-action-button btn btn-block btn-primary"
+                     value="Log in" disabled="disabled">
+            </div>
+          </div>
+        </form>
+      </div>
+
     </div>
   </div>
 </div>
