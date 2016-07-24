@@ -27,86 +27,107 @@
   <script type="text/javascript" th:src='@{/js/}+${@assets.get("shared").get("js")}'></script>
   <script type="text/javascript" th:src='@{/js/}+${@assets.get("page/login").get("js")}'></script>
 </head>
-<body>
-<div id="mainWrapper">
-  <div class="container">
-    <div class="login-card">
-      <div class="login-form">
-        <form method="post" class="form-horizontal">
-          <div id="external-login-error" class="alert alert-danger">
-            <p>Error processing external login</p>
-          </div>
-          <div class="alert alert-danger"
-               th:if="${param.error != null && session['SPRING_SECURITY_LAST_EXCEPTION'] != null}">
-            <p th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">Invalid username and password.</p>
-          </div>
-          <div class="alert alert-success" th:if="${param.logout != null}">
-            <p>You have been logged out successfully.</p>
-          </div>
-          <div>
-            <h1 class="text-center">App Login</h1>
-          </div>
-          <div class="input-group input-sm">
-            <label class="input-group-addon" for="username"><i class="fa fa-user"></i></label>
-            <input type="username" class="form-control" id="username" name="username" placeholder="Enter Username"
-                   required>
-          </div>
-          <div class="input-group input-sm">
-            <label class="input-group-addon" for="password"><i class="fa fa-lock"></i></label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password"
-                   required>
-          </div>
-          <div class="row input-sm">
-            <div class="col-xs-8">
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" id="rememberme" name="remember-me">
-                  <span>Remember me</span>
-                </label>
-              </div>
-            </div>
-            <div class="col-xs-4">
-              <input id="app-login" type="submit"
-                     class="btn btn-block btn-primary btn-default" value="Log in" disabled="disabled">
-            </div>
-          </div>
-          <input type="hidden" th:name="${_csrf.parameterName}"
-                 th:value="${_csrf.token}"/>
-        </form>
-      </div>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <img width="auto" height="100" th:src="@{/images/yggdrasil-xs.png}"></img>
+    <a th:href="@{/}"><b>Yggdrasil</b></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <div id="external-login-error" style="display:none;" class="alert alert-danger">
+      <h4><i class="icon fa fa-ban"></i>
+        External Authentication Error
+      </h4>
+      <span>Error processing external login</span>
     </div>
-    <hr/>
-    <div class="login-card">
-      <div>
-        <h1 class="text-center">Google Login</h1>
+
+    <div id="loginError" class="alert alert-danger"
+         th:if="${param.error != null && session['SPRING_SECURITY_LAST_EXCEPTION'] != null}">
+      <h4><i class="icon fa fa-ban"></i>
+        Login Error
+      </h4>
+      <span th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}">Unable to log in</span>
+    </div>
+
+    <div id="loggedOut" class="alert alert-info" th:if="${param.logout != null}">
+      <h4><i class="icon fa fa-info"></i>
+        Logged Out
+      </h4>
+      You are now logged out of the system
+    </div>
+
+    <p class="login-box-msg">
+      Sign in to start your session</p>
+
+    <form method="post">
+      <div class="form-group has-feedback">
+        <input name="username" type="username" class="form-control" placeholder="Username">
+        <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
-      <div class="login-form">
-        <form id="google-signin-form" th:action="@{/login/google}" method="post">
-          <div class="row">
-            <div class="col-xs-12">
-              <div class="checkbox">
-                <div class="social-login-container">
-                  <div id="google-signin"></div>
-                  <script src="https://apis.google.com/js/platform.js" async defer></script>
-                  <input type="hidden" name="token" value=""/>
+      <div class="form-group has-feedback">
+        <input name="password" type="password" class="form-control" placeholder="Password">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="checkbox icheck">
+            <label>
+              <input type="checkbox" name="remember-me"> Remember Me
+            </label>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <button id="app-login" disabled="disabled" type="submit" class="btn btn-primary btn-block btn-flat">Sign In
+          </button>
+        </div>
+      </div>
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+    </form>
+    <div class="social-auth-links text-center">
+      <p>- OR -</p>
+      <form id="google-signin-form" th:action="@{/login/google}" method="post">
+        <div class="google-signin-row row">
+          <div class="col-xs-12">
+            <div class="google-login-container">
+              <div id="google-signin-button"></div>
+              <script src="https://apis.google.com/js/platform.js" async defer></script>
+              <input type="hidden" name="token" value=""/>
+            </div>
+          </div>
+        </div>
+        <div class="google-signout-row row" style="display: none;">
+          <div class="col-xs-6">
+            <button id="google-signout" type="button" class="google-action-button btn btn-block btn-default">
+              <div class="abcRioButtonIcon">
+                <div style="width:18px;height:18px;"
+                     class="abcRioButtonSvgImageWithFallback abcRioButtonIconImage abcRioButtonIconImage18">
+                  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 48 48"
+                       class="abcRioButtonSvg">
+                    <g>
+                      <path fill="#EA4335"
+                            d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                      <path fill="#4285F4"
+                            d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                      <path fill="#FBBC05"
+                            d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                      <path fill="#34A853"
+                            d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                      <path fill="none" d="M0 0h48v48H0z"></path>
+                    </g>
+                  </svg>
                 </div>
               </div>
-            </div>
+              Sign out
+            </button>
           </div>
-          <div class="row">
-            <div class="col-xs-6">
-              <button id="google-signout" type="button" class="google-action-button btn btn-block btn-default"
-                      disabled="disabled">Sign Out
-              </button>
-            </div>
-            <div class="col-xs-6">
-              <input id="google-login" type="submit" class="google-action-button btn btn-block btn-primary"
-                     value="Log in" disabled="disabled">
-            </div>
+          <div class="col-xs-6">
+            <button id="google-login" type="submit" class="google-action-button btn btn-block btn-primary">Use Google
+              Account
+            </button>
           </div>
-        </form>
-      </div>
-
+        </div>
+      </form>
     </div>
   </div>
 </div>

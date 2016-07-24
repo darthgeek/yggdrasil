@@ -9,6 +9,10 @@ if (typeof window != "undefined") {
   require("bootstrap");
   require("bootstrap/dist/css/bootstrap.css");
 
+  require('admin-lte');
+  require('admin-lte/dist/css/AdminLTE.css');
+  require('admin-lte/dist/css/skins/skin-blue.css');
+
   require("font-awesome/css/font-awesome.min.css");
   require("ionicons/dist/css/ionicons.min.css");
 }

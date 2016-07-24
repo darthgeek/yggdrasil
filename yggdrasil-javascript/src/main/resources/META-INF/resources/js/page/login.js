@@ -6,6 +6,8 @@ require("../../css/app.css");
 var $ = require("jquery");
 var log = require("../lib/logger").getLogger("page/login.js", "INFO");
 var stringify = require("json-stringify");
+require("admin-lte/plugins/iCheck/icheck.js");
+require("admin-lte/plugins/iCheck/square/blue.css");
 
 /*global gapi */
 
@@ -24,6 +26,12 @@ function Page() {
  * Initializes the page after DOM ready.
  */
 Page.prototype.init = function () {
+  $('input').iCheck({
+    checkboxClass: 'icheckbox_square-blue',
+    radioClass: 'iradio_square-blue',
+    increaseArea: '20%'
+  });
+
   $("input[type='username']").focus();
 
   $("input[type='username'],input[type='password']").keyup(function () {
@@ -43,11 +51,11 @@ Page.prototype.init = function () {
  * Callback for Google signin widget to initialize the button once platform.js has finished loading.
  */
 Page.prototype.initGoogleSignin = function () {
-  window.gapi.signin2.render("google-signin", {
+  window.gapi.signin2.render("google-signin-button", {
     "scope": "profile email",
     "width": 240,
-    "height": 50,
-    "longtitle": false,
+    "height": 34,
+    "longtitle": true,
     "theme": "light",
     "onsuccess": this.onGoogleSigninSuccess,
     "onfailure": this.onGoogleSigninFailure
@@ -61,7 +69,8 @@ Page.prototype.signOutGoogle = function () {
   var auth2 = gapi.auth2.getAuthInstance();
   auth2.signOut().then(function () {
     log.info("user signed out of Google");
-    $(".google-action-button").attr("disabled", "disabled");
+    $(".google-signout-row").hide();
+    $(".google-signin-row").show();
   });
 }
 
@@ -74,7 +83,8 @@ Page.prototype.onGoogleSigninSuccess = function (googleUser) {
   var idToken = googleUser.getAuthResponse().id_token;
   var form = $("#google-signin-form");
   form.find("input[name=token]").val(idToken);
-  $(".google-action-button").removeAttr("disabled");
+  $(".google-signout-row").show();
+  $(".google-signin-row").hide();
 }
 
 /**
@@ -84,7 +94,7 @@ Page.prototype.onGoogleSigninSuccess = function (googleUser) {
 Page.prototype.onGoogleSigninFailure = function (error) {
   log.error("error authenticating with Google: " + stringify(error));
   var panel = $("#external-login-error");
-  panel.html("<p>Google responded with: " + error.reason + "</p>");
+  panel.find("span").html("Google responded with: " + error.reason);
   panel.slideDown("fast", function () {
     panel.delay(5000).slideUp();
   });

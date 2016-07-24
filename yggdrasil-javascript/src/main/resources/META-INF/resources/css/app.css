@@ -1,8 +1,5 @@
-.social-login-container {
+.google-login-container {
   width: 240px;
-  margin: 20px auto;
-}
-
-#external-login-error {
-  display: none;
+  margin-left: auto;
+  margin-right: auto;
 }
