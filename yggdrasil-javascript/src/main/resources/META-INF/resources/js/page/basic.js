@@ -20,6 +20,6 @@ function Page() {
  */
 Page.prototype.init = function () {
   log.info("Page loaded");
-}
+};
 
 window.page = new Page();

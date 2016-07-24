@@ -21,6 +21,6 @@ function Page() {
 Page.prototype.init = function () {
   log.info("Starting game instance");
   this.main.init();
-}
+};
 
 window.page = new Page();

@@ -26,10 +26,10 @@ function Page() {
  * Initializes the page after DOM ready.
  */
 Page.prototype.init = function () {
-  $('input').iCheck({
-    checkboxClass: 'icheckbox_square-blue',
-    radioClass: 'iradio_square-blue',
-    increaseArea: '20%'
+  $("input").iCheck({
+    checkboxClass: "icheckbox_square-blue",
+    radioClass: "iradio_square-blue",
+    increaseArea: "20%"
   });
 
   $("input[type='username']").focus();
@@ -45,7 +45,7 @@ Page.prototype.init = function () {
 
   $(".alert:visible").delay(5000).slideUp();
   $("#google-signout").click(this.signOutGoogle);
-}
+};
 
 /**
  * Callback for Google signin widget to initialize the button once platform.js has finished loading.
@@ -72,7 +72,7 @@ Page.prototype.signOutGoogle = function () {
     $(".google-signout-row").hide();
     $(".google-signin-row").show();
   });
-}
+};
 
 /**
  * Callback for Google sign-in widget to indicate the user has been successfully authorized.
@@ -85,7 +85,7 @@ Page.prototype.onGoogleSigninSuccess = function (googleUser) {
   form.find("input[name=token]").val(idToken);
   $(".google-signout-row").show();
   $(".google-signin-row").hide();
-}
+};
 
 /**
  * Callback for Google sign-in widget to indicate the user was not successfully authenticated.
@@ -98,7 +98,7 @@ Page.prototype.onGoogleSigninFailure = function (error) {
   panel.slideDown("fast", function () {
     panel.delay(5000).slideUp();
   });
-}
+};
 
 window.page = new Page();
-window.gapi_onload = function() { window.page.initGoogleSignin(); }
+window.gapi_onload = function() { window.page.initGoogleSignin(); };
