@@ -26,7 +26,7 @@ function ScreenMetrics() {
     PORTRAIT: 0,
     LANDSCAPE: 1
   };
-};
+}
 
 /**
  * Gets the current screen metrics.
@@ -61,7 +61,7 @@ ScreenMetrics.prototype.get = function () {
  *  }}
  */
 ScreenMetrics.prototype.calculate = function (defaultWidth, defaultHeight, orientation, maxWidth, maxHeight) {
-  if (!orientation) orientation = this.Orientation.LANDSCAPE;
+  if (!orientation) { orientation = this.Orientation.LANDSCAPE; }
 
   var windowHeight = window.innerHeight;
   var windowWidth = window.innerWidth;
