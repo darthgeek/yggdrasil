@@ -4,7 +4,7 @@ var mocha = require("gulp-mocha");
 var istanbul = require("gulp-istanbul");
 
 gulp.task("pre-test", function () {
-  return gulp.src([config.jsSource + "/**/*.js"])
+  return gulp.src([config.jsSource + "/**/*.js", "!" + config.vendorSource + "/**/*.js"])
       .pipe(istanbul())
       // Force `require` to return covered files
       .pipe(istanbul.hookRequire());

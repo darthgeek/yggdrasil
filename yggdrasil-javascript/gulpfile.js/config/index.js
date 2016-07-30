@@ -9,6 +9,7 @@ var assetsTarget = path.join(resourcesTarget, "META-INF/resources");
 var config = {
   buildDir: buildDir,
   jsSource: path.join(assetsSrc, "js"),
+  vendorSource: path.join(assetsSrc, "js/vendor"),
   jsTarget: path.join(assetsTarget, "js"),
   testSource: path.join(assetsSrc, "testjs"),
   cssSource: path.join(assetsSrc, "css"),
