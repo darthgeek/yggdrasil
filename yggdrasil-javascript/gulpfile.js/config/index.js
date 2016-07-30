@@ -15,8 +15,7 @@ var config = {
   cssTarget: path.join(assetsTarget, "css"),
   fontSource: path.join(assetsSrc, "font"),
   fontTarget: path.join(assetsTarget, "font"),
-  classpathTarget: resourcesTarget,
-  vendorSource: path.join(assetsTarget, "vendor")
+  classpathTarget: resourcesTarget
 };
 
 module.exports = config;

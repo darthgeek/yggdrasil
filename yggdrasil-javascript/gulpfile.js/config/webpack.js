@@ -33,7 +33,10 @@ module.exports = function (env) {
 
     resolve: {
       extensions: ["", ".js"],
-      alias: {}
+      root:  config.jsSource,
+      alias: {
+        "phaser-shim": "vendor/phaser-shim"
+      }
     },
 
     node: {

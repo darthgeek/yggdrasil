@@ -1,6 +1,9 @@
 var $ = require("jquery");
 require("phaser-shim");
 var log = require("../lib/logger").getLogger("game/main.js");
+var stringify = require("json-stringify");
+
+var ScreenMetrics = require("./screen-metrics");
 
 /*global Phaser */
 
@@ -11,13 +14,13 @@ var log = require("../lib/logger").getLogger("game/main.js");
  */
 var _defaultOpts = {
   /**
-   * Width of the game viewport.
+   * Default width of the game viewport.
    */
-  width: 640,
+  width: 800,
   /**
-   * Height of the game viewport.
+   * Default height of the game viewport.
    */
-  height: 580,
+  height: 500,
   /**
    * ID of the DOM element to embed the game viewport in.
    */
@@ -33,36 +36,38 @@ var _defaultOpts = {
 function Main(opts) {
   var _opts = $.extend({}, _defaultOpts, opts);
 
-  this.game = new Phaser.Game(_opts.width, _opts.height, Phaser.AUTO, _opts.gameDiv);
+  var screenDims = ScreenMetrics.calculate(_opts.width, _opts.height, ScreenMetrics.LANDSCAPE);
+
+  this.game = new Phaser.Game(screenDims.width, screenDims.height, Phaser.AUTO, _opts.gameDiv);
+  this.map = null;
 
   var _this = this;
 
-  // TODO - split game state initialization out to separate method/class
-  this.game.state.add("Boot", {
+  this.game.state.add("Demo", {
     preload: function () {
       log.info("[BOOT] preload");
-      // TODO - load booting assets
+      var screenDims = ScreenMetrics.get();
+      this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
+      this.scale.setUserScale(screenDims.scaleX, screenDims.scaleY);
+      this.scale.pageAlignHorizontally = true;
+      this.scale.pageAlignVertically = true;
+      if (!this.game.device.desktop) {
+        this.scale.forceOrientation(true, false);
+      }
+      log.info("screen dimensions: " + stringify(screenDims));
+
+      _this.game.load.tilemap("tilemap", "assets/simple-map.json", null, Phaser.Tilemap.TILED_JSON);
+      _this.game.load.image("terrain", "assets/terrain.png");
     },
     create: function () {
       log.info("[BOOT] create");
-      _this.game.state.start("Preload");
-    }
-  });
-
-  this.game.state.add("Preload", {
-    preload: function () {
-      log.info("[PRELOAD] preload");
-      // TODO: load preload assets
-    },
-    create: function () {
-      log.info("[PRELOAD] create");
-      _this.game.state.start("Play");
-    }
-  });
-
-  this.game.state.add("Play", {
-    create: function () {
-      log.info("[PLAY] create");
+      var map = _this.game.add.tilemap("tilemap");
+      map.addTilesetImage("terrain", "terrain");
+      var layer = map.createLayer("Dirt");
+      layer.resizeWorld();
+      map.createLayer("Grass");
+      map.createLayer("Details");
+      map.createLayer("Details 2");
     }
   });
 
@@ -74,7 +79,7 @@ function Main(opts) {
  */
 Main.prototype.init = function () {
   log.info("starting boot state");
-  this.game.state.start("Boot");
+  this.game.state.start("Demo");
 };
 
 /**

@@ -64,6 +64,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
           .setCachePeriod(2592000);
     registry.addResourceHandler("/fonts/**").addResourceLocations("/WEB-INF/fonts/", "classpath:/META-INF/resources/fonts/")
           .setCachePeriod(2592000);
+    registry.addResourceHandler("/assets/**").addResourceLocations("/WEB-INF/assets/", "classpath:/META-INF/resources/assets/")
+          .setCachePeriod(2592000);
   }
 
   @Override
