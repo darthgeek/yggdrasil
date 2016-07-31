@@ -34,11 +34,11 @@ var _defaultOpts = {
  * @constructor
  */
 function Main(opts) {
-  var _opts = $.extend({}, _defaultOpts, opts);
+  this._opts = $.extend({}, _defaultOpts, opts);
 
-  var screenDims = ScreenMetrics.calculate(_opts.width, _opts.height, ScreenMetrics.LANDSCAPE);
+  var screenDims = ScreenMetrics.calculate(this._opts.width, this._opts.height, ScreenMetrics.LANDSCAPE);
 
-  this.game = new Phaser.Game(screenDims.width, screenDims.height, Phaser.AUTO, _opts.gameDiv);
+  this.game = new Phaser.Game(screenDims.width, screenDims.height, Phaser.AUTO, this._opts.gameDiv);
   this.map = null;
 
   var _this = this;
@@ -49,12 +49,15 @@ function Main(opts) {
       var screenDims = ScreenMetrics.get();
       this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
       this.scale.setUserScale(screenDims.scaleX, screenDims.scaleY);
+      this.scale.setResizeCallback(function(state) {
+        var screenDims = ScreenMetrics.calculate(_this._opts.width, _this._opts.height, ScreenMetrics.LANDSCAPE);
+        state.setUserScale(screenDims.scaleX, screenDims.scaleY);
+      }, this);
       this.scale.pageAlignHorizontally = true;
       this.scale.pageAlignVertically = true;
       if (!this.game.device.desktop) {
         this.scale.forceOrientation(true, false);
       }
-      log.info("screen dimensions: " + stringify(screenDims));
 
       _this.game.load.tilemap("tilemap", "assets/simple-map.json", null, Phaser.Tilemap.TILED_JSON);
       _this.game.load.image("terrain", "assets/terrain.png");

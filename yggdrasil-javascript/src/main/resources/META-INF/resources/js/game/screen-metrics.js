@@ -30,9 +30,20 @@ function ScreenMetrics() {
 
 /**
  * Gets the current screen metrics.
- * @returns {{windowWidth: number, windowHeight: number, defaultGameWidth: number, defaultGameHeight: number,
- *  maxGameWidth: number, maxGameHeight: number, gameWidth: number, gameHeight: number, scaleX: number, scaleY: number,
- *  offsetX: number, offsetY: number}}
+ * @returns {{
+ *    windowWidth: number,
+ *    windowHeight: number,
+ *    defaultGameWidth: number,
+ *    defaultGameHeight: number,
+ *    maxGameWidth: number,
+ *    maxGameHeight: number,
+ *    gameWidth: number,
+ *    gameHeight: number,
+ *    scaleX: number,
+ *    scaleY: number,
+ *    offsetX: number,
+ *    offsetY: number
+ *  }}
  */
 ScreenMetrics.prototype.get = function () {
   return _instance;
@@ -45,7 +56,7 @@ ScreenMetrics.prototype.get = function () {
  * @param orientation
  * @param maxWidth
  * @param maxHeight
- * @returns
+ * @returns {{
  *    windowWidth: number,
  *    windowHeight: number,
  *    defaultGameWidth: number,
