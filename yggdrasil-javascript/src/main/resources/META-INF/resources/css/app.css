@@ -3,3 +3,8 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.game-container {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}

@@ -1,4 +1,5 @@
 require("../lib/common.js");
+require("../../css/app.css");
 var log = require("../lib/logger").getLogger("page/game-sandbox.js");
 var Main = require("../game/main.js");
 
@@ -8,7 +9,6 @@ var Main = require("../game/main.js");
  */
 function Page() {
   this.main = new Main();
-
   var _this = this;
   $(function () {
     _this.init();

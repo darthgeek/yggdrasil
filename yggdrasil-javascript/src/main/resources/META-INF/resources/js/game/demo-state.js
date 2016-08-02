@@ -1,6 +1,7 @@
 require("phaser-shim");
 var log = require("../lib/logger").getLogger("game/demo-state.js");
 var stringify = require("json-stringify");
+var throttle = require('throttle-debounce/throttle');
 
 /* global Phaser */
 
@@ -22,32 +23,46 @@ DemoState.prototype = new Phaser.State();
 DemoState.prototype.preload = function () {
   Phaser.State.call(this.preload);
 
-  var _this = this;
-
   this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
   this.main.screenMetrics.update();
-  this.scale.setUserScale(this.main.screenMetrics.scaleX, this.main.screenMetrics.scaleY);
-
   log.debug("initial: " + stringify(this.main.screenMetrics));
 
+  this.game.camera.bounds = null;
+
+  this.scale.setUserScale(this.main.screenMetrics.scaleX, this.main.screenMetrics.scaleY);
+  this.scale.setGameSize(this.main.screenMetrics.windowWidth, this.main.screenMetrics.windowHeight);
   this.scale.pageAlignHorizontally = true;
   this.scale.pageAlignVertically = true;
-
-  this.scale.setResizeCallback(function () {
-    _this.main.screenMetrics.update();
-    _this.scale.setUserScale(_this.main.screenMetrics.scaleX, _this.main.screenMetrics.scaleY);
-
-    log.debug("resize: " + stringify(_this.main.screenMetrics));
-  }, this);
   if (!this.game.device.desktop) {
     this.scale.forceOrientation(true, false);
   }
+
+  this.scale.setResizeCallback(function (scale, parentBounds) {
+    var metrics = this.main.screenMetrics.update();
+    scale.setUserScale(metrics.scaleX, metrics.scaleY);
+    scale.setGameSize(metrics.windowWidth, metrics.windowHeight);
+    scale.game.camera.setSize(metrics.windowWidth, metrics.windowHeight);
+
+    this.updateLayerSizes();
+  }, this);
 
   this.cursors = this.game.input.keyboard.createCursorKeys();
 
   this.game.load.tilemap("tilemap", "assets/simple-map.json", null, Phaser.Tilemap.TILED_JSON);
   this.game.load.image("terrain", "assets/terrain.png");
 };
+
+/**
+ * Resizes tilemap layers
+ */
+DemoState.prototype.updateLayerSizes = throttle(100, function () {
+  var metrics = this.main.screenMetrics;
+  $.each(this.layers, function (idx, layer) {
+    layer.resize(metrics.windowWidth, metrics.windowHeight)
+  });
+
+  log.debug("resize: " + stringify(metrics));
+});
 
 /**
  * Called after all assets are preloaded.
@@ -57,11 +72,12 @@ DemoState.prototype.create = function () {
 
   var map = this.game.add.tilemap("tilemap");
   map.addTilesetImage("terrain", "terrain");
-  var layer = map.createLayer("Dirt");
-  layer.resizeWorld();
-  map.createLayer("Grass");
-  map.createLayer("Details");
-  map.createLayer("Details 2");
+  this.layers = [];
+  this.layers.push(map.createLayer("Dirt"));
+  this.layers.push(map.createLayer("Grass"));
+  this.layers.push(map.createLayer("Details"));
+  this.layers.push(map.createLayer("Details 2"));
+  this.layers[0].resizeWorld();
 };
 
 /**

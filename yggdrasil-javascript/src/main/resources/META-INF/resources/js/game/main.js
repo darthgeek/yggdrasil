@@ -36,9 +36,7 @@ var _defaultOpts = {
 function Main(options) {
   this.opts = $.extend({}, _defaultOpts, options);
   this.screenMetrics = new ScreenMetrics(this.opts.width, this.opts.height);
-  this.game = new Phaser.Game(this.screenMetrics.gameWidth, this.screenMetrics.gameWidth, Phaser.AUTO, this.opts.gameDiv);
-
-  $("#" + this.opts.gameDiv).css("overflow", "hidden");
+  this.game = new Phaser.Game(this.screenMetrics.gameWidth, this.screenMetrics.gameHeight, Phaser.AUTO, this.opts.gameDiv);
 
   this.demoState = new DemoState(this);
   this.game.state.add(this.demoState.name, this.demoState);
