@@ -232,6 +232,5 @@ gradle.taskGraph.afterTask { Task task, TaskState state ->
 
 gretty {
     servletContainer "tomcat8"
-    managedClassReload true
     contextPath "/"
 }

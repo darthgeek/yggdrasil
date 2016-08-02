@@ -21,10 +21,22 @@ task buildJavascript(type: NodeTask, group: 'gulp') {
     script = project.file('gulpfile.js')
 }
 
+task runBrowserSync(type: NodeTask, group: 'gulp') {
+    args = [
+            '--root-dir',
+            project.projectDir.absolutePath,
+            '--task',
+            'browsersync:dev'
+    ]
+    script = project.file('gulpfile.js')
+}
+
 tasks['buildJavascript'].dependsOn 'installGulp'
 tasks['installGulp'].dependsOn 'npmInstall'
 tasks['classes'].dependsOn 'buildJavascript'
 tasks['buildJavascript'].mustRunAfter 'processResources'
+
+tasks['runBrowserSync'].dependsOn 'installGulp'
 
 task javascriptTest(type: NodeTask, group: 'gulp') {
     args = [

@@ -4,12 +4,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -45,9 +43,10 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 
   @Value("classpath:assets.json")
   private Resource assetsJsonFile;
+  private Map<String, Object> assets;
 
-  @Value("${spring.template.cache:false}")
-  private boolean templateCache;
+  @Value("${spring.resource.cache:false}")
+  private boolean resourceCache;
 
   @Override
   public void setApplicationContext(ApplicationContext applicationContext) {
@@ -96,7 +95,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     resolver.setPrefix("/WEB-INF/templates/");
     resolver.setSuffix(".html");
     resolver.setTemplateMode(TemplateMode.HTML);
-    resolver.setCacheable(templateCache);
+    resolver.setCacheable(resourceCache);
     return resolver;
   }
 
@@ -109,12 +108,16 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
   }
 
   @Bean
-  public Map<String, Object> assets() {
-    try {
-      return JSON_MAPPER.readValue(assetsJsonFile.getInputStream(), ASSETS_TYPE_REF);
-    } catch (final IOException ioe) {
-      throw new BeanInitializationException("Error loading " + assetsJsonFile, ioe);
+  @Scope(value = BeanDefinition.SCOPE_PROTOTYPE, proxyMode = ScopedProxyMode.INTERFACES)
+  public synchronized Map<String, Object> assets() {
+    if (assets == null || !resourceCache) {
+      try {
+        assets = JSON_MAPPER.readValue(assetsJsonFile.getInputStream(), ASSETS_TYPE_REF);
+      } catch (final IOException ioe) {
+        throw new BeanInitializationException("Error loading " + assetsJsonFile, ioe);
+      }
     }
+    return assets;
   }
 
   @Override
@@ -125,6 +128,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     registry.addViewController("/game-sandbox").setViewName("game-sandbox");
     registry.addViewController("/phaser-tutorial").setViewName("phaser-tutorial");
     registry.addViewController("/websocket-tutorial").setViewName("websocket-tutorial");
+
     registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
   }
 }

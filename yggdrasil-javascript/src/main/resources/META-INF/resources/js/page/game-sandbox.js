@@ -1,5 +1,5 @@
 require("../lib/common.js");
-var log = require("../lib/logger").getLogger("page/home.js");
+var log = require("../lib/logger").getLogger("page/game-sandbox.js");
 var Main = require("../game/main.js");
 
 /**
@@ -19,7 +19,7 @@ function Page() {
  * Initializes the page after DOM ready.
  */
 Page.prototype.init = function () {
-  log.info("Starting game instance");
+  log.info("Initializing game engine...");
   this.main.init();
 };
 

@@ -29,7 +29,8 @@ module.exports = function (env) {
         $: "jquery",
         jQuery: "jquery",
         "window.jQuery": "jquery"
-      })],
+      })
+    ],
 
     resolve: {
       extensions: ["", ".js"],
