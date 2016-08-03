@@ -2,7 +2,7 @@ var $ = require("jquery");
 require("phaser-shim");
 var log = require("../lib/logger").getLogger("game/main.js");
 var stringify = require("json-stringify");
-var DemoState = require("game/demo-state.js");
+var DemoState = require("demo/demo-state.js");
 var ScreenMetrics = require("game/screen-metrics.js");
 
 /*global Phaser */

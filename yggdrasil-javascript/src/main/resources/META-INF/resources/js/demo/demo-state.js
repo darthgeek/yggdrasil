@@ -1,5 +1,5 @@
 require("phaser-shim");
-var log = require("../lib/logger").getLogger("game/demo-state.js");
+var log = require("../lib/logger").getLogger("demo/demo-state.js");
 var stringify = require("json-stringify");
 var throttle = require('throttle-debounce/throttle');
 
