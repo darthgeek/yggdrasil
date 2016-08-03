@@ -46,7 +46,7 @@ DemoState.prototype.preload = function () {
 
   this.cursors = _game.input.keyboard.createCursorKeys();
 
-  _game.load.tilemap("tilemap", "assets/large-demo-map.json", null, Phaser.Tilemap.TILED_JSON);
+  _game.load.tilemap("tilemap", "assets/medium-demo-map.json", null, Phaser.Tilemap.TILED_JSON);
   _game.load.image("terrain", "assets/terrain.png");
 };
 
