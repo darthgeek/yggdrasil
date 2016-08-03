@@ -26,9 +26,6 @@ DemoState.prototype.preload = function () {
 
   _scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
   _game.screenMetrics.update();
-  log.debug("initial: " + stringify(_game.screenMetrics));
-
-  _game.camera.bounds = null;
 
   _scale.setUserScale(_game.screenMetrics.scaleX, _game.screenMetrics.scaleY);
   _scale.setGameSize(_game.screenMetrics.windowWidth, _game.screenMetrics.windowHeight);
@@ -49,7 +46,7 @@ DemoState.prototype.preload = function () {
 
   this.cursors = _game.input.keyboard.createCursorKeys();
 
-  _game.load.tilemap("tilemap", "assets/simple-map.json", null, Phaser.Tilemap.TILED_JSON);
+  _game.load.tilemap("tilemap", "assets/large-demo-map.json", null, Phaser.Tilemap.TILED_JSON);
   _game.load.image("terrain", "assets/terrain.png");
 };
 
@@ -62,8 +59,6 @@ DemoState.prototype.updateLayerSizes = throttle(100, function () {
   $.each(this.layers, function (idx, layer) {
     layer.resize(metrics.windowWidth, metrics.windowHeight)
   });
-
-  log.debug("resize: " + stringify(metrics));
 });
 
 /**
@@ -76,10 +71,8 @@ DemoState.prototype.create = function () {
   var map = _game.add.tilemap("tilemap");
   map.addTilesetImage("terrain", "terrain");
   var _layers = this.layers = [];
-  _layers.push(map.createLayer("Dirt"));
-  _layers.push(map.createLayer("Grass"));
-  _layers.push(map.createLayer("Details"));
-  _layers.push(map.createLayer("Details 2"));
+  _layers.push(map.createLayer("Ground"));
+  _layers.push(map.createLayer("Barriers"));
   _layers[0].resizeWorld();
 };
 

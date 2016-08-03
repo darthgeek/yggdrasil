@@ -5,7 +5,7 @@ var stringify = require("json-stringify");
 var DemoState = require("demo/demo-state.js");
 var ScreenMetrics = require("game/screen-metrics.js");
 
-/*global Phaser */
+/* global Phaser */
 
 /**
  * Default options for the application.
