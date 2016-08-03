@@ -28,7 +28,7 @@ var _defaultOpts = {
 };
 
 /**
- * Main application class for the game.
+ * Main class for the game.
  * @param options
  * @returns {Main} instance of application
  * @constructor
@@ -36,13 +36,13 @@ var _defaultOpts = {
 function Main(options) {
   this.opts = $.extend({}, _defaultOpts, options);
   this.screenMetrics = new ScreenMetrics(this.opts.width, this.opts.height);
-  this.game = new Phaser.Game(this.screenMetrics.gameWidth, this.screenMetrics.gameHeight, Phaser.AUTO, this.opts.gameDiv);
+  Phaser.Game.call(this, this.screenMetrics.gameWidth, this.screenMetrics.gameHeight, Phaser.AUTO, this.opts.gameDiv)
 
-  this.demoState = new DemoState(this);
-  this.game.state.add(this.demoState.name, this.demoState);
+  this.state.add(DemoState.NAME, new DemoState());
 
   return this;
 }
+Main.prototype = Object.create(Phaser.Game.prototype);
 
 
 /**
@@ -50,7 +50,7 @@ function Main(options) {
  */
 Main.prototype.init = function () {
   log.info("starting initial game state");
-  this.game.state.start(this.demoState.name);
+  this.state.start(DemoState.NAME);
 };
 
 /**

@@ -7,15 +7,13 @@ var throttle = require('throttle-debounce/throttle');
 
 /**
  * Creates the 'Demo' game state, used for POC and experimentation.
- * @param main application instance this game state belongs to
  * @constructor
  */
-function DemoState(main) {
-  this.main = main;
-  this.name = 'Demo';
-
+function DemoState() {
 };
-DemoState.prototype = new Phaser.State();
+DemoState.prototype = Object.create(Phaser.State.prototype);
+
+DemoState.NAME = 'Demo';
 
 /**
  * Preloads assets required by the game state.
@@ -23,22 +21,25 @@ DemoState.prototype = new Phaser.State();
 DemoState.prototype.preload = function () {
   Phaser.State.call(this.preload);
 
-  this.scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
-  this.main.screenMetrics.update();
-  log.debug("initial: " + stringify(this.main.screenMetrics));
+  var _scale = this.scale;
+  var _game = this.game;
 
-  this.game.camera.bounds = null;
+  _scale.scaleMode = Phaser.ScaleManager.USER_SCALE;
+  _game.screenMetrics.update();
+  log.debug("initial: " + stringify(_game.screenMetrics));
 
-  this.scale.setUserScale(this.main.screenMetrics.scaleX, this.main.screenMetrics.scaleY);
-  this.scale.setGameSize(this.main.screenMetrics.windowWidth, this.main.screenMetrics.windowHeight);
-  this.scale.pageAlignHorizontally = true;
-  this.scale.pageAlignVertically = true;
-  if (!this.game.device.desktop) {
-    this.scale.forceOrientation(true, false);
+  _game.camera.bounds = null;
+
+  _scale.setUserScale(_game.screenMetrics.scaleX, _game.screenMetrics.scaleY);
+  _scale.setGameSize(_game.screenMetrics.windowWidth, _game.screenMetrics.windowHeight);
+  _scale.pageAlignHorizontally = true;
+  _scale.pageAlignVertically = true;
+  if (!_game.device.desktop) {
+    _scale.forceOrientation(true, false);
   }
 
-  this.scale.setResizeCallback(function (scale, parentBounds) {
-    var metrics = this.main.screenMetrics.update();
+  _scale.setResizeCallback(function (scale, parentBounds) {
+    var metrics = _game.screenMetrics.update();
     scale.setUserScale(metrics.scaleX, metrics.scaleY);
     scale.setGameSize(metrics.windowWidth, metrics.windowHeight);
     scale.game.camera.setSize(metrics.windowWidth, metrics.windowHeight);
@@ -46,17 +47,18 @@ DemoState.prototype.preload = function () {
     this.updateLayerSizes();
   }, this);
 
-  this.cursors = this.game.input.keyboard.createCursorKeys();
+  this.cursors = _game.input.keyboard.createCursorKeys();
 
-  this.game.load.tilemap("tilemap", "assets/simple-map.json", null, Phaser.Tilemap.TILED_JSON);
-  this.game.load.image("terrain", "assets/terrain.png");
+  _game.load.tilemap("tilemap", "assets/simple-map.json", null, Phaser.Tilemap.TILED_JSON);
+  _game.load.image("terrain", "assets/terrain.png");
 };
 
 /**
  * Resizes tilemap layers
  */
 DemoState.prototype.updateLayerSizes = throttle(100, function () {
-  var metrics = this.main.screenMetrics;
+  var _game = this.game;
+  var metrics = _game.screenMetrics;
   $.each(this.layers, function (idx, layer) {
     layer.resize(metrics.windowWidth, metrics.windowHeight)
   });
@@ -70,30 +72,32 @@ DemoState.prototype.updateLayerSizes = throttle(100, function () {
 DemoState.prototype.create = function () {
   Phaser.State.call(this.create);
 
-  var map = this.game.add.tilemap("tilemap");
+  var _game = this.game;
+  var map = _game.add.tilemap("tilemap");
   map.addTilesetImage("terrain", "terrain");
-  this.layers = [];
-  this.layers.push(map.createLayer("Dirt"));
-  this.layers.push(map.createLayer("Grass"));
-  this.layers.push(map.createLayer("Details"));
-  this.layers.push(map.createLayer("Details 2"));
-  this.layers[0].resizeWorld();
+  var _layers = this.layers = [];
+  _layers.push(map.createLayer("Dirt"));
+  _layers.push(map.createLayer("Grass"));
+  _layers.push(map.createLayer("Details"));
+  _layers.push(map.createLayer("Details 2"));
+  _layers[0].resizeWorld();
 };
 
 /**
  * Called on each game state update tick.
  */
 DemoState.prototype.update = function () {
+  var _game = this.game;
   if (this.cursors.up.isDown) {
-    this.game.camera.y -= 4;
+    _game.camera.y -= 4;
   } else if (this.cursors.down.isDown) {
-    this.game.camera.y += 4;
+    _game.camera.y += 4;
   }
 
   if (this.cursors.left.isDown) {
-    this.game.camera.x -= 4;
+    _game.camera.x -= 4;
   } else if (this.cursors.right.isDown) {
-    this.game.camera.x += 4;
+    _game.camera.x += 4;
   }
 }
 
