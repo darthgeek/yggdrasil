@@ -39,8 +39,6 @@ function Main(options) {
   Phaser.Game.call(this, this.screenMetrics.gameWidth, this.screenMetrics.gameHeight, Phaser.AUTO, this.opts.gameDiv)
 
   this.state.add(DemoState.NAME, new DemoState());
-
-  return this;
 }
 Main.prototype = Object.create(Phaser.Game.prototype);
 

@@ -1,7 +1,8 @@
 require("phaser-shim");
 var log = require("../lib/logger").getLogger("demo/demo-state.js");
 var stringify = require("json-stringify");
-var throttle = require('throttle-debounce/throttle');
+var throttle = require("throttle-debounce/throttle");
+var SystemMenu = require("game/system-menu.js");
 
 /* global Phaser */
 
@@ -41,71 +42,16 @@ DemoState.prototype.preload = function () {
     scale.setGameSize(metrics.windowWidth, metrics.windowHeight);
     scale.game.camera.setSize(metrics.windowWidth, metrics.windowHeight);
 
-    if (this.menuFrame) {
-      this.menuFrame.x = metrics.gameWidth / 2;
-      this.menuFrame.y = metrics.gameHeight / 2;
-    }
-
     this.updateLayerSizes();
   }, this);
 
   this.cursors = _game.input.keyboard.createCursorKeys();
-  var escKey = _game.input.keyboard.addKey(Phaser.Keyboard.ESC);
-  escKey.onDown.add(this.onEscKey, this);
 
   _game.load.tilemap("tilemap", "assets/medium-demo-map.json", null, Phaser.Tilemap.TILED_JSON);
   _game.load.image("terrain", "assets/terrain.png");
+
   _game.load.image("menuFrame", "assets/menuFrame.png");
   _game.load.spritesheet("menuButton", "assets/button.png", 150, 39);
-};
-
-/**
- * Handles pressing of the ESC key.
- * @param key
- */
-DemoState.prototype.onEscKey = function (key) {
-  log.info("ESC key pressed");
-  var metrics = this.game.screenMetrics;
-
-  if (!this.menuFrame) {
-    var _game = this.game;
-    this.menuFrame = _game.add.group();
-    this.uiLayer.add(this.menuFrame);
-
-    var frame = this.menuFrame.create(0, 0, "menuFrame");
-    frame.anchor.set(0.5);
-
-    var button = _game.add.button(0, 0, "menuButton", this.onDemoButton, this, 0, 1, 2);
-    button.anchor.set(0.5);
-    this.menuFrame.add(button);
-
-    var style = {
-      font: "16px Arial",
-      fontWeight: "Bold",
-      fill: "#ffffff",
-      align: "center"
-    };
-    var text = _game.add.text(0, 0, "Demo Action", style);
-    text.anchor.set(0.45);
-    this.menuFrame.add(text);
-
-    this.menuFrame.x = metrics.gameWidth / 2;
-    this.menuFrame.y = metrics.gameHeight / 2;
-  } else {
-    this.menuFrame.destroy();
-    this.menuFrame = null;
-  }
-};
-
-/**
- * Handle te demo menu action.
- */
-DemoState.prototype.onDemoButton = function () {
-  log.info("Demo menu action chosen!");
-  if (this.menuFrame) {
-    this.menuFrame.destroy();
-    this.menuFrame = null;
-  }
 };
 
 /**
@@ -136,6 +82,9 @@ DemoState.prototype.create = function () {
   this.worldLayer = _game.add.group();
   this.uiLayer = _game.add.group();
   this.uiLayer.fixedToCamera = true;
+
+  this.systemMenu = new SystemMenu(this.uiLayer, Phaser.Keyboard.ESC);
+  this.systemMenu.addButton("Demo", this.onDemoButton, this);
 };
 
 /**
@@ -154,7 +103,14 @@ DemoState.prototype.update = function () {
   } else if (this.cursors.right.isDown) {
     _game.camera.x += 4;
   }
-}
+};
+
+/**
+ * Handle te demo menu action.
+ */
+DemoState.prototype.onDemoButton = function () {
+  log.info("Demo menu action chosen!");
+};
 
 module.exports = DemoState;
 
