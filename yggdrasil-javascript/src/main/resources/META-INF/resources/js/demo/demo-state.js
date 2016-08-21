@@ -51,7 +51,7 @@ DemoState.prototype.preload = function () {
   _game.load.image("terrain", "assets/terrain.png");
 
   _game.load.image("menuFrame", "assets/menuFrame.png");
-  _game.load.spritesheet("menuButton", "assets/button.png", 150, 39);
+  _game.load.spritesheet("menuButton", "assets/button.png", 252, 80);
 };
 
 /**

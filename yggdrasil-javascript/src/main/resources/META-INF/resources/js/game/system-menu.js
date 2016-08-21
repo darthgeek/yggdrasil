@@ -34,7 +34,6 @@ SystemMenu.prototype.onMenuToggle = function () {
   log.info("System menu toggle");
   var _metrics = this.group.game.screenMetrics;
   this.menuFrameGroup.visible = !this.menuFrameGroup.visible;
-
 };
 
 /**
@@ -50,14 +49,14 @@ SystemMenu.prototype.addButton = function (label, cb, ctx) {
   var button = _game.add.button(0, 0, "menuButton", function () {
     _menuFrameGroup.visible = false;
     cb();
-  }, ctx, 0, 1, 2);
+  }, ctx, 1, 2, 0);
   button.anchor.set(0.5);
   _menuFrameGroup.add(button);
 
   var style = {
     font: "16px Arial",
     fontWeight: "Bold",
-    fill: "#ffffff",
+    fill: "#000000",
     align: "center"
   };
   var text = _game.add.text(0, 0, label, style);
