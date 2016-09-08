@@ -32,7 +32,6 @@ function SystemMenu(group, key) {
  */
 SystemMenu.prototype.onMenuToggle = function () {
   log.info("System menu toggle");
-  var _metrics = this.group.game.screenMetrics;
   this.menuFrameGroup.visible = !this.menuFrameGroup.visible;
 };
 
@@ -48,8 +47,10 @@ SystemMenu.prototype.addButton = function (label, cb, ctx) {
 
   var button = _game.add.button(0, 0, "menuButton", function () {
     _menuFrameGroup.visible = false;
+    this.
     cb();
   }, ctx, 1, 2, 0);
+  button.forceOut = true;
   button.anchor.set(0.5);
   _menuFrameGroup.add(button);
 
