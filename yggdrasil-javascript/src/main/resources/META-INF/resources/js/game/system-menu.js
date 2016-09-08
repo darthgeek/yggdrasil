@@ -23,8 +23,8 @@ function SystemMenu(group, key) {
 
   var frame = this.menuFrameGroup.create(0, 0, "menuFrame");
   frame.anchor.set(0.5);
-  this.menuFrameGroup.x = _metrics.gameWidth / 2;
-  this.menuFrameGroup.y = _metrics.gameHeight / 2;
+  this.menuFrameGroup.x = _metrics.windowWidth / 2;
+  this.menuFrameGroup.y = _metrics.windowHeight / 2;
 }
 
 /**

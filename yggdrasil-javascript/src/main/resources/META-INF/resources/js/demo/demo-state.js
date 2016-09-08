@@ -29,7 +29,7 @@ DemoState.prototype.preload = function () {
   _game.screenMetrics.update();
 
   _scale.setUserScale(_game.screenMetrics.scaleX, _game.screenMetrics.scaleY);
-  _scale.setGameSize(_game.screenMetrics.windowWidth, _game.screenMetrics.windowHeight);
+  _scale.setGameSize(_game.screenMetrics.gameWidth, _game.screenMetrics.gameHeight);
   _scale.pageAlignHorizontally = true;
   _scale.pageAlignVertically = true;
   if (!_game.device.desktop) {
@@ -39,8 +39,8 @@ DemoState.prototype.preload = function () {
   _scale.setResizeCallback(function (scale, parentBounds) {
     var metrics = _game.screenMetrics.update();
     scale.setUserScale(metrics.scaleX, metrics.scaleY);
-    scale.setGameSize(metrics.windowWidth, metrics.windowHeight);
-    scale.game.camera.setSize(metrics.windowWidth, metrics.windowHeight);
+    scale.setGameSize(metrics.gameWidth, metrics.gameHeight);
+    scale.game.camera.setSize(metrics.gameWidth, metrics.gameHeight);
 
     this.updateLayerSizes();
   }, this);
@@ -60,7 +60,7 @@ DemoState.prototype.preload = function () {
 DemoState.prototype.updateLayerSizes = throttle(100, function () {
   var metrics = this.game.screenMetrics;
   $.each(this.layers, function (idx, layer) {
-    layer.resize(metrics.windowWidth, metrics.windowHeight)
+    layer.resize(metrics.gameWidth, metrics.gameHeight)
   });
 });
 
