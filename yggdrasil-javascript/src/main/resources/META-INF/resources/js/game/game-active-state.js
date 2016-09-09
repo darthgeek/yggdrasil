@@ -73,7 +73,15 @@ GameActiveState.prototype.create = function () {
   this.uiLayer.fixedToCamera = true;
 
   this.systemMenu = new SystemMenu(this.uiLayer, Phaser.Keyboard.ESC);
-  this.systemMenu.addButton("Demo", this.onDemoButton, this);
+  this.systemMenu.addButton("Demo 1", function () {
+    log.info("Demo 1 menu action chosen!")
+  });
+  this.systemMenu.addButton("Demo 2", function () {
+    log.info("Demo 2 menu action chosen!")
+  });
+  this.systemMenu.addButton("Demo 3", function () {
+    log.info("Demo 3 menu action chosen!")
+  });
 };
 
 /**
@@ -104,11 +112,5 @@ GameActiveState.prototype.update = function () {
   }
 };
 
-/**
- * Handle te demo menu action.
- */
-GameActiveState.prototype.onDemoButton = function () {
-  log.info("Demo menu action chosen!");
-};
 
 module.exports = GameActiveState;
