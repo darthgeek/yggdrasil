@@ -1,5 +1,5 @@
 require("phaser-shim");
-var log = require("../lib/logger").getLogger("game/system-menu.js");
+var log = require("lib/logger").getLogger("game/system-menu.js");
 
 /**
  * Creates the system menu.
@@ -47,7 +47,6 @@ SystemMenu.prototype.addButton = function (label, cb, ctx) {
 
   var button = _game.add.button(0, 0, "menuButton", function () {
     _menuFrameGroup.visible = false;
-    this.
     cb();
   }, ctx, 1, 2, 0);
   button.forceOut = true;

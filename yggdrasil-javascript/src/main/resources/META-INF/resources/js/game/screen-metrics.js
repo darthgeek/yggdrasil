@@ -1,4 +1,4 @@
-var log = require("../lib/logger").getLogger("game/screen-metrics.js");
+var log = require("lib/logger").getLogger("game/screen-metrics.js");
 
 /**
  * Display orientation enumeration.

@@ -1,26 +1,29 @@
 require("phaser-shim");
-var log = require("../lib/logger").getLogger("demo/demo-state.js");
-var stringify = require("json-stringify");
+var log = require("lib/logger").getLogger("game/game-active-state.js");
 var throttle = require("throttle-debounce/throttle");
 var SystemMenu = require("game/system-menu.js");
+
+GameActiveState.NAME = 'Game';
 
 /* global Phaser */
 
 /**
- * Creates the 'Demo' game state, used for POC and experimentation.
+ * Creates the 'GameActive' game state, which governs normal game play while logged in.
  * @constructor
  */
-function DemoState() {
+function GameActiveState() {
 };
-DemoState.prototype = Object.create(Phaser.State.prototype);
+GameActiveState.prototype = Object.create(Phaser.State.prototype);
 
-DemoState.NAME = 'Demo';
+GameActiveState.NAME = 'Active';
 
 /**
  * Preloads assets required by the game state.
  */
-DemoState.prototype.preload = function () {
+GameActiveState.prototype.preload = function () {
   Phaser.State.call(this.preload);
+
+  log.debug("GameActiveState:preload");
 
   var _scale = this.scale;
   var _game = this.game;
@@ -46,29 +49,15 @@ DemoState.prototype.preload = function () {
   }, this);
 
   this.cursors = _game.input.keyboard.createCursorKeys();
-
-  _game.load.tilemap("tilemap", "assets/medium-demo-map.json", null, Phaser.Tilemap.TILED_JSON);
-  _game.load.image("terrain", "assets/terrain.png");
-
-  _game.load.image("menuFrame", "assets/menuFrame.png");
-  _game.load.spritesheet("menuButton", "assets/button.png", 252, 80);
 };
-
-/**
- * Resizes tilemap layers
- */
-DemoState.prototype.updateLayerSizes = throttle(100, function () {
-  var metrics = this.game.screenMetrics;
-  $.each(this.layers, function (idx, layer) {
-    layer.resize(metrics.gameWidth, metrics.gameHeight)
-  });
-});
 
 /**
  * Called after all assets are preloaded.
  */
-DemoState.prototype.create = function () {
+GameActiveState.prototype.create = function () {
   Phaser.State.call(this.create);
+
+  log.debug("GameActiveState:create");
 
   var _game = this.game;
 
@@ -88,9 +77,19 @@ DemoState.prototype.create = function () {
 };
 
 /**
+ * Resizes tilemap layers
+ */
+GameActiveState.prototype.updateLayerSizes = throttle(100, function () {
+  var metrics = this.game.screenMetrics;
+  $.each(this.layers, function (idx, layer) {
+    layer.resize(metrics.gameWidth, metrics.gameHeight)
+  });
+});
+
+/**
  * Called on each game state update tick.
  */
-DemoState.prototype.update = function () {
+GameActiveState.prototype.update = function () {
   var _game = this.game;
   if (this.cursors.up.isDown) {
     _game.camera.y -= 4;
@@ -108,9 +107,8 @@ DemoState.prototype.update = function () {
 /**
  * Handle te demo menu action.
  */
-DemoState.prototype.onDemoButton = function () {
+GameActiveState.prototype.onDemoButton = function () {
   log.info("Demo menu action chosen!");
 };
 
-module.exports = DemoState;
-
+module.exports = GameActiveState;
