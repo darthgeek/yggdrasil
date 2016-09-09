@@ -1,4 +1,4 @@
-var log = require("../lib/logger").getLogger("game/screen-metrics.js");
+var log = require("lib/logger").getLogger("game/screen-metrics.js");
 
 /**
  * Display orientation enumeration.
@@ -27,12 +27,14 @@ function ScreenMetrics(defaultWidth, defaultHeight) {
  * Updates the screen metrics based on the current window size.
  */
 ScreenMetrics.prototype.update = function () {
-  this.windowWidth = window.innerWidth * window.devicePixelRatio;
-  this.windowHeight = window.innerHeight * window.devicePixelRatio;
+  this.windowWidth = window.innerWidth;
+  this.windowHeight = window.innerHeight;
   this.windowAspect = this.windowWidth / this.windowHeight;
 
-  this.gameWidth = this.windowWidth;
-  this.gameHeight = this.windowHeight;
+
+  this.devicePixelRatio = window.devicePixelRatio;
+  this.gameWidth = this.windowWidth * window.devicePixelRatio;
+  this.gameHeight = this.windowHeight * window.devicePixelRatio;
 
   return this;
 };
