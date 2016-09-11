@@ -79,7 +79,7 @@ SystemMenu.ID_COUNTER = 1;
  * Handles the menu toggle event.
  */
 SystemMenu.prototype.onMenuToggle = function () {
-  log.info("System menu toggle");
+  log.debug("System menu toggle");
   var _screenMetrics = this.group.game.screenMetrics;
 
   if (!this.menuFrameGroup.visible) {

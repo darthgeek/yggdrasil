@@ -26,7 +26,7 @@ var _defaultOpts = {
   /**
    * ID of the DOM element to embed the game viewport in.
    */
-  gameDiv: "gameDiv"
+  gameDiv: "game-container"
 };
 
 /**

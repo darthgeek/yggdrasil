@@ -2,6 +2,8 @@ require("phaser-shim");
 var log = require("lib/logger").getLogger("game/game-active-state.js");
 var throttle = require("throttle-debounce/throttle");
 var SystemMenu = require("game/system-menu.js");
+$ = require("jquery");
+require("jquery-ui");
 
 GameActiveState.NAME = 'Game';
 
@@ -73,8 +75,9 @@ GameActiveState.prototype.create = function () {
   this.uiLayer.fixedToCamera = true;
 
   this.systemMenu = new SystemMenu(this.uiLayer, Phaser.Keyboard.ESC);
-  this.systemMenu.addButton("Admin", function () {
+  this.systemMenu.addButton("ADMIN", function () {
     log.info("Admin menu action chosen!")
+    $("#admin-menu").toggle('slide', {direction: "right"});
   });
 };
 
