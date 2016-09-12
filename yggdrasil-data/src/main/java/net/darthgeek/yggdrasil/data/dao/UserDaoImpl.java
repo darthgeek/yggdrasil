@@ -1,6 +1,5 @@
 package net.darthgeek.yggdrasil.data.dao;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import net.darthgeek.yggdrasil.data.model.User;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -102,8 +101,6 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
   }
 
   @Override
-  @SuppressFBWarnings(value = "RV_RETURN_VALUE_IGNORED_NO_SIDE_EFFECT",
-        justification = "Walk user authority relationships to force load of permissions for spring-security")
   public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
     final Session session = getSession();
 
@@ -116,9 +113,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
     if (results.size() == 0) {
       throw new UsernameNotFoundException("username " + username + " not found");
     } else {
-      final User user = results.get(0);
-      user.getAuthorities();
-      return user;
+      return results.get(0);
     }
   }
 }

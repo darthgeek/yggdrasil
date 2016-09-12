@@ -125,8 +125,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
     registry.addViewController("/login").setViewName("login");
-    registry.addViewController("/").setViewName("game-window");
-
 
     registry.addViewController("/phaser-tutorial").setViewName("phaser-tutorial");
     registry.addViewController("/websocket-tutorial").setViewName("websocket-tutorial");

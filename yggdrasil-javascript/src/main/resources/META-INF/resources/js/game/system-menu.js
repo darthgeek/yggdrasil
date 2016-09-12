@@ -1,8 +1,8 @@
 require("phaser-shim");
 var log = require("lib/logger").getLogger("game/system-menu.js");
 var stringify = require("json-stringify-safe");
-var menuItem = require("../../hbs/menu-item.hbs")
-
+var menuItem = require("../../hbs/menu-item.hbs");
+var security = require("lib/security");
 
 /**
  * Configures the system menu.
@@ -18,10 +18,11 @@ function SystemMenu(game, key) {
   var menuKey = this.game.input.keyboard.addKey(keyCode);
   menuKey.onDown.add(this.onMenuToggle, this);
 
-  // TODO: check for admin permission to display menu item
-  this.addMenu("admin-menu", "Admin", "fa fa-lock", function (ev, elem) {
-    // TODO: open admin control panel
-  });
+  if (security.hasPermission("PERM_ADMIN")) {
+    this.addMenu("admin-menu", "Admin", "fa fa-lock", function (ev, elem) {
+      // TODO: open admin control panel
+    });
+  }
 
   this.addMenu("settings-menu", "Settings", "fa fa-gear", function (ev, elem) {
     // TODO: open user settings panel

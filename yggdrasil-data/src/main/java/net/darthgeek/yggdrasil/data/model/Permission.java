@@ -5,7 +5,6 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import javax.validation.constraints.Pattern;
-import java.util.Set;
 
 /**
  * A permission within the system.
@@ -25,9 +24,6 @@ public class Permission implements GrantedAuthority {
   @NotBlank
   @Pattern(regexp = "[A-Z_]+")
   private String name;
-
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "permissions")
-  private Set<Role> roles;
 
   @Override
   public boolean equals(final Object obj) {
@@ -70,14 +66,6 @@ public class Permission implements GrantedAuthority {
 
   public void setName(final String name) {
     this.name = name;
-  }
-
-  public Set<Role> getRoles() {
-    return roles;
-  }
-
-  public void setRoles(final Set<Role> roles) {
-    this.roles = roles;
   }
 
   @Override

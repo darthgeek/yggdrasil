@@ -24,11 +24,9 @@ public class Role implements GrantedAuthority {
   @NotBlank
   private String name;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "permission_id"))
   private Set<Permission> permissions;
-
-  @ManyToMany(fetch = FetchType.LAZY, mappedBy = "roles")
-  private Set<User> users;
 
   @Override
   public boolean equals(final Object obj) {
@@ -79,14 +77,6 @@ public class Role implements GrantedAuthority {
 
   public void setPermissions(final Set<Permission> permissions) {
     this.permissions = permissions;
-  }
-
-  public Set<User> getUsers() {
-    return users;
-  }
-
-  public void setUsers(final Set<User> users) {
-    this.users = users;
   }
 
   @Override

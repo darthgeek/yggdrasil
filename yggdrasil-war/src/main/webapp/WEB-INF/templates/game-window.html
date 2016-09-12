@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
 >
 <head>
-  <title>Yggdrasil | Game Sandbox</title>
+  <title>Yggdrasil</title>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,6 +21,7 @@
 
   <script th:inline='javascript'>
     window._contextPath = /*[[@{/}]]*/ '/';
+    window._permissions = /*[[${permissions}]]*/ [];
   </script>
   <script type="text/javascript" th:src='@{/js/}+${@assets.get("shared").get("js")}'></script>
   <script type="text/javascript" th:src='@{/js/}+${@assets.get("page/game-window").get("js")}'></script>

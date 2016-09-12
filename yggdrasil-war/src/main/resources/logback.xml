@@ -15,4 +15,11 @@
     <!--
     <logger name="org.springframework.web" level="INFO"/>
     -->
+
+    <!-- SQL Debugging -->
+    <!--
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
+    <logger name="org.hibernate.type" level="TRACE"/>
+    <logger name="org.flywaydb.core" level="DEBUG"/>
+    -->
 </configuration>
