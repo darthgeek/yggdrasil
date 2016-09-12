@@ -65,6 +65,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
           .setCachePeriod(2592000);
     registry.addResourceHandler("/assets/**").addResourceLocations("/WEB-INF/assets/", "classpath:/META-INF/resources/assets/")
           .setCachePeriod(2592000);
+    registry.addResourceHandler("/hbs/**").addResourceLocations("/WEB-INF/assets/", "classpath:/META-INF/resources/hbs/")
+          .setCachePeriod(2592000);
   }
 
   @Override
@@ -122,10 +124,10 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
-    registry.addViewController("/").setViewName("index");
     registry.addViewController("/login").setViewName("login");
+    registry.addViewController("/").setViewName("game-window");
 
-    registry.addViewController("/game-sandbox").setViewName("game-sandbox");
+
     registry.addViewController("/phaser-tutorial").setViewName("phaser-tutorial");
     registry.addViewController("/websocket-tutorial").setViewName("websocket-tutorial");
 
