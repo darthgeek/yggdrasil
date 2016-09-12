@@ -65,6 +65,7 @@ dependencies {
     compile "org.thymeleaf:thymeleaf:$rootProject.ext.thymeleafVersion"
     compile "org.thymeleaf:thymeleaf-spring4:$rootProject.ext.thymeleafVersion"
     compile "org.thymeleaf.extras:thymeleaf-extras-springsecurity4:$rootProject.ext.thymeleafVersion"
+    compile "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.0.1"
     compile "com.google.code.findbugs:jsr305:3.0.0"
     compile "com.google.code.findbugs:annotations:3.0.0"
     compile "com.fasterxml.jackson.core:jackson-databind:$rootProject.ext.jacksonVersion"

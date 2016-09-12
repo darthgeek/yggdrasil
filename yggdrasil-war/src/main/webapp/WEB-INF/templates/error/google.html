@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
->
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <title>Yggdrasil | Google Authentication Error</title>
 
@@ -32,6 +32,9 @@
     <div class="panel-body">
       The application was unable to process the authentication token from your Google account.
     </div>
+  </div>
+  <div layout:replace="~{error/default :: errorDetails}">
+    <small>Error details not available</small>
   </div>
 </div>
 </body>

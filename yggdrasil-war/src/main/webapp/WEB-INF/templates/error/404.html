@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
->
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <title>Yggdrasil | Page Not Found</title>
 
@@ -30,8 +30,13 @@
   <div class="panel panel-danger">
     <div class="panel-heading">HTTP 404 : Page Not Found</div>
     <div class="panel-body">
-      You have tried to access a page that does not exist.
+      <p>
+        You have tried to access a page that does not exist.
+      </p>
     </div>
+  </div>
+  <div layout:replace="~{error/default :: errorDetails}">
+    <small>Error details not available</small>
   </div>
 </div>
 </body>

@@ -3,6 +3,7 @@ var log = require("lib/logger").getLogger("game/system-menu.js");
 var stringify = require("json-stringify-safe");
 var menuItem = require("../../hbs/menu-item.hbs");
 var security = require("lib/security");
+var util = require("lib/utils");
 
 /**
  * Configures the system menu.
@@ -20,12 +21,12 @@ function SystemMenu(game, key) {
 
   if (security.hasPermission("PERM_ADMIN")) {
     this.addMenu("admin-menu", "Admin", "fa fa-lock", function (ev, elem) {
-      // TODO: open admin control panel
+      _this.openSystemPanel(util.url("api/systemPanel/admin/dashboard"));
     });
   }
 
   this.addMenu("settings-menu", "Settings", "fa fa-gear", function (ev, elem) {
-    // TODO: open user settings panel
+    _this.openSystemPanel(util.url("api/systemPanel/settings"));
   });
 
   this.addMenu("logout-menu", "Logout", "fa fa-power-off", function (ev, elem) {
@@ -38,7 +39,20 @@ function SystemMenu(game, key) {
  */
 SystemMenu.prototype.onMenuToggle = function () {
   log.debug("System menu toggle");
-  $("#system-menu").toggle("slide", {direction: "right"});
+  var panel = $("#system-panel");
+
+  if (panel.is(":visible")) {
+    panel.hide("slide", {direction: "right"});
+  } else {
+    $("#system-menu").toggle("slide", {direction: "right"});
+  }
+};
+
+SystemMenu.prototype.openSystemPanel = function (url) {
+  $("#system-menu").hide("slide", {direction: "right"});
+  $("#system-panel").toggle("slide", {direction: "right"});
+
+  log.info("Opening " + url);
 };
 
 /**

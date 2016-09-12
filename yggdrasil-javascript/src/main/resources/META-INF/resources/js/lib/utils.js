@@ -55,4 +55,12 @@ Utils.formatUtcDate = function (date, format) {
   return Utils.formatDate(date, format, true);
 };
 
+/**
+ * Converts a context relative path to a full relative URL including the web applicatoin context.
+ * @param path path to convert
+ */
+Utils.url = function (path) {
+  return (window._contextPath ? window._contextPath : "/") + path;
+}
+
 module.exports = Utils;

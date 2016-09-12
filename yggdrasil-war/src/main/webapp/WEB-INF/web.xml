@@ -4,6 +4,10 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_3_0.xsd"
          version="3.0">
     <error-page>
+        <error-code>401</error-code>
+        <location>/error/401</location>
+    </error-page>
+    <error-page>
         <error-code>404</error-code>
         <location>/error/404</location>
     </error-page>

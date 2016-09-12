@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <head>
   <title>Yggdrasil | Access Forbidden</title>
@@ -32,6 +33,9 @@
     <div class="panel-body">
       You have tried to access a page that you don't have permission to view.
     </div>
+  </div>
+  <div layout:replace="~{error/default :: errorDetails}">
+    <small>Error details not available</small>
   </div>
 </div>
 </body>
