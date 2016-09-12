@@ -16,6 +16,8 @@ var config = {
   cssTarget: path.join(assetsTarget, "css"),
   fontSource: path.join(assetsSrc, "font"),
   fontTarget: path.join(assetsTarget, "font"),
+  hbsSource: path.join(assetsSrc, "hbs"),
+  hbsTarget: path.join(assetsTarget, "hbs"),
   classpathTarget: resourcesTarget
 };
 

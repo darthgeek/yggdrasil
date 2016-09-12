@@ -5,7 +5,7 @@ require("../lib/common.js");
 require("../../css/app.css");
 var $ = require("jquery");
 var log = require("../lib/logger").getLogger("page/login.js", "INFO");
-var stringify = require("json-stringify");
+var stringify = require("json-stringify-safe");
 require("admin-lte/plugins/iCheck/icheck.js");
 require("admin-lte/plugins/iCheck/square/blue.css");
 

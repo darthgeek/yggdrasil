@@ -74,11 +74,7 @@ GameActiveState.prototype.create = function () {
   this.uiLayer = _game.add.group();
   this.uiLayer.fixedToCamera = true;
 
-  this.systemMenu = new SystemMenu(this.uiLayer, Phaser.Keyboard.ESC);
-  this.systemMenu.addButton("ADMIN", function () {
-    log.info("Admin menu action chosen!")
-    $("#admin-menu").toggle('slide', {direction: "right"});
-  });
+  this.systemMenu = new SystemMenu(_game, Phaser.Keyboard.ESC);
 };
 
 /**

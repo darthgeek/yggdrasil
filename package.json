@@ -39,7 +39,7 @@
     "jquery": "~2.2.3",
     "jquery-ui": "~1.10.5",
     "json-loader": "~0.5.4",
-    "json-stringify": "~1.0.0",
+    "json-stringify-safe": "~5.0.1",
     "micromatch": "~2.3.11",
     "opn": "~4.0.2",
     "path": "~0.12.7",
