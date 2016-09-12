@@ -27,9 +27,12 @@
 </head>
 <body>
 <div class="game-container"></div>
-<div id="admin-menu"
-     style="display: none; position: fixed;background: rgba(0,0,0,.5);color:#ffffff;z-index: 1000;width: 300px;right: 0;height: 100%;">
-  Menu content
+<div id="system-menu" class="menu-container">
+  <ul class="nav nav-pills nav-stacked">
+  </ul>
 </div>
+<form id="logout-form" th:action="@{/logout}" method="post">
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
 </body>
 </html>
