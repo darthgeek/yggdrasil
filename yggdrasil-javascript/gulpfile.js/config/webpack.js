@@ -9,7 +9,7 @@ module.exports = function (env) {
     entry: {
       "page/basic": ["./page/basic.js"],
       "page/login": ["./page/login.js"],
-      "page/game-sandbox": ["./page/game-sandbox.js"],
+      "page/game-window": ["./page/game-window.js"],
       "page/phaser-tutorial": ["./page/phaser-tutorial.js"],
       "page/websocket-tutorial": ["./page/websocket-tutorial.js"],
     },

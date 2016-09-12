@@ -33,7 +33,7 @@
   background-color: rgba(64, 64, 64, 0.7);
 }
 
-.fa-blank {
+.menu-container .menu-icon {
   width: 12px;
-  height: 14px;
+  text-align: center;
 }
