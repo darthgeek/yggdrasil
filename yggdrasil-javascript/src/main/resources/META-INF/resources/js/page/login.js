@@ -79,7 +79,7 @@ Page.prototype.signOutGoogle = function () {
  * @param googleUser Google account information
  */
 Page.prototype.onGoogleSigninSuccess = function (googleUser) {
-  log.info("Logged in as " + googleUser.getBasicProfile().getName());
+  log.info("Logged in to Google as " + googleUser.getBasicProfile().getName());
   var idToken = googleUser.getAuthResponse().id_token;
   var form = $("#google-signin-form");
   form.find("input[name=token]").val(idToken);
