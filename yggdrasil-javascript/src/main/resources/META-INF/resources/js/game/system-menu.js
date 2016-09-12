@@ -19,8 +19,12 @@ function SystemMenu(game, key) {
   menuKey.onDown.add(this.onMenuToggle, this);
 
   // TODO: check for admin permission to display menu item
-  this.addMenu("admin-menu", "Admin", "fa fa-gear", function (ev, elem) {
+  this.addMenu("admin-menu", "Admin", "fa fa-lock", function (ev, elem) {
     // TODO: open admin control panel
+  });
+
+  this.addMenu("settings-menu", "Settings", "fa fa-gear", function (ev, elem) {
+    // TODO: open user settings panel
   });
 
   this.addMenu("logout-menu", "Logout", "fa fa-power-off", function (ev, elem) {
