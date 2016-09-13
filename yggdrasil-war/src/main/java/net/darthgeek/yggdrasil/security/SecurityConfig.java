@@ -16,11 +16,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 /**
@@ -83,15 +85,21 @@ public class SecurityConfig {
   public static class GuiApiSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(final HttpSecurity http) throws Exception {
-      // @formatter:on
+      // @formatter:off
       http.antMatcher("/api/**")
             .authorizeRequests()
-            .anyRequest().authenticated().and()
-            .exceptionHandling()
-            .accessDeniedPage("/error/403").and()
-            .headers()
+              .anyRequest().authenticated().and()
+          .exceptionHandling()
+            .authenticationEntryPoint(restEntryPoint()).and()
+          .headers()
             .frameOptions().sameOrigin();
-      // @formatter:off
+      // @formatter:on
+    }
+
+    @Bean
+    public AuthenticationEntryPoint restEntryPoint() {
+      // We only authenticate through the webapp to get to the API
+      return (request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
     }
   }
 
