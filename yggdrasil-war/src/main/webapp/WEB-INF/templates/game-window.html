@@ -29,6 +29,15 @@
 <body>
 <div class="game-container"></div>
 <div id="system-menu" class="menu-container">
+  <div class="profile">
+    <div><strong>Welcome, <span th:text="${#authentication.principal.username}">User</span>!</strong></div>
+    <div>Member since
+      <time th:text="${#dates.format(#authentication.principal.createdTime, 'MMM d, yyyy')}"
+            th:datetime="${#dates.format(#authentication.principal.createdTime, 'yyyy-MM-dd''T''HH:mm:ss''Z''')}">
+        MMM d, yyyy
+      </time>
+    </div>
+  </div>
   <ul class="nav nav-pills nav-stacked">
   </ul>
 </div>
