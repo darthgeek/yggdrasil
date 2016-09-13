@@ -32,9 +32,7 @@
   <ul class="nav nav-pills nav-stacked">
   </ul>
 </div>
-<div id="system-panel" class="panel-container">
-  <iframe src="/api/systemPanel/admin/dashboard.html">
-  </iframe>
+<div id="system-panel" class="panel-container container-fluid">
 </div>
 <form id="logout-form" th:action="@{/logout}" method="post">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

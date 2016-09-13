@@ -102,6 +102,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     resolver.setSuffix(".html");
     resolver.setTemplateMode(TemplateMode.HTML);
     resolver.setCacheable(resourceCache);
+    resolver.setCheckExistence(true);
     return resolver;
   }
 

@@ -3,7 +3,7 @@
  */
 require("../lib/common.js");
 var modernizer = require("modernizr");
-var log = require("../lib/logger").getLogger("page/basic.js");
+var log = require("../lib/logger").getLogger("page/error.js");
 
 /**
  * Page specific functionality.
@@ -21,6 +21,11 @@ function Page() {
  */
 Page.prototype.init = function () {
   log.info("Page loaded");
+
+  // Strip the query string off the address bar
+  if (modernizer.history) {
+    history.pushState(null, "", location.href.split("?")[0]);
+  }
 };
 
 window.page = new Page();

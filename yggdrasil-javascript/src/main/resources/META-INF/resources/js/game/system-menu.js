@@ -2,8 +2,10 @@ require("phaser-shim");
 var log = require("lib/logger").getLogger("game/system-menu.js");
 var stringify = require("json-stringify-safe");
 var menuItem = require("../../hbs/menu-item.hbs");
+var errorPanel = require("../../hbs/error-panel.hbs");
 var security = require("lib/security");
 var util = require("lib/utils");
+var $ = require("jquery");
 
 /**
  * Configures the system menu.
@@ -32,6 +34,10 @@ function SystemMenu(game, key) {
   this.addMenu("logout-menu", "Logout", "fa fa-power-off", function (ev, elem) {
     $("#logout-form").submit();
   });
+
+  $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+    options.async = true;
+  });
 }
 
 /**
@@ -48,11 +54,24 @@ SystemMenu.prototype.onMenuToggle = function () {
   }
 };
 
+/**
+ * Opens the system panel with the appropriate contents loaded.
+ * @param url URL to system panel contents
+ */
 SystemMenu.prototype.openSystemPanel = function (url) {
-  $("#system-menu").hide("slide", {direction: "right"});
-  $("#system-panel").toggle("slide", {direction: "right"});
-
-  log.info("Opening " + url);
+  $("#system-panel").load(url + " .container", null, function (response, status, xhr) {
+    if (status == "error") {
+      var msg = errorPanel(
+          {
+            status: xhr.status,
+            summary: xhr.statusText,
+            details: "There was an error loading the system panel " + url
+          });
+      $("#system-panel").html(msg);
+    }
+    $("#system-menu").hide("slide", {direction: "right"});
+    $("#system-panel").toggle("slide", {direction: "right"});
+  });
 };
 
 /**
