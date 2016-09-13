@@ -23,29 +23,33 @@ CREATE TABLE Permission (
 );
 
 CREATE TABLE User_Role (
-  users_id BIGINT NOT NULL,
-  roles_id BIGINT NOT NULL,
-  FOREIGN KEY (users_id) REFERENCES User (id),
-  FOREIGN KEY (roles_id) REFERENCES Role (id),
+  user_id BIGINT NOT NULL,
+  role_id BIGINT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES User (id),
+  FOREIGN KEY (role_id) REFERENCES Role (id),
 );
 
 CREATE TABLE Role_Permission (
-  roles_id       BIGINT NOT NULL,
-  permissions_id BIGINT NOT NULL,
-  FOREIGN KEY (roles_id) REFERENCES Role (id),
-  FOREIGN KEY (permissions_id) REFERENCES Permission (id)
+  role_id       BIGINT NOT NULL,
+  permission_id BIGINT NOT NULL,
+  FOREIGN KEY (role_id) REFERENCES Role (id),
+  FOREIGN KEY (permission_id) REFERENCES Permission (id)
 );
 
 -- Default user: admin/password
 INSERT INTO User (id, email, username, password, enabled, createdTime)
-VALUES (1, 'yggdrasil-admin@example.com', 'admin', '$2a$10$nY19RQx74gIF7qKjlYScceQcutEVVwb8w2q9knbH3Sp5oiDoWrsem', 1,
-        CURRENT_TIME());
+  VALUES (1, 'yggdrasil-admin@example.com', 'admin', '$2a$10$nY19RQx74gIF7qKjlYScceQcutEVVwb8w2q9knbH3Sp5oiDoWrsem', 1,
+          CURRENT_TIME());
 
-INSERT INTO Role (id, name) VALUES (1, 'USER');
-INSERT INTO Role (id, name) VALUES (2, 'ADMIN');
+INSERT INTO Role (id, name) VALUES (10, 'USER');
+INSERT INTO Role (id, name) VALUES (20, 'ADMIN');
 
-INSERT INTO User_Role (users_id, roles_id) VALUES (1, 1);
-INSERT INTO User_Role (users_id, roles_id) VALUES (1, 2);
+INSERT INTO Permission (id, name) VALUES (100, 'ADMIN');
+
+INSERT INTO User_Role (user_id, role_id) VALUES (1, 10);
+INSERT INTO User_Role (user_id, role_id) VALUES (1, 20);
+
+INSERT INTO Role_Permission (role_id, permission_id) VALUES (20, 100);
 
 -- Spring "remember me" authentication
 CREATE TABLE persistent_logins (

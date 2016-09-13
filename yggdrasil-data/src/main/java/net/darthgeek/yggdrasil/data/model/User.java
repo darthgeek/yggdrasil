@@ -44,7 +44,8 @@ public class User implements UserDetails {
   @Column
   private String externalAuthKey;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new TreeSet<Role>();
 
   @Override

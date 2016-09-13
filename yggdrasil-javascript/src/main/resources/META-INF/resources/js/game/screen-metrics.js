@@ -17,8 +17,6 @@ function ScreenMetrics(defaultWidth, defaultHeight) {
   this.defaultWidth = defaultWidth || 1280;
   this.defaultHeight = defaultHeight || 800;
   this.defaultAspect = this.defaultWidth / this.defaultHeight;
-  this.scaleX = 1.0;
-  this.scaleY = 1.0;
 
   this.update();
 };
@@ -33,8 +31,11 @@ ScreenMetrics.prototype.update = function () {
 
 
   this.devicePixelRatio = window.devicePixelRatio;
-  this.gameWidth = this.windowWidth * window.devicePixelRatio;
-  this.gameHeight = this.windowHeight * window.devicePixelRatio;
+  this.gameWidth = this.windowWidth;
+  this.gameHeight = this.windowHeight;
+
+  this.scaleX = 1.0;
+  this.scaleY = 1.0;
 
   return this;
 };

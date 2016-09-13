@@ -1,6 +1,7 @@
 var config = require("../config");
 var webpack = require("webpack");
 var AssetsPlugin = require("assets-webpack-plugin");
+var path = require("path");
 
 module.exports = function (env) {
   var webpackConfig = {
@@ -9,7 +10,7 @@ module.exports = function (env) {
     entry: {
       "page/basic": ["./page/basic.js"],
       "page/login": ["./page/login.js"],
-      "page/game-sandbox": ["./page/game-sandbox.js"],
+      "page/game-window": ["./page/game-window.js"],
       "page/phaser-tutorial": ["./page/phaser-tutorial.js"],
       "page/websocket-tutorial": ["./page/websocket-tutorial.js"],
     },
@@ -34,9 +35,10 @@ module.exports = function (env) {
 
     resolve: {
       extensions: ["", ".js"],
-      root:  config.jsSource,
+      root: config.jsSource,
       alias: {
-        "phaser-shim": "vendor/phaser-shim"
+        "phaser-shim": "vendor/phaser-shim",
+        "modernizr$": path.resolve(config.vendorSource, "modernizr/modernizrrc.json")
       }
     },
 
@@ -48,6 +50,10 @@ module.exports = function (env) {
 
     module: {
       loaders: [
+        {
+          test: /modernizrrc.json$/,
+          loader: "modernizr"
+        },
         {
           test: /\.css$/,
           loader: "style-loader!css-loader"

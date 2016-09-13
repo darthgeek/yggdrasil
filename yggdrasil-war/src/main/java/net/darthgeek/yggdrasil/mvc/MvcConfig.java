@@ -2,6 +2,7 @@ package net.darthgeek.yggdrasil.mvc;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -10,6 +11,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.*;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.Resource;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.*;
@@ -34,6 +36,7 @@ import java.util.Set;
 @ComponentScan
 @PropertySource("classpath:thymeleaf.properties")
 @EnableTransactionManagement
+@EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationContextAware {
   private static final TypeReference<Map<String, Object>> ASSETS_TYPE_REF = new TypeReference<Map<String, Object>>() {
   };
@@ -65,6 +68,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
           .setCachePeriod(2592000);
     registry.addResourceHandler("/assets/**").addResourceLocations("/WEB-INF/assets/", "classpath:/META-INF/resources/assets/")
           .setCachePeriod(2592000);
+    registry.addResourceHandler("/hbs/**").addResourceLocations("/WEB-INF/assets/", "classpath:/META-INF/resources/hbs/")
+          .setCachePeriod(2592000);
   }
 
   @Override
@@ -76,6 +81,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
   public Set<IDialect> dialects() {
     final Set<IDialect> sets = new HashSet<>();
     sets.add(new SpringSecurityDialect());
+    sets.add(new LayoutDialect());
     return sets;
   }
 
@@ -96,6 +102,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
     resolver.setSuffix(".html");
     resolver.setTemplateMode(TemplateMode.HTML);
     resolver.setCacheable(resourceCache);
+    resolver.setCheckExistence(true);
     return resolver;
   }
 
@@ -122,10 +129,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter implements ApplicationCon
 
   @Override
   public void addViewControllers(ViewControllerRegistry registry) {
-    registry.addViewController("/").setViewName("index");
     registry.addViewController("/login").setViewName("login");
 
-    registry.addViewController("/game-sandbox").setViewName("game-sandbox");
     registry.addViewController("/phaser-tutorial").setViewName("phaser-tutorial");
     registry.addViewController("/websocket-tutorial").setViewName("websocket-tutorial");
 

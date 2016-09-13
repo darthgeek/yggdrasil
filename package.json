@@ -39,7 +39,7 @@
     "jquery": "~2.2.3",
     "jquery-ui": "~1.10.5",
     "json-loader": "~0.5.4",
-    "json-stringify": "~1.0.0",
+    "json-stringify-safe": "~5.0.1",
     "micromatch": "~2.3.11",
     "opn": "~4.0.2",
     "path": "~0.12.7",
@@ -61,6 +61,8 @@
     "url": "~0.11.0",
     "url-loader": "~0.5.7",
     "webpack": "~1.13.0",
-    "webstomp-client": "~1.0.2"
+    "webstomp-client": "~1.0.2",
+    "modernizr": "~3.3.1",
+    "modernizr-loader": "~0.0.5"
   }
 }

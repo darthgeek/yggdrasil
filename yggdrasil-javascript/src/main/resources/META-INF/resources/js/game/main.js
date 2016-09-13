@@ -1,7 +1,7 @@
 var $ = require("jquery");
 require("phaser-shim");
 var log = require("lib/logger").getLogger("game/main.js");
-var stringify = require("json-stringify");
+var stringify = require("json-stringify-safe");
 var ScreenMetrics = require("game/screen-metrics.js");
 var BootState = require("game/boot-state.js");
 var LoadingState = require("game/loading-state.js");
@@ -26,7 +26,7 @@ var _defaultOpts = {
   /**
    * ID of the DOM element to embed the game viewport in.
    */
-  gameDiv: "gameDiv"
+  gameDiv: "game-container"
 };
 
 /**

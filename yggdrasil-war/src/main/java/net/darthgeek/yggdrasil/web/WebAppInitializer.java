@@ -7,6 +7,8 @@ import net.darthgeek.yggdrasil.websocket.WebSocketConfig;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.Filter;
+
 /**
  * Created by jason on 7/10/2016.
  */
@@ -30,5 +32,12 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
   @Override
   protected String getServletName() {
     return "Yggdrasil Server";
+  }
+
+  @Override
+  protected Filter[] getServletFilters() {
+    return new Filter[]{
+          new ViewErrorHandlerFilter()
+    };
   }
 }

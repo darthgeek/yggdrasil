@@ -2,13 +2,13 @@
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head layout:replace="~{error/default :: header}">
-  <title layout:fragment="title">Yggdrasil | Method Not Supported</title>
+  <title layout:fragment="title">Yggdrasil | Internal Server Error</title>
 </head>
 <body>
 <div class="container">
-  <div layout:replace="~{error/default :: errorSummary(httpStatus = '405', message = 'Method Not Supported')}">
+  <div layout:replace="~{error/default :: errorSummary(httpStatus = '500', message = 'Internal Server Error')}">
     <p layout:fragment="description">
-      You have tried to access a page through an unsupported HTTP method.
+      The application has encountered an internal error processing the request.
     </p>
   </div>
   <div layout:replace="~{error/default :: errorDetails}">

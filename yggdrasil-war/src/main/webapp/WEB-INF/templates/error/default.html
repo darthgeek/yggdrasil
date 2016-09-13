@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
->
-<head>
-  <title>Yggdrasil | Internal Server Error</title>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.springframework.org/security/tags">
+<head layout:fragment="header">
+  <title layout:fragment="title">Yggdrasil | Internal Server Error</title>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -27,12 +28,70 @@
 </head>
 <body>
 <div class="container">
-  <div class="panel panel-danger">
-    <div class="panel-heading">HTTP 500 : Internal Server Error</div>
+  <div layout:fragment="errorSummary(httpStatus, message)" class="panel panel-danger">
+    <div class="panel-heading">HTTP <span th:text="${httpStatus}">500</span> :
+      <span th:text="${message}">Internal Server Error</span>
+    </div>
     <div class="panel-body">
-      The application has encountered an internal error processing the request.
+      <div layout:fragment="description">
+        The application has encountered an internal error processing the request.
+      </div>
     </div>
   </div>
-</div>
+  <div layout:fragment="errorDetails">
+    <div class="panel panel-warning">
+      <div class="panel-heading" th:if="${exception != null}" th:text="'Exception: ' + ${exception} + ']'">Error
+        Details
+      </div>
+      <div class="panel-heading" th:if="${param.exception != null}" th:text="'Exception: ' + ${param.exception} + ']'">
+        Error Details
+      </div>
+      <div class="panel-heading" th:if="${exception == null && param.exception == null}">Error Details</div>
+      <div class="panel-body">
+        <ul class="list-unstyled">
+          <li th:if="${errorId != null || param.errorId != null}">
+            <small>
+              <strong>Error ID:</strong>
+              <span th:if="${errorId != null}" th:text="${errorId}"><i>unknown</i></span>
+              <span th:if="${param.errorId != null}" th:text="${param.errorId}"><i>unknown</i></span>
+            </small>
+          </li>
+          <li th:if="${request} != null">
+            <small>
+              <strong>Request:</strong> <span th:text="${request.method}"><i>unknown</i></span>
+              <span th:text="${request.requestURI}"><i>unknown</i></span>
+            </small>
+          </li>
+          <li th:if="${request.getHeader('referer') != null && request.getHeader('referer').trim().length() > 0}">
+            <small>
+              <strong>Referer:</strong> <span th:text="${request.getHeader('referer')}"><i>unknown</i></span>
+            </small>
+          </li>
+          <li th:if="${request} != null">
+            <small>
+              <strong>IP Address:</strong> <span th:text="${request.getRemoteAddr()}"><i>unknown</i></span>
+            </small>
+          </li>
+          <li th:if="${request} != null">
+            <small>
+              <strong>User Agent:</strong> <span th:text="${request.getHeader('User-Agent')}"><i>unknown</i></span>
+            </small>
+          </li>
+          <li>
+            <small>
+              <strong>User:</strong>
+              <span sec:authorize="isAuthenticated()">
+                  <span th:text="${#authentication.name}"></span>
+                </span>
+              <span sec:authorize="isAnonymous()">
+                  <i>not authenticated</i>
+                </span>
+            </small>
+          </li>
+        </ul>
+      </div>
+      </p>
+    </div>
+  </div>
 </body>
 </html>

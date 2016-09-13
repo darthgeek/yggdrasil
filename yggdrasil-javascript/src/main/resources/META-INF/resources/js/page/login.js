@@ -5,7 +5,7 @@ require("../lib/common.js");
 require("../../css/app.css");
 var $ = require("jquery");
 var log = require("../lib/logger").getLogger("page/login.js", "INFO");
-var stringify = require("json-stringify");
+var stringify = require("json-stringify-safe");
 require("admin-lte/plugins/iCheck/icheck.js");
 require("admin-lte/plugins/iCheck/square/blue.css");
 
@@ -79,7 +79,7 @@ Page.prototype.signOutGoogle = function () {
  * @param googleUser Google account information
  */
 Page.prototype.onGoogleSigninSuccess = function (googleUser) {
-  log.info("Logged in as " + googleUser.getBasicProfile().getName());
+  log.info("Logged in to Google as " + googleUser.getBasicProfile().getName());
   var idToken = googleUser.getAuthResponse().id_token;
   var form = $("#google-signin-form");
   form.find("input[name=token]").val(idToken);

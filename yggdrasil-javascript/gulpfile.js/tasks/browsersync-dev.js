@@ -13,7 +13,12 @@ gulp.task("browsersync:dev", ["webpack:dev"], function (cb) {
     proxy: "http://localhost:8080"
   });
 
-  var srcDirs = [config.jsSource + "/**/*", config.cssSource + "/**/*", config.fontSource + "/**/*"];
+  var srcDirs = [
+    config.jsSource + "/**/*",
+    config.cssSource + "/**/*",
+    config.fontSource + "/**/*",
+    config.hbsSource + "/**/*"
+  ];
 
   gutil.log("Running browsersync:dev - watching " + srcDirs);
   gulp.watch(srcDirs, ["browsersync:refresh"]);

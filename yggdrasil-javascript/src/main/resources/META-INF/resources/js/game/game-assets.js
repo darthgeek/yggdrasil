@@ -67,10 +67,6 @@ TileMapAsset.prototype.load = function (loader) {
  * Manifest of game assets for the loader.
  */
 module.exports = [
-  // System menu UI assets
-  new ImageAsset("menuFrame", "assets/menuFrame.png"),
-  new SpriteSheetAsset("menuButton", "assets/button.png", 252, 80),
-
   // Base game assets
   new TileMapAsset("tilemap", "assets/medium-demo-map.json"),
   new ImageAsset("terrain", "assets/terrain.png")

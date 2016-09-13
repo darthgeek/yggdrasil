@@ -2,13 +2,13 @@
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head layout:replace="~{error/default :: header}">
-  <title layout:fragment="title">Yggdrasil | Method Not Supported</title>
+  <title layout:fragment="title">Yggdrasil | Authentication Required</title>
 </head>
 <body>
 <div class="container">
-  <div layout:replace="~{error/default :: errorSummary(httpStatus = '405', message = 'Method Not Supported')}">
+  <div layout:replace="~{error/default :: errorSummary(httpStatus = '401', message = 'Authentication Required')}">
     <p layout:fragment="description">
-      You have tried to access a page through an unsupported HTTP method.
+      You have tried to access a page that requires a valid login session.
     </p>
   </div>
   <div layout:replace="~{error/default :: errorDetails}">
@@ -17,4 +17,3 @@
 </div>
 </body>
 </html>
-a
