@@ -1,6 +1,7 @@
 package net.darthgeek.yggdrasil.data.dao;
 
 import net.darthgeek.yggdrasil.data.model.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
@@ -108,6 +109,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
     final List<User> results =
           session.createCriteria(getEntityClass())
                 .add(Restrictions.eq("username", username))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 
     if (results.size() == 0) {

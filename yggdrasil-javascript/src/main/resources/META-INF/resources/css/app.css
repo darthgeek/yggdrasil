@@ -16,27 +16,47 @@
   background: rgba(0, 0, 0, 0.8);
   color: #ffffff;
   z-index: 1000;
-  width: 120px;
+  width: 200px;
   height: 100%;
 }
 
+.menu-container .nav li {
+  padding: 0px 0px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: rgba(11, 26, 40, 0.5);
+}
+
 .menu-container .nav-stacked > li > a {
-  color: #ffffff;
-  white-space: nowrap;
   padding: 10px 10px;
+  color: #ddd;
+  white-space: nowrap;
 }
 
 .menu-container .nav-pills > li > a:hover,
 .menu-container .nav-pills > li > a:active,
 .menu-container .nav-pills > li > a:focus {
   color: #fff;
-  font-weight: bold;
-  background-color: rgba(64, 64, 64, 1.0);
+  background-color: rgba(128, 128, 128, 0.8);
 }
 
 .menu-container .menu-icon {
   width: 12px;
   text-align: center;
+}
+
+.menu-container .profile {
+  background: rgba(39, 93, 139, 0.8);
+  color: #ccc;
+  padding: 5px 15px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.menu-container .profile strong {
+  color: #fff;
+  font-weight: bolder;
+  font-size: 16px;
 }
 
 .panel-container {
