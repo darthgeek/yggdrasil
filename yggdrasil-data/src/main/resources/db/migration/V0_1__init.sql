@@ -38,8 +38,8 @@ CREATE TABLE Role_Permission (
 
 -- Default user: admin/password
 INSERT INTO User (id, email, username, password, enabled, createdTime)
-  VALUES (1, 'yggdrasil-admin@example.com', 'admin', '$2a$10$nY19RQx74gIF7qKjlYScceQcutEVVwb8w2q9knbH3Sp5oiDoWrsem', 1,
-          CURRENT_TIME());
+VALUES (1, 'yggdrasil-admin@example.com', 'admin', '$2a$10$nY19RQx74gIF7qKjlYScceQcutEVVwb8w2q9knbH3Sp5oiDoWrsem',
+        1, CURRENT_TIMESTAMP());
 
 INSERT INTO Role (id, name) VALUES (10, 'USER');
 INSERT INTO Role (id, name) VALUES (20, 'ADMIN');
