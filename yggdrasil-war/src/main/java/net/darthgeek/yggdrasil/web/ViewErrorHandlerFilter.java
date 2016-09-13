@@ -13,10 +13,12 @@ public class ViewErrorHandlerFilter implements Filter {
 
   @Override
   public void init(final FilterConfig filterConfig) throws ServletException {
+    // Intentionally blank
   }
 
   @Override
   public void destroy() {
+    // Intentionally blank
   }
 
   @Override

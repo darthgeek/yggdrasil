@@ -60,7 +60,7 @@ SystemMenu.prototype.onMenuToggle = function () {
  */
 SystemMenu.prototype.openSystemPanel = function (url) {
   $("#system-panel").load(url + " .container", null, function (response, status, xhr) {
-    if (status == "error") {
+    if (status === "error") {
       var msg = errorPanel(
           {
             status: xhr.status,
@@ -88,9 +88,9 @@ SystemMenu.prototype.addMenu = function (id, label, icon, cb) {
     label: label
   }));
   var menuEl = $("#" + id);
-  menuEl.find('a').click(function (ev) {
+  menuEl.find("a").click(function (ev) {
     log.info("Menu item " + id + " (" + label + ") selected");
-    var _cb = (typeof cb === 'function') ? cb : function () {
+    var _cb = (typeof cb === "function") ? cb : function () {
     };
     var blinkMs = 75;
     $(ev.target).blur()
@@ -99,10 +99,9 @@ SystemMenu.prototype.addMenu = function (id, label, icon, cb) {
         .fadeOut(blinkMs)
         .fadeIn(blinkMs,
             function () {
-              _cb(ev, menuEl)
+              _cb(ev, menuEl);
             });
   });
-
-}
+};
 
 module.exports = SystemMenu;

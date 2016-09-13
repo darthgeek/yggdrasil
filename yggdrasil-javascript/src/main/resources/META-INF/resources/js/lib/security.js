@@ -1,4 +1,4 @@
-_ = require("underscore");
+var _ = require("underscore");
 
 /**
  * Security context holder for client side.
@@ -15,6 +15,6 @@ function Security() {
  */
 Security.prototype.hasPermission = function (perm) {
   return _.contains(this.permissions, perm);
-}
+};
 
 module.exports = new Security();

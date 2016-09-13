@@ -61,6 +61,6 @@ Utils.formatUtcDate = function (date, format) {
  */
 Utils.url = function (path) {
   return (window._contextPath ? window._contextPath : "/") + path;
-}
+};
 
 module.exports = Utils;
