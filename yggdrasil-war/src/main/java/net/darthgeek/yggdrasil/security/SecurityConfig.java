@@ -87,7 +87,6 @@ public class SecurityConfig {
       http.antMatcher("/api/**")
             .authorizeRequests()
             .anyRequest().authenticated().and()
-            .httpBasic().and()
             .exceptionHandling()
             .accessDeniedPage("/error/403").and()
             .headers()

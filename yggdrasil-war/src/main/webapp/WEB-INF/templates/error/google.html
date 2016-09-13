@@ -1,37 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
+<html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-  <title>Yggdrasil | Google Authentication Error</title>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-
-  <meta name="_csrf" th:content="${_csrf.token}" th:if="${_csrf != null}"/>
-  <meta name="_csrf_header" th:content="${_csrf.headerName}" th:if="${_csrf != null}"/>
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-
-  <script th:inline='javascript'>
-    window._contextPath = /*[[@{/}]]*/ '/';
-  </script>
-  <script type="text/javascript" th:src='@{/js/}+${@assets.get("shared").get("js")}'></script>
-  <script type="text/javascript" th:src='@{/js/}+${@assets.get("page/basic").get("js")}'></script>
+<head layout:replace="~{error/default :: header}">
+  <title layout:fragment="title">Yggdrasil | Google Authentication Error</title>
 </head>
 <body>
 <div class="container">
-  <div class="panel panel-danger">
-    <div class="panel-heading">Error Processing Google Login</div>
-    <div class="panel-body">
+  <div layout:replace="~{error/default :: errorSummary(httpStatus = '500', message = 'Google Authentication Error')}">
+    <p layout:fragment="description">
       The application was unable to process the authentication token from your Google account.
-    </div>
+    </p>
   </div>
   <div layout:replace="~{error/default :: errorDetails}">
     <small>Error details not available</small>
