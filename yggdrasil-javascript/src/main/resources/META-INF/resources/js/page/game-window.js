@@ -1,5 +1,4 @@
-require("../lib/common.js");
-require("../../css/app.css");
+require("lib/common");
 var log = require("../lib/logger").getLogger("page/game-sandbox.js");
 var Main = require("../game/main.js");
 

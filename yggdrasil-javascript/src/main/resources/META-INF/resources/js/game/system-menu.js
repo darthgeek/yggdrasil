@@ -6,6 +6,7 @@ var errorPanel = require("../../hbs/error-panel.hbs");
 var security = require("lib/security");
 var util = require("lib/utils");
 var $ = require("jquery");
+var _ = require("underscore");
 
 /**
  * Configures the system menu.
@@ -59,16 +60,28 @@ SystemMenu.prototype.onMenuToggle = function () {
  * @param url URL to system panel contents
  */
 SystemMenu.prototype.openSystemPanel = function (url) {
-  $("#system-panel").load(url + " .container", null, function (response, status, xhr) {
-    if (status === "error") {
-      var msg = errorPanel(
-          {
-            status: xhr.status,
-            summary: xhr.statusText,
-            details: "There was an error loading the system panel " + url
-          });
-      $("#system-panel").html(msg);
+  var _this = this;
+  $.get({
+    url: url,
+    dataType: "html",
+    ifModified: true,
+    success: function (content) {
+      var d = document.createElement("div");
+      d.innerHTML = content;
+
+      var panel = $("#system-panel");
+      panel.empty();
+      panel.append($(d).find(".embedded"));
     }
+  }).fail(function (xhr, status, error) {
+    var html = errorPanel(
+        {
+          status: xhr.status,
+          summary: xhr.statusText,
+          details: "There was an error loading the system panel " + url + ": " + error
+        });
+    $("#system-panel").html(html);
+  }).complete(function () {
     $("#system-menu").hide("slide", {direction: "right"});
     $("#system-panel").toggle("slide", {direction: "right"});
   });
