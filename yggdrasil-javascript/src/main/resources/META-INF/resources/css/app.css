@@ -215,6 +215,23 @@
   color: #fff;
 }
 
+.panel-container .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background: #000;
+}
+
+.panel-container .add-user-button {
+  float: left;
+}
+
+.panel-container .search-users {
+  float: right;
+}
+
+.panel-container #userManagementTable_info {
+  display: inline-block;
+  float: left;
+}
+
 .ui-tooltip {
   z-index: 2000;
   font-size: 10px;

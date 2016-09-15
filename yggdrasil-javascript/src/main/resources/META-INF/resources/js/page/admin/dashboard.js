@@ -22,7 +22,26 @@ Dashboard.prototype.init = function () {
   log.info("Dashboard loaded");
 
   var table = $("#userManagementTable");
-  table.DataTable();
+  var dataTable = table.DataTable({
+    "lengthChange": false,
+    "pageLength": 50,
+    "autoWidth": false,
+    "order": [[1, "desc"]],
+    "dom": '<"add-user-button"><"search-users">rtip',
+    "columnDefs": [
+      {"targets": 0, "orderable": false, "width": "50px"},
+      {"targets": 3, "width": "90px"},
+      {"targets": 4, "orderable": false, "width": "20px"}
+    ]
+  });
+
+  $("div.search-users").html('<input type="text" class="form-control" placeholder="Search" length="10">');
+  $("div.add-user-button").html('<a href="javascript:void(0)" class="btn btn-sm btn-info pull-left">' +
+      '<i class="fa fa-user-plus"></i> Add User</a>');
+
+  $('div.search-users > input').keyup(function () {
+    dataTable.search($(this).val()).draw();
+  });
 
   $("[data-toggle='tooltip']").tooltip();
 };
