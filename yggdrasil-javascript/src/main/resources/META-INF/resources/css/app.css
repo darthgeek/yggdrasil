@@ -1,3 +1,7 @@
+.alert-danger, .alert-warning, .alert-info, .alert-success, .alert-default, .alert-primary {
+  background-image: none;
+}
+
 .google-login-container {
   width: 240px;
   margin-left: auto;

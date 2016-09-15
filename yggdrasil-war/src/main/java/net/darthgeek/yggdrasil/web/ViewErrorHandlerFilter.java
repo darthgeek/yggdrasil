@@ -2,6 +2,7 @@ package net.darthgeek.yggdrasil.web;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.util.NestedServletException;
+import org.thymeleaf.exceptions.TemplateInputException;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
@@ -27,9 +28,13 @@ public class ViewErrorHandlerFilter implements Filter {
     try {
       chain.doFilter(request, response);
     } catch (final NestedServletException nse) {
-      doRedirect(HttpStatus.NOT_FOUND.value(), nse.getCause(), request, response);
-    } catch (final Exception ex) {
-      doRedirect(HttpStatus.INTERNAL_SERVER_ERROR.value(), ex, request, response);
+      if (nse.getCause() instanceof TemplateInputException) {
+        doRedirect(HttpStatus.NOT_FOUND.value(), nse.getCause(), request, response);
+      } else {
+        throw nse;
+      }
+    } catch (final IOException | ServletException ex) {
+      throw ex;
     }
   }
 

@@ -91,6 +91,7 @@ public class SecurityConfig {
               .anyRequest().authenticated().and()
           .exceptionHandling()
             .authenticationEntryPoint(restEntryPoint()).and()
+          .httpBasic().and()  // TODO - remove after testing complete
           .headers()
             .frameOptions().sameOrigin();
       // @formatter:on

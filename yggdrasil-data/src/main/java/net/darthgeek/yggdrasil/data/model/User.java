@@ -39,7 +39,8 @@ public class User implements UserDetails {
   private Date createdTime;
 
   @Column
-  private String externalAuthProvider;
+  @Enumerated(EnumType.STRING)
+  private ExternalAuthProvider externalAuthProvider;
 
   @Column
   private String externalAuthKey;
@@ -170,11 +171,11 @@ public class User implements UserDetails {
     this.enabled = enabled;
   }
 
-  public String getExternalAuthProvider() {
+  public ExternalAuthProvider getExternalAuthProvider() {
     return externalAuthProvider;
   }
 
-  public void setExternalAuthProvider(final String externalAuthProvider) {
+  public void setExternalAuthProvider(final ExternalAuthProvider externalAuthProvider) {
     this.externalAuthProvider = externalAuthProvider;
   }
 
@@ -186,7 +187,7 @@ public class User implements UserDetails {
     this.externalAuthKey = externalAuthKey;
   }
 
-  public void setExternalAuth(final String externalAuthProvider, final String externalAuthKey) {
+  public void setExternalAuth(final ExternalAuthProvider externalAuthProvider, final String externalAuthKey) {
     this.externalAuthProvider = externalAuthProvider;
     this.externalAuthKey = externalAuthKey;
   }

@@ -1,5 +1,6 @@
 package net.darthgeek.yggdrasil.data.dao;
 
+import net.darthgeek.yggdrasil.data.model.ExternalAuthProvider;
 import net.darthgeek.yggdrasil.data.model.User;
 
 import javax.persistence.EntityNotFoundException;
@@ -44,5 +45,5 @@ public interface UserDao extends AbstractDao<User, Long> {
    * @param key user's unique ID with external authentication provider
    * @return null if user not found
    */
-  User findByExternalId(String provider, String key);
+  User findByExternalId(ExternalAuthProvider provider, String key);
 }
