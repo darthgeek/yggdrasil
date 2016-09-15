@@ -27,4 +27,4 @@ Dashboard.prototype.init = function () {
   $("[data-toggle='tooltip']").tooltip();
 };
 
-var dashboard = new Dashboard();
+module.exports = Dashboard;

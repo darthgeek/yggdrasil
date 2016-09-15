@@ -23,11 +23,10 @@
     window._permissions = /*[[${permissions}]]*/ [];
   </script>
   <script type="text/javascript" th:src='@{/js/}+${@assets.get("shared").get("js")}'></script>
+  <script type="text/javascript" th:src='@{/js/}+${@assets.get("page/admin/dashboard").get("js")}'></script>
 </head>
 <body>
 <!-- Embedded pages need their specific javascript inside the body tag -->
-<script class="embedded" type="text/javascript"
-        th:src='@{/js/}+${@assets.get("page/admin/dashboard").get("js")}'></script>
 
 <div class="container embedded">
   <div class="content-wrapper">

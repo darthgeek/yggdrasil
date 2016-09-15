@@ -7,6 +7,7 @@ var security = require("lib/security");
 var util = require("lib/utils");
 var $ = require("jquery");
 var _ = require("underscore");
+var Dashboard = require("page/admin/dashboard");
 
 /**
  * Configures the system menu.
@@ -15,6 +16,8 @@ var _ = require("underscore");
  * @constructor
  */
 function SystemMenu(game, key) {
+  this.systemPanel = null;
+
   var _this = this;
   var keyCode = key || Phaser.KeyCode.ESC;
 
@@ -24,7 +27,10 @@ function SystemMenu(game, key) {
 
   if (security.hasPermission("PERM_ADMIN")) {
     this.addMenu("admin-menu", "Admin", "fa fa-lock", function (ev, elem) {
-      _this.openSystemPanel(util.url("api/systemPanel/admin/dashboard"));
+      _this.openSystemPanel(util.url("api/systemPanel/admin/dashboard"),
+          function () {
+            _this.systemPanel = new Dashboard();
+          });
     });
   }
 
@@ -58,9 +64,12 @@ SystemMenu.prototype.onMenuToggle = function () {
 /**
  * Opens the system panel with the appropriate contents loaded.
  * @param url URL to system panel contents
+ * @param cb optional callback when panel is loaded
  */
-SystemMenu.prototype.openSystemPanel = function (url) {
-  var _this = this;
+SystemMenu.prototype.openSystemPanel = function (url, cb) {
+  var _cb = (typeof cb === "function") ? cb : function () {
+  };
+
   $.get({
     url: url,
     dataType: "html",
@@ -72,6 +81,9 @@ SystemMenu.prototype.openSystemPanel = function (url) {
       var panel = $("#system-panel");
       panel.empty();
       panel.append($(d).find(".embedded"));
+      $(panel).ready(function () {
+        _cb();
+      });
     }
   }).fail(function (xhr, status, error) {
     var html = errorPanel(
