@@ -26,12 +26,14 @@ Dashboard.prototype.init = function () {
     "lengthChange": false,
     "pageLength": 50,
     "autoWidth": false,
-    "order": [[1, "desc"]],
+    "order": [[2, "desc"]],
     "dom": '<"add-user-button"><"search-users">rtip',
+    "responsive": true,
     "columnDefs": [
       {"targets": 0, "orderable": false, "width": "50px"},
-      {"targets": 3, "width": "90px"},
-      {"targets": 4, "orderable": false, "width": "20px"}
+      {"targets": 1, "orderable": false, "width": "10px"},
+      {"targets": 4, "width": "90px"},
+      {"targets": 5, "orderable": false, "width": "20px"}
     ]
   });
 

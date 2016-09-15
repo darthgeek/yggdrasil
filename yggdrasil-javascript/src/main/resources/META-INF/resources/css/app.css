@@ -232,7 +232,96 @@
   float: left;
 }
 
+.panel-container input {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: #000;
+  color: #fff;
+}
+
+.panel-container .account-icon {
+  color: #0099ff;
+}
+
+.panel-container .admin-icon {
+  color: #ff6633;
+}
+
+.panel-container .online-icon {
+  color: #66cc00;
+}
+
+.panel-container .offline-icon {
+  color: #999966;
+}
+
+.panel-container a {
+  color: #ee99ff;
+}
+
+.panel-container a:hover {
+  color: #ffff00;
+}
+
+.panel-container a.btn {
+  color: #ffffff;
+}
+
+.panel-container th {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.panel-container .table > thead > tr > th {
+  border-color: #000000;
+}
+
+.panel-container .table > tfoot > tr > th {
+  border-color: #000000;
+}
+
+.panel-container .table > tbody > tr > td {
+  border-color: #000000;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 .ui-tooltip {
   z-index: 2000;
   font-size: 10px;
+}
+
+.dropdown.align-right > .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
+.panel-container .btn-default {
+  background: rgba(128, 128, 128, 0.8);
+  border-color: #000;
+  color: #ccc;
+}
+
+.panel-container .btn-default:active:hover,
+.panel-container .btn-default.active:hover,
+.panel-container .open > .dropdown-toggle.btn-default:hover,
+.panel-container .btn-default:active:focus,
+.panel-container .btn-default.active:focus,
+.panel-container .open > .dropdown-toggle.btn-default:focus,
+.panel-container .btn-default:active.active,
+.panel-container .btn-default.active.active,
+.panel-container .open > .dropdown-toggle.btn-default {
+  background: #333;
+  color: #fff;
+}
+
+.panel-container .dropdown-menu {
+  background: #333;
+  border-color: #000;
+}
+
+.panel-container .dropdown-menu > li > a {
+  color: #fff;
+}
+
+.panel-container .dropdown-menu > li > a:hover {
+  color: #000;
 }
