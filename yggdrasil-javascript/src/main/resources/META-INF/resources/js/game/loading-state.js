@@ -12,7 +12,7 @@ LoadingState.NAME = "Loading";
  * @constructor
  */
 function LoadingState() {
-};
+}
 LoadingState.prototype = Object.create(Phaser.State.prototype);
 
 LoadingState.NAME = "Loading";

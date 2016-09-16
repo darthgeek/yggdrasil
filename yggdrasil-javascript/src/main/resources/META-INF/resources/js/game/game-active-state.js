@@ -14,7 +14,7 @@ GameActiveState.NAME = 'Game';
  * @constructor
  */
 function GameActiveState() {
-};
+}
 GameActiveState.prototype = Object.create(Phaser.State.prototype);
 
 GameActiveState.NAME = 'Active';

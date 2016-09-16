@@ -19,8 +19,7 @@ function ScreenMetrics(defaultWidth, defaultHeight) {
   this.defaultAspect = this.defaultWidth / this.defaultHeight;
 
   this.update();
-};
-
+}
 /**
  * Updates the screen metrics based on the current window size.
  */

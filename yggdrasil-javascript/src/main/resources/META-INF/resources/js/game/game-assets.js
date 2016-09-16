@@ -7,7 +7,7 @@
 function ImageAsset(name, path) {
   this.name = name;
   this.path = path;
-};
+}
 /**
  * Loads the asset.
  * @param loader Phaser asset loader
@@ -30,7 +30,7 @@ function SpriteSheetAsset(name, path, tileWidth, tileHeight) {
   this.path = path;
   this.tileWidth = tileWidth;
   this.tileHeight = tileHeight;
-};
+}
 /**
  * Loads the asset.
  * @param loader Phaser asset loader
@@ -53,7 +53,7 @@ function TileMapAsset(name, path, data, format) {
   this.path = path;
   this.data = data;
   this.format = format || Phaser.Tilemap.TILED_JSON;
-};
+}
 /**
  * Loads the asset
  * @param loader Phaser asset loader
