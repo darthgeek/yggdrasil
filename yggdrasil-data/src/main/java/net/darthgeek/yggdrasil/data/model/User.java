@@ -4,8 +4,6 @@ import net.darthgeek.yggdrasil.data.dao.DaoConfig;
 import net.darthgeek.yggdrasil.data.util.UserSessionManager;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,7 +21,6 @@ import java.util.*;
 @Entity
 @Configurable("user")
 public class User implements UserDetails, HttpSessionBindingListener {
-  private static final Logger LOG = LoggerFactory.getLogger(User.class);
   private static final long serialVersionUID = -5590585702123249516L;
 
   @Id

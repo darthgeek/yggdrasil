@@ -1,8 +1,6 @@
 package net.darthgeek.yggdrasil.security;
 
 import net.darthgeek.yggdrasil.data.model.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -17,7 +15,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,7 +30,6 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 import java.io.IOException;
 
 /**
@@ -44,15 +40,10 @@ import java.io.IOException;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 public class SecurityConfig {
-  private static Logger LOG = LoggerFactory.getLogger(SecurityConfig.class);
-
   @Configuration
   public static class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     private UserDetailsService userDetailsService;
-
-    @Resource
-    private DataSource dataSource;
 
     @Override
     public void configure(final WebSecurity web) throws Exception {
@@ -100,15 +91,11 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationSuccessHandler loginHandler() {
-      return new AuthenticationSuccessHandler() {
-        @Override
-        public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response,
-                                            final Authentication authentication) throws IOException, ServletException {
-          final User user = (User) authentication.getPrincipal();
-          // TODO: track time of last login for user here
-          request.getSession().setAttribute("user", user);
-          response.sendRedirect("/");
-        }
+      return (request, response, authentication) -> {
+        final User user = (User) authentication.getPrincipal();
+        // TODO: track time of last login for user here
+        request.getSession().setAttribute("user", user);
+        response.sendRedirect("/");
       };
     }
 
