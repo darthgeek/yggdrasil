@@ -76,11 +76,11 @@ public class UserDto {
   }
 
   public Date getCreatedTime() {
-    return createdTime;
+    return createdTime == null ? null : (Date) createdTime.clone();
   }
 
   public void setCreatedTime(final Date createdTime) {
-    this.createdTime = createdTime;
+    this.createdTime = createdTime == null ? null : (Date) createdTime.clone();
   }
 
   public Set<String> getRoles() {

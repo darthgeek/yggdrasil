@@ -38,13 +38,13 @@ public class ViewErrorHandlerFilter implements Filter {
     }
   }
 
-  private void doRedirect(int httpStatus, Throwable t, final ServletRequest request, final ServletResponse response) throws IOException {
+  private void doRedirect(int httpStatus, Throwable cause, final ServletRequest request, final ServletResponse response) throws IOException, ServletException {
     final HttpServletResponse httpResponse = (HttpServletResponse) response;
     try {
       httpResponse.setStatus(httpStatus);
-      request.getRequestDispatcher(String.format("/error/%d", httpStatus)).forward(request, response);
+      request.getRequestDispatcher(String.format("/error/%d?message=%s", httpStatus, cause)).forward(request, response);
     } catch (ServletException e) {
-      throw new RuntimeException("unable to forward to error page", e);
+      throw new ServletException("unable to forward to error page", e);
     }
   }
 }

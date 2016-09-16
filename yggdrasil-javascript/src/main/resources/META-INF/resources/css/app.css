@@ -182,7 +182,7 @@
 }
 
 .panel-container .bg-info {
-  background: rgba(40, 140, 189, 0.8) !important;
+  background: rgba(40, 140, 189, 0.8);
 }
 
 .panel-container .box {
