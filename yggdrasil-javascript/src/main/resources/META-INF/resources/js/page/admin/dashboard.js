@@ -28,12 +28,13 @@ Dashboard.prototype.init = function () {
   log.info("Dashboard loaded");
 
   var table = $("#userManagementTable");
+  /*eslint new-cap: ["error", { "newIsCap": false }]*/
   var dataTable = table.DataTable({
     "lengthChange": false,
     "pageLength": 50,
     "autoWidth": false,
     "order": [[2, "desc"]],
-    "dom": '<"add-user-button"><"search-users">rtip',
+    "dom": "<,add-user-button,><,search-users,>rtip",
     "columnDefs": [
       {
         "targets": 0,
@@ -44,7 +45,7 @@ Dashboard.prototype.init = function () {
         "render": function (data, type, full, meta) {
           var cell = "";
           if (_.contains(data.roles, "ADMIN")) {
-            cell += icon({iconClass: 'fa fa-key admin-icon', toolTip: 'Administrator'})
+            cell += icon({iconClass: "fa fa-key admin-icon", toolTip: "Administrator"});
           }
           return cell;
         }
@@ -56,10 +57,11 @@ Dashboard.prototype.init = function () {
         "data": null,
         "className": "text-nowrap",
         "render": function (data, type, full, meta) {
-          if (data.online)
-            return icon({iconClass: 'fa fa-circle online-icon', toolTip: 'User is online'});
-          else
-            return icon({iconClass: 'fa fa-circle-o offline-icon', toolTip: 'User is offline'});
+          if (data.online) {
+            return icon({iconClass: "fa fa-circle online-icon", toolTip: "User is online"});
+          } else {
+            return icon({iconClass: "fa fa-circle-o offline-icon", toolTip: "User is offline"});
+          }
         }
       },
       {
@@ -69,10 +71,10 @@ Dashboard.prototype.init = function () {
           var cell = "";
           switch (data.accountType) {
             case "LOCAL":
-              cell += icon({iconClass: 'fa fa-database online-icon', toolTip: 'Local account'});
+              cell += icon({iconClass: "fa fa-database online-icon", toolTip: "Local account"});
               break;
             case "GOOGLE":
-              cell += icon({iconClass: 'fa fa-google account-icon', toolTip: 'Google account'})
+              cell += icon({iconClass: "fa fa-google account-icon", toolTip: "Google account"})
               break;
           }
           cell += " " + data.username;
@@ -83,7 +85,7 @@ Dashboard.prototype.init = function () {
         "targets": 3,
         "data": null,
         "render": function (data, type, full, meta) {
-          return '<a href="mailto:' + data.email + '">' + data.email + '</a>';
+          return "<a href='mailto:" + data.email + "'>" + data.email + "</a>";
         }
       },
       {
@@ -93,7 +95,7 @@ Dashboard.prototype.init = function () {
         "data": null,
         "render": function (data, type, full, meta) {
           var createdDate = new Date(data.createdTime);
-          return dateformat(createdDate, 'h:MM TT mmm dS yyyy');
+          return dateformat(createdDate, "h:MM TT mmm dS yyyy");
         }
       },
       {
@@ -110,14 +112,16 @@ Dashboard.prototype.init = function () {
 
   // TODO - refactor user out to it's own module
   var apiUrl = window._contextPath + "/api/user";
-  if (apiUrl.startsWith("/")) apiUrl = apiUrl.substr(1);
+  if (apiUrl.startsWith("/")) {
+    apiUrl = apiUrl.substr(1);
+  }
 
   this.Users = Backbone.Collection.extend({url: apiUrl});
   this.users = new this.Users();
   this.users.fetch({
     success: function (collection, response, options) {
       var users = collection.toJSON();
-      log.info("loaded " + users.length + " users")
+      log.info("loaded " + users.length + " users");
       dataTable.rows.add(users);
       var onlineUsers = _.filter(users, function (user) {
         return user.online;
@@ -128,11 +132,11 @@ Dashboard.prototype.init = function () {
     }
   });
 
-  $("div.search-users").html('<input type="text" class="form-control" placeholder="Search" length="10">');
-  $("div.add-user-button").html('<a href="javascript:void(0)" class="btn btn-sm btn-default pull-left">' +
-      '<i class="fa fa-user-plus"></i> Add User</a>');
+  $("div.search-users").html("<input type='text' class='form-control' placeholder='Search' length='10'>");
+  $("div.add-user-button").html("<a href='javascript:void(0)' class='btn btn-sm btn-default pull-left'>" +
+      "<i class='fa fa-user-plus'></i> Add User</a>");
 
-  $('div.search-users > input').keyup(function () {
+  $("div.search-users > input").keyup(function () {
     dataTable.search($(this).val()).draw();
   });
 
