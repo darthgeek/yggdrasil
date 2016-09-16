@@ -4,9 +4,9 @@
           aria-haspopup="true" aria-expanded="false">
     <span class="caret"></span>
   </button>
-  <ul aria-labelledby="user-{{userId}}-menu" class="dropdown-menu">
-    <li><a href="javascript:void(0)">Action 1</a></li>
-    <li><a href="javascript:void(0)">Action 2</a></li>
-    <li><a href="javascript:void(0)">Action 3</a></li>
+  <ul aria-labelledby="user-{{userId}}-menu" data-user="{{userId}}" class="user-popup-menu dropdown-menu">
+    {{#each actions}}
+      <li><a data-action="{{name}}" href="javascript:void(0)">{{label}}</a></li>
+    {{/each}}
   </ul>
 </div>

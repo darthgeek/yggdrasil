@@ -3,6 +3,7 @@ var log = require("lib/logger").getLogger("page/admin/dashboard.js");
 var stringify = require("json-stringify-safe");
 var Backbone = require("backbone");
 var _ = require("underscore");
+var $ = require("jquery");
 var dateformat = require("dateformat");
 var icon = require("../../../hbs/icon.hbs");
 var userPopupMenu = require("../../../hbs/user-popup-menu.hbs");
@@ -26,6 +27,8 @@ function Dashboard() {
  */
 Dashboard.prototype.init = function () {
   log.info("Dashboard loaded");
+
+  var _this = this;
 
   var table = $("#userManagementTable");
   var dataTable = table.DataTable({  // eslint-disable-line new-cap
@@ -102,14 +105,29 @@ Dashboard.prototype.init = function () {
         "orderable": false,
         "width": "20px",
         "data": null,
+        // TODO: refactor this out to a method that calculates based on user data
         "render": function (data, type, full, meta) {
-          return userPopupMenu({userId: data.id});
+          return userPopupMenu({
+            userId: data.id, actions: [
+              {name: "enable", label: "Enable user"},
+              {name: "disable", label: "Disable user"}
+            ]
+          });
         }
       }
     ]
   });
+  dataTable.on("click", "a", function (ev) {
+    // TODO: move this and the userPopupMenu template handling out to a usermenu module
+    var target = $(ev.target);
+    var action = target.attr("data-action");
+    var userId = target.closest("[data-user]").attr("data-user");
+    var user = _this.users.findWhere({"id": userId}).toJSON();
+    log.info("clicked: " + target.attr("data-action") + " for user "
+        + user.username);
+  });
 
-  // TODO - refactor user out to it's own module
+// TODO - refactor user out to it's own module
   var apiUrl = window._contextPath + "/api/user";
   if (apiUrl.startsWith("/")) {
     apiUrl = apiUrl.substr(1);
@@ -140,6 +158,7 @@ Dashboard.prototype.init = function () {
   });
 
   $("[data-toggle='tooltip']").tooltip();
-};
+}
+;
 
 module.exports = Dashboard;
