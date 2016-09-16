@@ -74,6 +74,7 @@ SystemMenu.prototype.openSystemPanel = function (url, cb) {
     url: url,
     dataType: "html",
     ifModified: true,
+    timeout: 5000,
     success: function (content) {
       var d = document.createElement("div");
       d.innerHTML = content;
@@ -86,12 +87,22 @@ SystemMenu.prototype.openSystemPanel = function (url, cb) {
       });
     }
   }).fail(function (xhr, status, error) {
-    var html = errorPanel(
-        {
-          status: xhr.status,
-          summary: xhr.statusText,
-          details: "There was an error loading the system panel " + url + ": " + error
-        });
+    var html;
+    if (xhr.status === 0) {
+      html = errorPanel(
+          {
+            status: xhr.status,
+            summary: "Request timed out",
+            details: "The application timed out trying to load the system panel " + url + ": " + error
+          });
+    } else {
+      html = errorPanel(
+          {
+            status: xhr.status,
+            summary: xhr.statusText,
+            details: "There was an error loading the system panel " + url + ": " + error
+          });
+    }
     $("#system-panel").html(html);
   }).complete(function () {
     $("#system-menu").hide("slide", {direction: "right"});

@@ -2,6 +2,7 @@ package net.darthgeek.yggdrasil.mvc.api;
 
 import net.darthgeek.yggdrasil.data.dao.UserDao;
 import net.darthgeek.yggdrasil.data.model.User;
+import net.darthgeek.yggdrasil.data.util.UserSessionManager;
 import net.darthgeek.yggdrasil.mvc.api.dto.UserDto;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +27,9 @@ public class UserResource {
   @Resource
   private UserDao userDao;
 
+  @Resource
+  private UserSessionManager sessionManager;
+
   /**
    * Lists all users that the current user is allowed to see.
    *
@@ -36,6 +40,12 @@ public class UserResource {
   @ResponseBody
   List<UserDto> listUsers() {
     final List<User> users = userDao.getAll();
-    return users.stream().map(user -> new UserDto(user)).collect(Collectors.toList());
+    return users.stream().map(this::modelToDto).collect(Collectors.toList());
+  }
+
+  private UserDto modelToDto(final User user) {
+    final UserDto dto = new UserDto(user);
+    dto.setOnline(null != sessionManager.getSession(user));
+    return dto;
   }
 }

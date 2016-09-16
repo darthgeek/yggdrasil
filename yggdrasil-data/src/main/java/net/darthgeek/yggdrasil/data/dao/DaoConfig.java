@@ -1,10 +1,15 @@
 package net.darthgeek.yggdrasil.data.dao;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import net.darthgeek.yggdrasil.data.util.UserSessionManager;
 import org.flywaydb.core.Flyway;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.BeanInstantiationException;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +33,9 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @ComponentScan
-public class DaoConfig {
+public class DaoConfig implements ApplicationContextAware {
+  private static ApplicationContext context;
+
   @Resource
   private Environment env;
 
@@ -100,5 +107,21 @@ public class DaoConfig {
     flyway.setBaselineOnMigrate(true);
     flyway.setDataSource(dataSource());
     return flyway;
+  }
+
+  @Bean
+  public UserSessionManager userSessionManager() {
+    return new UserSessionManager();
+  }
+
+  @Override
+  @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+        justification = "Need to use this pattern to get access to session manager bean from non-Spring managed User class")
+  public void setApplicationContext(final ApplicationContext applicationContext) throws BeansException {
+    this.context = applicationContext;
+  }
+
+  public static ApplicationContext getContext() {
+    return context;
   }
 }
