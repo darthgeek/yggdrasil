@@ -33,7 +33,7 @@ Dashboard.prototype.init = function () {
     "pageLength": 50,
     "autoWidth": false,
     "order": [[2, "desc"]],
-    "dom": "<,add-user-button,><,search-users,>rtip",
+    "dom": '<"add-user-button"><"search-users">rtip', // eslint-disable-line quotes
     "columnDefs": [
       {
         "targets": 0,
