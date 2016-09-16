@@ -1,3 +1,7 @@
+.alert-danger, .alert-warning, .alert-info, .alert-success, .alert-default, .alert-primary {
+  background-image: none;
+}
+
 .google-login-container {
   width: 240px;
   margin-left: auto;
@@ -18,6 +22,7 @@
   z-index: 1000;
   width: 200px;
   height: 100%;
+  overflow-y: scroll;
 }
 
 .menu-container .nav li {
@@ -68,6 +73,7 @@
   z-index: 1010;
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
 }
 
 .panel-container div.container.embedded {
@@ -159,4 +165,167 @@
 
 .panel-container .panel-danger > .panel-body {
   background: rgba(32, 0, 0, 0.5);
+}
+
+.panel-container .content-wrapper {
+  background: rgba(11, 26, 40, 0.5);
+  color: #eee;
+}
+
+.embedded .content-wrapper {
+  margin: 15px;
+}
+
+.panel-container .info-box {
+  background: rgba(17, 63, 85, 0.5);
+  border-color: #000;
+}
+
+.panel-container .bg-info {
+  background: rgba(40, 140, 189, 0.8);
+}
+
+.panel-container .box {
+  background: rgba(0, 0, 0, 0);
+  color: #eee;
+}
+
+.panel-container .box-info {
+  border-color: #000;
+  color: #eee;
+}
+
+.panel-container .box-header {
+  border-color: #000;
+  color: #fff;
+  font-weight: bold;
+}
+
+.panel-container .box-info > .box-header {
+  background: rgba(40, 140, 189, 0.8);
+}
+
+.panel-container .box-info > .box-body {
+  background: rgba(17, 63, 85, 0.5);
+  border-color: #000;
+}
+
+.panel-container .box-info > .box-footer {
+  background: rgba(17, 63, 85, 0.5);
+  border-color: #000;
+}
+
+.panel-container .btn-box-tool {
+  color: #fff;
+}
+
+.panel-container .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background: #000;
+}
+
+.panel-container .add-user-button {
+  float: left;
+}
+
+.panel-container .search-users {
+  float: right;
+}
+
+.panel-container #userManagementTable_info {
+  display: inline-block;
+  float: left;
+}
+
+.panel-container input {
+  background: rgba(0, 0, 0, 0.3);
+  border-color: #000;
+  color: #fff;
+}
+
+.panel-container .account-icon {
+  color: #0099ff;
+}
+
+.panel-container .admin-icon {
+  color: #ff6633;
+}
+
+.panel-container .online-icon {
+  color: #66cc00;
+}
+
+.panel-container .offline-icon {
+  color: #999966;
+}
+
+.panel-container a {
+  color: #ee99ff;
+}
+
+.panel-container a:hover {
+  color: #ffff00;
+}
+
+.panel-container a.btn {
+  color: #ffffff;
+}
+
+.panel-container th {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+.panel-container .table > thead > tr > th {
+  border-color: #000000;
+}
+
+.panel-container .table > tfoot > tr > th {
+  border-color: #000000;
+}
+
+.panel-container .table > tbody > tr > td {
+  border-color: #000000;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.ui-tooltip {
+  z-index: 2000;
+  font-size: 10px;
+}
+
+.dropdown.align-right > .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
+.panel-container .btn-default {
+  background: rgba(128, 128, 128, 0.8);
+  border-color: #000;
+  color: #ccc;
+}
+
+.panel-container .btn-default:active:hover,
+.panel-container .btn-default.active:hover,
+.panel-container .open > .dropdown-toggle.btn-default:hover,
+.panel-container .btn-default:active:focus,
+.panel-container .btn-default.active:focus,
+.panel-container .open > .dropdown-toggle.btn-default:focus,
+.panel-container .btn-default:active.active,
+.panel-container .btn-default.active.active,
+.panel-container .open > .dropdown-toggle.btn-default {
+  background: #333;
+  color: #fff;
+}
+
+.panel-container .dropdown-menu {
+  background: #333;
+  border-color: #000;
+}
+
+.panel-container .dropdown-menu > li > a {
+  color: #fff;
+}
+
+.panel-container .dropdown-menu > li > a:hover {
+  color: #000;
 }

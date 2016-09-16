@@ -1,6 +1,8 @@
 package net.darthgeek.yggdrasil.web;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.util.NestedServletException;
+import org.thymeleaf.exceptions.TemplateInputException;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
@@ -26,20 +28,23 @@ public class ViewErrorHandlerFilter implements Filter {
     try {
       chain.doFilter(request, response);
     } catch (final NestedServletException nse) {
-      doRedirect("/error/404", nse.getCause(), request, response);
-    } catch (final Exception ex) {
-      doRedirect("/error/500", ex, request, response);
+      if (nse.getCause() instanceof TemplateInputException) {
+        doRedirect(HttpStatus.NOT_FOUND.value(), nse.getCause(), request, response);
+      } else {
+        throw nse;
+      }
+    } catch (final IOException | ServletException ex) {
+      throw ex;
     }
   }
 
-  private void doRedirect(String path, Throwable t, final ServletRequest request, final ServletResponse response) throws IOException {
+  private void doRedirect(int httpStatus, Throwable cause, final ServletRequest request, final ServletResponse response) throws IOException, ServletException {
     final HttpServletResponse httpResponse = (HttpServletResponse) response;
-    final StringBuilder sb = new StringBuilder();
-    sb.append(request.getServletContext().getContextPath());
-    sb.append(path);
-    sb.append("?");
-    sb.append("exception=");
-    sb.append(t);
-    httpResponse.sendRedirect(sb.toString());
+    try {
+      httpResponse.setStatus(httpStatus);
+      request.getRequestDispatcher(String.format("/error/%d?message=%s", httpStatus, cause)).forward(request, response);
+    } catch (ServletException e) {
+      throw new ServletException("unable to forward to error page", e);
+    }
   }
 }

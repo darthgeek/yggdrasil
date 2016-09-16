@@ -8,6 +8,7 @@ if (typeof window != "undefined") {
 
   require("bootstrap");
   require("bootstrap/dist/css/bootstrap.css");
+  require("bootstrap/dist/css/bootstrap-theme.css");
 
   require("admin-lte");
   require("admin-lte/dist/css/AdminLTE.css");
@@ -15,4 +16,9 @@ if (typeof window != "undefined") {
 
   require("font-awesome/css/font-awesome.min.css");
   require("ionicons/dist/css/ionicons.min.css");
+
+  require("jquery-ui");
+  require("jquery-ui/themes/base/jquery-ui.css");
+
+  require("../../css/app.css");
 }

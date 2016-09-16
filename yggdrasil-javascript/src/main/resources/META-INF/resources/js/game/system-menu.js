@@ -6,6 +6,8 @@ var errorPanel = require("../../hbs/error-panel.hbs");
 var security = require("lib/security");
 var util = require("lib/utils");
 var $ = require("jquery");
+var _ = require("underscore");
+var Dashboard = require("page/admin/dashboard");
 
 /**
  * Configures the system menu.
@@ -14,6 +16,8 @@ var $ = require("jquery");
  * @constructor
  */
 function SystemMenu(game, key) {
+  this.systemPanel = null;
+
   var _this = this;
   var keyCode = key || Phaser.KeyCode.ESC;
 
@@ -23,7 +27,10 @@ function SystemMenu(game, key) {
 
   if (security.hasPermission("PERM_ADMIN")) {
     this.addMenu("admin-menu", "Admin", "fa fa-lock", function (ev, elem) {
-      _this.openSystemPanel(util.url("api/systemPanel/admin/dashboard"));
+      _this.openSystemPanel(util.url("api/systemPanel/admin/dashboard"),
+          function () {
+            _this.systemPanel = new Dashboard();
+          });
     });
   }
 
@@ -57,18 +64,36 @@ SystemMenu.prototype.onMenuToggle = function () {
 /**
  * Opens the system panel with the appropriate contents loaded.
  * @param url URL to system panel contents
+ * @param cb optional callback when panel is loaded
  */
-SystemMenu.prototype.openSystemPanel = function (url) {
-  $("#system-panel").load(url + " .container", null, function (response, status, xhr) {
-    if (status === "error") {
-      var msg = errorPanel(
-          {
-            status: xhr.status,
-            summary: xhr.statusText,
-            details: "There was an error loading the system panel " + url
-          });
-      $("#system-panel").html(msg);
+SystemMenu.prototype.openSystemPanel = function (url, cb) {
+  var _cb = (typeof cb === "function") ? cb : function () {
+  };
+
+  $.get({
+    url: url,
+    dataType: "html",
+    ifModified: true,
+    success: function (content) {
+      var d = document.createElement("div");
+      d.innerHTML = content;
+
+      var panel = $("#system-panel");
+      panel.empty();
+      panel.append($(d).find(".embedded"));
+      $(panel).ready(function () {
+        _cb();
+      });
     }
+  }).fail(function (xhr, status, error) {
+    var html = errorPanel(
+        {
+          status: xhr.status,
+          summary: xhr.statusText,
+          details: "There was an error loading the system panel " + url + ": " + error
+        });
+    $("#system-panel").html(html);
+  }).complete(function () {
     $("#system-menu").hide("slide", {direction: "right"});
     $("#system-panel").toggle("slide", {direction: "right"});
   });

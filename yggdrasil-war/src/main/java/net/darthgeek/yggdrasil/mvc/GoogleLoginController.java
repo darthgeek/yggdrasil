@@ -5,6 +5,7 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import net.darthgeek.yggdrasil.data.dao.UserDao;
+import net.darthgeek.yggdrasil.data.model.ExternalAuthProvider;
 import net.darthgeek.yggdrasil.data.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +29,6 @@ import java.util.Date;
 @Controller("googleLoginController")
 @RequestMapping("/login/google")
 public class GoogleLoginController {
-  public static final String GOOGLE_AUTH_PROVIDER = "google";
   private static final Logger LOG = LoggerFactory.getLogger(GoogleLoginController.class);
   private static final String CLIENT_ID = "1020627545730-gifi00t2fl2gvgfh89dpnt3cfjsdfh4v.apps.googleusercontent.com";
   private GoogleIdTokenVerifier verifier;
@@ -59,11 +59,11 @@ public class GoogleLoginController {
 
       final String googleId = payload.getSubject();
 
-      User user = userDao.findByExternalId(GOOGLE_AUTH_PROVIDER, googleId);
+      User user = userDao.findByExternalId(ExternalAuthProvider.GOOGLE, googleId);
       if (null == user) {
         LOG.info("Creating Google user ID: " + googleId + ": (" + payload.getEmail() + ")");
         user = new User();
-        user.setExternalAuth(GOOGLE_AUTH_PROVIDER, googleId);
+        user.setExternalAuth(ExternalAuthProvider.GOOGLE, googleId);
         user.setPassword("");
         user.setEnabled(true);
         user.setCreatedTime(new Date());

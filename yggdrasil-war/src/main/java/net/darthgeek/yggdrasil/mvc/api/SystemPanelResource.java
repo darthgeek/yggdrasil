@@ -11,10 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * Created by jason on 9/12/16.
  */
-@Controller("adminSystemPanel")
+@Controller("systemPanelResource")
 @RequestMapping("/api/systemPanel")
 @PreAuthorize("isAuthenticated()")
-public class SystemPanelController {
+public class SystemPanelResource {
   @PreAuthorize("hasAuthority('PERM_ADMIN')")
   @RequestMapping(path = "/admin//{panelName}", method = RequestMethod.GET, produces = MediaType.TEXT_HTML_VALUE)
   public ModelAndView adminPanel(@PathVariable final String panelName) {

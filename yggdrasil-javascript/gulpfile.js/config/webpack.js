@@ -11,6 +11,7 @@ module.exports = function (env) {
       "page/basic": ["./page/basic.js"],
       "page/login": ["./page/login.js"],
       "page/game-window": ["./page/game-window.js"],
+      "page/admin/dashboard": ["./page/admin/dashboard.js"],
       "page/phaser-tutorial": ["./page/phaser-tutorial.js"],
       "page/websocket-tutorial": ["./page/websocket-tutorial.js"],
     },

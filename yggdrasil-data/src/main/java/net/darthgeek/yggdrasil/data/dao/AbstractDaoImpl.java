@@ -53,7 +53,9 @@ public abstract class AbstractDaoImpl<T, K extends Serializable> implements Abst
   public List<T> getAll() {
     final Session session = getSession();
 
-    return session.createCriteria(getEntityClass()).list();
+    return session.createCriteria(getEntityClass())
+          .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+          .list();
   }
 
   abstract protected Class<T> getEntityClass();

@@ -1,8 +1,7 @@
 /**
  * Created by jason on 7/21/2016.
  */
-require("../lib/common.js");
-require("../../css/app.css");
+require("lib/common");
 var $ = require("jquery");
 var log = require("../lib/logger").getLogger("page/login.js", "INFO");
 var stringify = require("json-stringify-safe");

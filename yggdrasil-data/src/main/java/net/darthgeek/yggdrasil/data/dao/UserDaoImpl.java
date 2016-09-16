@@ -1,5 +1,6 @@
 package net.darthgeek.yggdrasil.data.dao;
 
+import net.darthgeek.yggdrasil.data.model.ExternalAuthProvider;
 import net.darthgeek.yggdrasil.data.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -52,6 +53,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
     final List<User> results =
           session.createCriteria(getEntityClass())
                 .add(Restrictions.eq("email", email))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 
     if (results.size() == 0) {
@@ -69,6 +71,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
     final List<User> results =
           session.createCriteria(getEntityClass())
                 .add(Restrictions.eq("username", username))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 
     if (results.size() == 0) {
@@ -79,7 +82,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
   }
 
   @Override
-  public User findByExternalId(final String provider, final String key) {
+  public User findByExternalId(final ExternalAuthProvider provider, final String key) {
     final Session session = getSession();
 
     @SuppressWarnings("unchecked")
@@ -87,6 +90,7 @@ public class UserDaoImpl extends AbstractDaoImpl<User, Long> implements UserDao,
           session.createCriteria(getEntityClass())
                 .add(Restrictions.eq("externalAuthProvider", provider))
                 .add(Restrictions.eq("externalAuthKey", key))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
 
     if (results.size() == 0) {

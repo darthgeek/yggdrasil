@@ -11,7 +11,7 @@ BootState.NAME = 'Boot';
  * @constructor
  */
 function BootState() {
-};
+}
 BootState.prototype = Object.create(Phaser.State.prototype);
 
 BootState.NAME = 'Boot';

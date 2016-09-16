@@ -23,12 +23,64 @@
     window._permissions = /*[[${permissions}]]*/ [];
   </script>
   <script type="text/javascript" th:src='@{/js/}+${@assets.get("shared").get("js")}'></script>
-  <script type="text/javascript" th:src='@{/js/}+${@assets.get("page/basic").get("js")}'></script>
+  <script type="text/javascript" th:src='@{/js/}+${@assets.get("page/admin/dashboard").get("js")}'></script>
 </head>
 <body>
+<!-- Embedded pages need their specific javascript inside the body tag -->
+
 <div class="container embedded">
-  <h2>Admin Dashboard</h2>
-  <p>Under construction... <!-- TODO --></p>
+  <div class="content-wrapper">
+    <section class="content-header">
+      <h1>Administration Dashboard</h1>
+    </section>
+    <section class="content">
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-12">
+          <div class="info-box info">
+            <span class="info-box-icon bg-info">
+              <i class="ion ion-ios-people-outline"></i>
+            </span>
+            <div class="info-box-content">
+              <span class="info-box-text">Users</span>
+              <div><span id="total-user-count" class="info-box-number inline">0</span> total</div>
+              <div><span id="online-user-count" class="info-box-number inline">0</span> online</div>
+            </div>
+          </div>
+        </div>
+        <!-- TODO - 3 more metrics boxes -->
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-info collapsed-box">
+            <div class="box-header">
+              <h3 class="box-title">User Management</h3>
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
+              </div>
+            </div>
+            <div class="box-body">
+              <table id="userManagementTable" class="table table-hover">
+                <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
+                  <th>Username</th>
+                  <th>E-mail</th>
+                  <th>Created</th>
+                  <th></th>
+                </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="box-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </div>
 </body>
 </html>
