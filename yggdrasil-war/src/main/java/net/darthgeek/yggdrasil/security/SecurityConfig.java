@@ -1,10 +1,14 @@
 package net.darthgeek.yggdrasil.security;
 
+import net.darthgeek.yggdrasil.data.model.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,17 +17,24 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.access.AccessDeniedHandlerImpl;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.csrf.CsrfException;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+import java.io.IOException;
 
 /**
  * Created by jason on 7/21/2016.
@@ -33,6 +44,8 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, proxyTargetClass = true)
 public class SecurityConfig {
+  private static Logger LOG = LoggerFactory.getLogger(SecurityConfig.class);
+
   @Configuration
   public static class AppSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
@@ -62,21 +75,64 @@ public class SecurityConfig {
           .formLogin()
             .loginPage("/login").permitAll()
             .defaultSuccessUrl("/")
+            .successHandler(loginHandler())
             .and()
-          .logout().permitAll().and()
+          .logout().permitAll()
+            .invalidateHttpSession(true).and()
           .rememberMe()
             .rememberMeParameter("remember-me").tokenRepository(persistentTokenRepository())
             .userDetailsService(userDetailsService).tokenValiditySeconds(86400).and()
-          .csrf().and()
-          .exceptionHandling().accessDeniedPage("/error/403");
+          .exceptionHandling()
+            .accessDeniedHandler(accessDeniedHandler()).and()
+          .csrf();
       // @formatter:on
     }
 
     @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+      return new MyAccessDeniedHandler("/error/403");
+    }
+
+    @Bean
     public PersistentTokenRepository persistentTokenRepository() {
-      JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
-      db.setDataSource(dataSource);
-      return db;
+      return null;
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler loginHandler() {
+      return new AuthenticationSuccessHandler() {
+        @Override
+        public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response,
+                                            final Authentication authentication) throws IOException, ServletException {
+          final User user = (User) authentication.getPrincipal();
+          // TODO: track time of last login for user here
+          request.getSession().setAttribute("user", user);
+          response.sendRedirect("/");
+        }
+      };
+    }
+
+    /**
+     * Specialization of the default access denied handler that handles
+     * CSRF exceptions on the logout link differently.  Instead of
+     * showing the 403 error page, the user is redirected to the home
+     * page where if they're not currently logged in they'll go to
+     * the login page.
+     */
+    private static class MyAccessDeniedHandler extends AccessDeniedHandlerImpl {
+      public MyAccessDeniedHandler(final String errorPage) {
+        setErrorPage(errorPage);
+      }
+
+      @Override
+      public void handle(final HttpServletRequest request, final HttpServletResponse response, final AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        if (accessDeniedException instanceof CsrfException &&
+              "/logout".equals(request.getPathInfo())) {
+          response.sendRedirect("/");
+        } else {
+          super.handle(request, response, accessDeniedException);
+        }
+      }
     }
   }
 

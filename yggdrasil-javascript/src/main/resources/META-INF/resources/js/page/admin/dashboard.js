@@ -70,7 +70,7 @@ Dashboard.prototype.init = function () {
           var cell = "";
           switch (data.accountType) {
             case "LOCAL":
-              cell += icon({iconClass: "fa fa-database online-icon", toolTip: "Local account"});
+              cell += icon({iconClass: "fa fa-database account-icon", toolTip: "Local account"});
               break;
             case "GOOGLE":
               cell += icon({iconClass: "fa fa-google account-icon", toolTip: "Google account"});

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -46,7 +47,7 @@ public class GoogleLoginController {
 
   @RequestMapping(method = RequestMethod.POST)
   @Transactional
-  public String login(final @ModelAttribute GoogleLoginForm form) {
+  public String login(final @ModelAttribute GoogleLoginForm form, final HttpServletRequest request) {
     final GoogleIdToken idToken;
     try {
       idToken = verifier.verify(form.getToken());
@@ -80,6 +81,7 @@ public class GoogleLoginController {
 
       final Authentication auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
       SecurityContextHolder.getContext().setAuthentication(auth);
+      request.getSession().setAttribute("user", user);
 
       return "redirect:/";
     } else {

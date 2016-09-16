@@ -1,11 +1,18 @@
 package net.darthgeek.yggdrasil.data.model;
 
+import net.darthgeek.yggdrasil.data.dao.DaoConfig;
+import net.darthgeek.yggdrasil.data.util.UserSessionManager;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpSessionBindingEvent;
+import javax.servlet.http.HttpSessionBindingListener;
 import java.util.*;
 
 /**
@@ -14,8 +21,11 @@ import java.util.*;
  * @author jason
  */
 @Entity
-public class User implements UserDetails {
+@Configurable("user")
+public class User implements UserDetails, HttpSessionBindingListener {
+  private static final Logger LOG = LoggerFactory.getLogger(User.class);
   private static final long serialVersionUID = -5590585702123249516L;
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
@@ -48,28 +58,6 @@ public class User implements UserDetails {
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new TreeSet<Role>();
-
-  @Override
-  public boolean equals(final Object obj) {
-    if (this == obj) {
-      return true;
-    }
-    if (obj == null) {
-      return false;
-    }
-    if (!(obj instanceof User)) {
-      return false;
-    }
-    User other = (User) obj;
-    if (email == null) {
-      if (other.email != null) {
-        return false;
-      }
-    } else if (!email.equals(other.email)) {
-      return false;
-    }
-    return true;
-  }
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -140,14 +128,6 @@ public class User implements UserDetails {
   }
 
   @Override
-  public int hashCode() {
-    final int prime = 31;
-    int result = 1;
-    result = prime * result + ((email == null) ? 0 : email.hashCode());
-    return result;
-  }
-
-  @Override
   public boolean isAccountNonExpired() {
     return true;
   }
@@ -195,5 +175,33 @@ public class User implements UserDetails {
   @Override
   public String toString() {
     return email;
+  }
+
+  @Override
+  public void valueBound(final HttpSessionBindingEvent httpSessionBindingEvent) {
+    final UserSessionManager manager = DaoConfig.getContext().getBean(UserSessionManager.class);
+    manager.register(this, httpSessionBindingEvent.getSession());
+  }
+
+  @Override
+  public void valueUnbound(final HttpSessionBindingEvent httpSessionBindingEvent) {
+    final UserSessionManager manager = DaoConfig.getContext().getBean(UserSessionManager.class);
+    manager.unregister(this);
+  }
+
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) return true;
+    if (!(o instanceof User)) return false;
+
+    User user = (User) o;
+
+    return id != null ? id.equals(user.id) : user.id == null;
+
+  }
+
+  @Override
+  public int hashCode() {
+    return id != null ? id.hashCode() : 0;
   }
 }
